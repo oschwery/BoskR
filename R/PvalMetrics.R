@@ -1,5 +1,4 @@
-PvalMetrics <-
-function(empMetrics, simMetrics) {
+PvalMetrics <- function(empMetrics, simMetrics) {
   # loop getting distributions for all sim trees
   dists <- list()
   targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness1_St")  # CHANGE once you have likelihood implemented!

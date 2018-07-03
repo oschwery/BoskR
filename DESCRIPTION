@@ -1,9 +1,12 @@
 Package: BoskR
 Type: Package
-Title: What the package does (short line)
+Title: Assess Adequacy of Diversification Models Using Tree Shapes
 Version: 1.0
 Date: 2018-06-29
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Orlando Schwery
+Maintainer: Orlando Schwery <oschwery@vols.utk.edu>
+Depends: ape, BAMMtools, DDD, diversitree, geiger, laser, MEDUSA, MonoPhy, phangorn, phyloTop, RPANDA, TESS, TreePar, TreeSim, treespace
+Description: Given a phylogeny (or several) and a diversification model (or several), the package makes use of graph Laplacians (as implemented in RPANDA) to infer tree shape metrics. The overlap of those metrics will be compared to the metrics from a set of trees simulated under the model in question and based on the same parameters as the initial tree. If the metrics indicate that the shapes of the simulated trees significantly differ from the initial one, the model should be deemed not adequate for this tree.
+License: GPL-3
+Suggests: knitr, testthat, spacodiR, rmarkdown
+VignetteBuilder: knitr
