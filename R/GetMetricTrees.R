@@ -44,7 +44,9 @@ GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL
 
 #print(paste("Tree Used", current_case[trset], sep=": "))
 print(trset)
-print(names(emptrees[trset]))
+if (empirical_start==TRUE) {
+  print(names(emptrees[trset]))
+}
 print(paste("N",N, sep=": "))
 print(paste("Numbsim1", Numbsim1, sep=": "))
 print(paste("Lambda", Lambda, sep=": "))
