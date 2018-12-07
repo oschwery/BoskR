@@ -4,25 +4,25 @@
 #'
 #' The function will simulate a number of trees based on either the parameters inferred from one or several empirical trees (given through `empParams` if `empirical_start=TRUE`), or user-specified parameters (if `empirical_start=FALSE`)
 #'
-#' @param trset
+#' @param trset Integer indicating the tree set to be evaluated
 #' @param empirical_start `TRUE` to use parameters estimated from empirical trees, `FALSE` to use user-specified ones
-#' @param current_case
+#' @param current_case Integer indicating which tree set tree belongs to (used for labeling purposes).
 #' @param empParams Nested list object with tree parameters as inferred through `GetParams` from one or several empirical trees
 #' @param current_method Method to be used for simulation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
-#' @param current_method_est
+#' @param current_method_est Method to be used for estimation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @param N Number of taxa
 #' @param Numbsim1 Number of trees to simulate per each
 #' @param Lambda Speciation rate
 #' @param Mu Extinction rate
-#' @param l
-#' @param a
-#' @param LambdaFun
-#' @param MuFun
-#' @param TreeAge
-#' @param BiSSEpars
-#' @param tree
+#' @param l Speciation rate
+#' @param a Extinction fracion (Mu/Lambda)
+#' @param LambdaFun Function for speciation rate
+#' @param MuFun Function for extinction rate
+#' @param TreeAge Stem age of tree
+#' @param BiSSEpars Parameters from BiSSE
+#' @param tree Phylogeny
 #' @return A list of trees of class multiPhylo
-GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, current_method_est=current_method, N=NULL, Numbsim1 Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
+GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, current_method_est=current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   # use empirical trees (or not)
   if (empirical_start == TRUE) {
     N <- empParams[[trset]]$N

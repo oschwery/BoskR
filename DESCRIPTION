@@ -11,3 +11,4 @@ License: GPL-3
 Suggests: knitr, testthat, spacodiR, rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
