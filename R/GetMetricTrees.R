@@ -1,7 +1,28 @@
-################################################
-# Simulate trees based on empirical estimations
-################################################
-GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, current_method_est=current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
+#' Simulate trees based on empirical estimations or set parameters
+#'
+#' `GetMetricTrees` simulates trees under a given model based on either parameter estimates from empirical trees or pre-set parameters.
+#'
+#' The function will simulate a number of trees based on either the parameters inferred from one or several empirical trees (given through `empParams` if `empirical_start=TRUE`), or user-specified parameters (if `empirical_start=FALSE`)
+#'
+#' @param trset
+#' @param empirical_start `TRUE` to use parameters estimated from empirical trees, `FALSE` to use user-specified ones
+#' @param current_case
+#' @param empParams Nested list object with tree parameters as inferred through `GetParams` from one or several empirical trees
+#' @param current_method Method to be used for simulation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
+#' @param current_method_est
+#' @param N Number of taxa
+#' @param Numbsim1 Number of trees to simulate per each
+#' @param Lambda Speciation rate
+#' @param Mu Extinction rate
+#' @param l
+#' @param a
+#' @param LambdaFun
+#' @param MuFun
+#' @param TreeAge
+#' @param BiSSEpars
+#' @param tree
+#' @return A list of trees of class multiPhylo
+GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, current_method_est=current_method, N=NULL, Numbsim1 Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   # use empirical trees (or not)
   if (empirical_start == TRUE) {
     N <- empParams[[trset]]$N
@@ -39,10 +60,7 @@ GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL
   if (is.null(BiSSEpars) & current_method == "TraitD") {  # this part doesn't make that much sense at this point...
     BiSSEpars <- c(median(as.numeric(empirical_solution$lambda0), na.rm=TRUE), median(as.numeric(empirical_solution$lambda1), na.rm=TRUE), median(as.numeric(empirical_solution$mu0), na.rm=TRUE), median(as.numeric(empirical_solution$mu1), na.rm=TRUE), median(as.numeric(empirical_solution$q01), na.rm=TRUE), median(as.numeric(empirical_solution$q10), na.rm=TRUE))
   }
-
-# display used metrics (only leave in for now as safety net... drop into a text file later)
-
-#print(paste("Tree Used", current_case[trset], sep=": "))
+# display used metrics
 print(trset)
 if (empirical_start==TRUE) {
   print(names(emptrees[trset]))
@@ -54,32 +72,18 @@ print(paste("Mu", Mu, sep=": "))
 print(paste("K", K, sep=": "))
 print(paste("l", l, sep=": "))
 print(paste("a", a, sep=": "))
-#print(paste("LambdaFun", LambdaFun, sep=": "))
 print(paste("MuFun", MuFun, sep=": "))
 print(paste("TreeAge", TreeAge, sep=": "))
 print(paste("BiSSEpars", BiSSEpars, sep=": "))
 ##############
-#print("works until print all new params")
-#try(print(class(trees)))
-#try(print(trees))
-##############
-# pick right approach\
+# pick right approach
   if (is.na(N)) {
     trees <- NA
-    ##############
-#    print("works until is.na(N)")
-#    print(class(trees))
-#    print(trees)
-    ##############
-
   } else if (!is.na(N)) {
     if (current_method == "BD") {
-      trees <- try(sim.bd.taxa(n=N, numbsim=Numbsim1, lambda=Lambda, mu=Mu, frac=1, complete=FALSE, stochsampling=TRUE), FALSE)
+      trees <- try(sim.bd.age(age=TreeAge, numbsim=Numbsim1, lambda=Lambda, mu=Mu, frac=1, mrca=TRUE, complete=FALSE, K=0), FALSE)
     } else if (current_method == "TimeD-BD") {
-      trees <- try(tess.sim.taxa.age(n=Numbsim1, nTaxa=N, age=TreeAge, lambda=LambdaFun, mu=MuFun), FALSE)
-      #########
-#      print("does it do anything in here?")
-      #########
+      trees <- try(tess.sim.age(n=Numbsim1, age=TreeAge, lambda=LambdaFun, mu=MuFun, massExtinctionTimes = c(), massExtinctionSurvivalProbabilities = c(), samplingProbability = 1, samplingStrategy = "uniform", maxTaxa = Inf, MRCA = TRUE), FALSE)
     } else if (current_method == "DD") {
       if (empirical_start == TRUE) {
         trees <- try(DDtreeSim(numbsim=Numbsim1, lambda=Lambda, mu=Mu, K=K,  age=TreeAge, ddmodel=1), FALSE)
@@ -93,7 +97,6 @@ print(paste("BiSSEpars", BiSSEpars, sep=": "))
     } else if (current_method == "TraitD") {
       trees <- list()
       for (i in 1:Numbsim1) {
-        #while (sum(trees[[i]]$tip.state) == 0 | sum(trees[[i]]$tip.state) == length(trees[[i]]$tip.label)) {
         repeat {
           tree <- list(try(tree.bisse(BiSSEpars, max.taxa=N, max.t=Inf, include.extinct=FALSE, x0=0), FALSE))
           if (sum(tree[[1]]$tip.state) != 0 & sum(tree[[1]]$tip.state) != length(tree[[1]]$tip.label)) {
@@ -102,33 +105,40 @@ print(paste("BiSSEpars", BiSSEpars, sep=": "))
             break
           }
         }
-        #}
       }
-      #trees <- trees(BiSSEpars, type=c("bisse"), n=Numbsim1, max.taxa=N, max.t=Inf, include.extinct=FALSE, x0=0)
     }
   }
-  ##############
-#  print("worksuntil after loops of different methods")
-  ##############
-#print(class(trees))
-#print(is.na(trees))
   if (class(trees) != "try-error" && !is.na(trees)) {
     class(trees) <- "multiPhylo"
-    ##############
-#    print("works turning trees to multiphylo")
-#    print(class(trees))
-    ##############
   }
-  ##############
-#  print("works until after multiPhylo")
-  ##############
-
   prefix <- "Tree"
   suffix <- seq(1:length(trees))
   names(trees) <- paste(prefix, suffix, sep="_")
-  ##############
-#  print("works assigning trees")
-  ##############
-
   trees
+}
+
+
+#' Get several DD trees out of DDD
+#'
+#' Internal function used by `GetMetricTrees` to simulate several trees under DD for each supplied tree or tree set.
+#'
+#' The function uses `dd_sim` from the package `DDD`.
+#'
+#' @param numbsim Number of simulations per tree
+#' @param lambda Speciation rate
+#' @param mu Extinction rate
+#' @param K Carrying capacity
+#' @param age Crown age for simulated tree
+#' @param ddmodel Model for dependence of diversification rates on K, see `dd_sim` description.
+#' @return A set of simulated trees
+DDtreeSim <- function(numbsim, lambda, mu, K, age, ddmodel) {
+  outtrees <- list()
+  for (rounds in 1:numbsim) {
+    onetree <- c()
+    treenumber <- as.character(rounds)
+    onetree <- dd_sim(c(lambda, mu, K), age, ddmodel)
+    print(paste("done tree ", rounds, " of ", numbsim, sep=""))
+    outtrees[[treenumber]] <- onetree$tes
+  }
+  outtrees
 }

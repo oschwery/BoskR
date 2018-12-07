@@ -1,19 +1,21 @@
-##########################################
-# measure the tree metrics
-##########################################
+#' Get metrics describing tree shape
+#'
+#' `GetTreeMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees.
+#'
+#' The function will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
+#'
+#' @param trees Tree or set of trees, list or multiPhylo-object
+#' @param rownum Number of rows for result matrix; should correspond to the number of trees used
+#' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
+#' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree.
 GetTreeMetrics <- function(trees, rownum, empirical_start=FALSE) {
   metricsmatrix <- matrix(nrow=rownum, ncol=14)
   colnames(metricsmatrix) <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness1_St", "Peakedness2_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness1_Nor", "Peakedness2_Nor")
-#  rownam <- c()
-#  for (i in 1:rownum) {
-#    rownam <- c(rownam, paste("tree", i, sep=""))
-#  }
   rownames(metricsmatrix) <- names(trees)
   spectrallist <- list()
   for (i in 1:length(trees)) {
     tree <- c()
     if (empirical_start == TRUE) {
-#      tree <- trees[[i]]$tree[[1]]
       tree <- trees[[i]]
     } else if (empirical_start == FALSE) {
       tree <- trees[[i]]
@@ -29,12 +31,7 @@ GetTreeMetrics <- function(trees, rownum, empirical_start=FALSE) {
     metricsmatrix[i, 4] <- pitchforks(tree, normalise = FALSE)
     #ladder sizes
     metricsmatrix[i, 5] <- avgLadder(tree, normalise = FALSE)
-    #widths __ paused bcz bigger output
-    #widths(tree)
-    #node-imbalance
-    #node-depth fractions
-
-    # RPANDA
+    # RPANDA metrics
     # standard spectral
     standardspec <- spectR(tree, method="standard")
     metricsmatrix[i, 6] <- standardspec$principal_eigenvalue
@@ -42,15 +39,14 @@ GetTreeMetrics <- function(trees, rownum, empirical_start=FALSE) {
     metricsmatrix[i, 8] <- standardspec$peakedness1
     metricsmatrix[i, 9] <- standardspec$peakedness2
     metricsmatrix[i, 10] <- standardspec$eigengap
-    #normalised spectral (forget eigengap)
-    #normalspec <- spectR(tree, method="normal") #disabled until fixed
-    # metricsmatrix[i, 11] <- normalspec$principal_eigenvalue
-    # metricsmatrix[i, 12] <- normalspec$asymmetry
-    # metricsmatrix[i, 13] <- normalspec$peakedness1
-    # metricsmatrix[i, 14] <- normalspec$peakedness2
+    #normalised spectral (disregard eigengap)
+    normalspec <- spectR(tree, method="normal") #disabled until fixed
+    metricsmatrix[i, 11] <- normalspec$principal_eigenvalue
+    metricsmatrix[i, 12] <- normalspec$asymmetry
+    metricsmatrix[i, 13] <- normalspec$peakedness1
+    metricsmatrix[i, 14] <- normalspec$peakedness2
     # drop to list
-#    spectra <- list(standardspec=standardspec, normalspec=normalspec)
-    spectra <- list(standardspec=standardspec, normalspec=NA)
+    spectra <- list(standardspec=standardspec, normalspec=normalspec)
     spectrallist[[i]] <- spectra
     standardspec <- NULL  #empty this before next round
     normalspec <- NULL  #empty this before next round
@@ -62,19 +58,6 @@ GetTreeMetrics <- function(trees, rownum, empirical_start=FALSE) {
     }
   }
   names(spectrallist) <- names(trees)
-  # measure the tree metrics
-  #LTT
-  #branch length distributions
-  #AdequacyLTT(tree, trees, PDF=TRUE)
-  #AccuracyBoxplot(simulated_solution, PDF=TRUE)
-  #BLdistPlot(tree, trees, PDF=TRUE)
-  #IntTermBLdistPlot(tree, trees, PDF=TRUE)
-
-
-  #RPANDA for several trees or for later(BICOMPARE)
-  # BICompare  # BIC test for modalities (clusters) in tree, need to be set apriori --> CHECK WHAT THAT MEANS
-  # JSDtree  # Jensen-Shannon distance between phylogenies (based on spectral densities)  --> CHECK WHAT THAT MEANS
-  # JSDtree_cluster  # clustering & plotting based on JSDtree
   outlist <- list(metrics=metricsmatrix, spectra=spectrallist)
   outlist
 }

@@ -10,3 +10,4 @@ Description: Given a phylogeny (or several) and a diversification model (or seve
 License: GPL-3
 Suggests: knitr, testthat, spacodiR, rmarkdown
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
