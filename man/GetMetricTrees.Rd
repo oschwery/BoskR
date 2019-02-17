@@ -7,8 +7,8 @@
 GetMetricTrees(trset = trset, empirical_start = FALSE,
   current_case = NULL, empParams = empParams, current_method,
   current_method_est = current_method, N = NULL, Numbsim1, Lambda, Mu,
-  l = NULL, a = NULL, LambdaFun = NULL, MuFun = NULL, TreeAge = NULL,
-  BiSSEpars = NULL, tree = NULL)
+  l = NULL, a = NULL, LambdaFun = NULL, MuFun = NULL,
+  TreeAge = NULL, BiSSEpars = NULL, tree = NULL)
 }
 \arguments{
 \item{trset}{Integer indicating the tree set to be evaluated}
