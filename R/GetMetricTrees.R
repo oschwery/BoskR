@@ -43,7 +43,7 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
     }
     if (is.na(metrictrees)) {
       sourceTreeName <- c(sourceTreeName, names(empParams[trset]))
-      simTreeName <- simTreeName <- c(simTreeName, "NA")
+      simTreeName <- c(simTreeName, "NA")
       NtaxSim <- c(NtaxSim, "NA")
       SimAge <- c(SimAge, "NA")
     } else {
@@ -55,6 +55,12 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
       }
     }
     metrictreeSet[[setname]] <- metrictrees
+
+print(sourceTreeName)
+print(simTreeName)
+print(NtaxSim)
+print(SimAge)
+
     treeindexSims <- data.frame(TreeID=sourceTreeName, SimID=simTreeName, NtaxSim=NtaxSim, SimAge=SimAge)
     return(list(metricTreeSet=metrictreeSet, treeindexSims=treeindexSims))
   } else if (empirical_start == FALSE) {
