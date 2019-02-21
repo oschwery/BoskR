@@ -9,7 +9,6 @@
 #' @param current_case Integer indicating which tree set tree belongs to (used for labeling purposes).
 #' @param empParams Nested list object with tree parameters as inferred through `GetParams` from one or several empirical trees
 #' @param current_method Method to be used for simulation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
-#' @param current_method_est Method to be used for estimation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @param N Number of taxa
 #' @param Numbsim1 Number of trees to simulate per each
 #' @param Lambda Speciation rate
@@ -22,7 +21,7 @@
 #' @param BiSSEpars Parameters from BiSSE
 #' @param tree Phylogeny
 #' @return A list of trees of class multiPhylo
-GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, current_method_est=current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
+GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   # use empirical trees (or not)
   if (empirical_start == TRUE) {
     N <- empParams[[trset]]$N
