@@ -4,12 +4,10 @@
 \alias{GetTreeMetrics}
 \title{Get metrics describing tree shape}
 \usage{
-GetTreeMetrics(trees, rownum, empirical_start = FALSE)
+GetTreeMetrics(trees, empirical_start = FALSE)
 }
 \arguments{
 \item{trees}{Tree or set of trees, list or multiPhylo-object}
-
-\item{rownum}{Number of rows for result matrix; should correspond to the number of trees used}
 
 \item{empirical_start}{\code{TRUE} if started out from empirical trees, \code{FALSE} if started from user-specified parameters}
 }
