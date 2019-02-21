@@ -32,7 +32,6 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
       metrictrees <- c()
       setname <- c()
       metrictrees <- try(GetMetricTrees(trset, empirical_start, empParams, current_method, N, Numbsim1, Lambda, Mu, l, a, LambdaFun, MuFun, TreeAge, BiSSEpars, tree), FALSE)
-    }
     if (class(metrictrees) == "try-error") {
       metrictrees <- NA
     }
@@ -63,7 +62,7 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
       }
     }
     metrictreeSet[[setname]] <- metrictrees
-
+  }
 print(sourceTreeName)
 print(simTreeName)
 print(NtaxSim)
