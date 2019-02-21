@@ -42,12 +42,20 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
       setname <- paste(names(empParams[trset]), current_method, sep="_")
     }
     if (is.na(metrictrees)) {
-      sourceTreeName <- c(sourceTreeName, names(empParams[trset]))
+      if (is.null(names(empParams[trset]))) {
+        sourceTreeName <- c(sourceTreeName, paste("Emptree", trset, current_method, sep="_"))
+      } else {
+        sourceTreeName <- c(sourceTreeName, names(empParams[trset]))
+      }
       simTreeName <- c(simTreeName, "NA")
       NtaxSim <- c(NtaxSim, "NA")
       SimAge <- c(SimAge, "NA")
     } else {
-      sourceTreeName <- c(sourceTreeName, rep(names(empParams[trset]), times=length(metrictrees)))
+      if (is.null(names(empParams[trset]))) {
+        sourceTreeName <- c(sourceTreeName, rep(paste("Emptree", trset, current_method, sep="_")), times=length(metrictrees))
+      } else {
+        sourceTreeName <- c(sourceTreeName, rep(names(empParams[trset]), times=length(metrictrees)))
+      }
       simTreeName <- c(simTreeName, names(metrictrees))
       for (simtr in 1:length(metrictrees)) {
         NtaxSim <- c(NtaxSim, length(metrictrees[[simtr]]$tip.label))
