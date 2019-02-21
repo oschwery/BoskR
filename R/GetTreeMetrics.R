@@ -9,7 +9,7 @@
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree.
 GetTreeMetrics <- function(trees, empirical_start=FALSE) {
   metricsmatrix <- matrix(nrow=length(trees), ncol=12)
-  colnames(metricsmatrix) <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness1_St", "Peakedness2_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness1_Nor", "Peakedness2_Nor")
+  colnames(metricsmatrix) <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
   rownames(metricsmatrix) <- names(trees)
   spectrallist <- list()
   for (i in 1:length(trees)) {
