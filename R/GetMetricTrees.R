@@ -5,7 +5,6 @@
 #' The function will simulate a number of trees based on either the parameters inferred from one or several empirical trees (given through `empParams` if `empirical_start=TRUE`), or user-specified parameters (if `empirical_start=FALSE`)
 #'
 #' @param empirical_start `TRUE` to use parameters estimated from empirical trees, `FALSE` to use user-specified ones
-#' @param current_case Integer indicating which tree set tree belongs to (used for labeling purposes).
 #' @param empParams Nested list object with tree parameters as inferred through `GetParams` from one or several empirical trees
 #' @param current_method Method to be used for simulation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @param N Number of taxa
@@ -21,7 +20,7 @@
 #' @param tree Phylogeny
 #' @return A list of trees of class multiPhylo
 
-GetMetricTreeSets <- function(empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
+GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   metrictreeSet <- list()
   treeindexSims <- c()
   sourceTreeName <- c()
@@ -32,30 +31,28 @@ GetMetricTreeSets <- function(empirical_start=FALSE, current_case=NULL, empParam
     for (trset in 1:length(empParams)) {
       metrictrees <- c()
       setname <- c()
-      metrictrees <- try(GetMetricTrees(trset, empirical_start, current_case, empParams, current_method, N, Numbsim1, Lambda, Mu, l, a, LambdaFun, MuFun, TreeAge, BiSSEpars, tree), FALSE)
+      metrictrees <- try(GetMetricTrees(trset, empirical_start, empParams, current_method, N, Numbsim1, Lambda, Mu, l, a, LambdaFun, MuFun, TreeAge, BiSSEpars, tree), FALSE)
     }
     if (class(metrictrees) == "try-error") {
       metrictrees <- NA
     }
-    if (length(current_case) > 1) {
-      setname <- paste("treeset", "empset", trset, current_method, sep="_")
-    } else if (current_case == "combo") {
-      setname <- paste(names(empParams[trset]), current_method, sep="_")
-      if (is.na(metrictrees)) {
-        sourceTreeName <- c(sourceTreeName, names(empParams[trset]))
-        simTreeName <- simTreeName <- c(simTreeName, "NA")
-        NtaxSim <- c(NtaxSim, "NA")
-        SimAge <- c(SimAge, "NA")
-      } else {
-        sourceTreeName <- c(sourceTreeName, rep(names(empParams[trset]), times=length(metrictrees)))
-        simTreeName <- c(simTreeName, names(metrictrees))
-        for (simtr in 1:length(metrictrees)) {
-          NtaxSim <- c(NtaxSim, length(metrictrees[[simtr]]$tip.label))
-          SimAge <- c(SimAge, max(branching.times(metrictrees[[simtr]])))
-        }
-      }
+    if (is.null(names(empParams[trset]))) {
+      setname <- paste("treeset", trset, current_method, sep="_")
     } else {
-      setname <- paste("treeset", current_case, trset, current_method, sep="_")
+      setname <- paste(names(empParams[trset]), current_method, sep="_")
+    }
+    if (is.na(metrictrees)) {
+      sourceTreeName <- c(sourceTreeName, names(empParams[trset]))
+      simTreeName <- simTreeName <- c(simTreeName, "NA")
+      NtaxSim <- c(NtaxSim, "NA")
+      SimAge <- c(SimAge, "NA")
+    } else {
+      sourceTreeName <- c(sourceTreeName, rep(names(empParams[trset]), times=length(metrictrees)))
+      simTreeName <- c(simTreeName, names(metrictrees))
+      for (simtr in 1:length(metrictrees)) {
+        NtaxSim <- c(NtaxSim, length(metrictrees[[simtr]]$tip.label))
+        SimAge <- c(SimAge, max(branching.times(metrictrees[[simtr]])))
+      }
     }
     metrictreeSet[[setname]] <- metrictrees
     treeindexSims <- data.frame(TreeID=sourceTreeName, SimID=simTreeName, NtaxSim=NtaxSim, SimAge=SimAge)
@@ -70,7 +67,7 @@ GetMetricTreeSets <- function(empirical_start=FALSE, current_case=NULL, empParam
             Mu <- Mus[mus]
             metrictrees <- c()
             setname <- c()
-            metrictrees <- GetMetricTrees(trset, empirical_start, current_case, empParams, current_method, N, Numbsim1, Lambda, Mu, l, a, LambdaFun, MuFun, TreeAge, BiSSEpars, tree)
+            metrictrees <- GetMetricTrees(trset, empirical_start, empParams, current_method, N, Numbsim1, Lambda, Mu, l, a, LambdaFun, MuFun, TreeAge, BiSSEpars, tree)
             setname <- paste("lambda", Lambda, "Mu", Mu, current_method, sep="_")
             metrictreeSet[[setname]] <- metrictrees
           }
@@ -91,7 +88,6 @@ GetMetricTreeSets <- function(empirical_start=FALSE, current_case=NULL, empParam
 #'
 #' @param trset Integer indicating the tree set to be evaluated
 #' @param empirical_start `TRUE` to use parameters estimated from empirical trees, `FALSE` to use user-specified ones
-#' @param current_case Integer indicating which tree set tree belongs to (used for labeling purposes).
 #' @param empParams Nested list object with tree parameters as inferred through `GetParams` from one or several empirical trees
 #' @param current_method Method to be used for simulation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @param N Number of taxa
@@ -107,7 +103,7 @@ GetMetricTreeSets <- function(empirical_start=FALSE, current_case=NULL, empParam
 #' @param tree Phylogeny
 #' @return A list of trees of class multiPhylo
 
-GetMetricTrees <- function(trset=trset, empirical_start=FALSE, current_case=NULL, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
+GetMetricTrees <- function(trset=trset, empirical_start=FALSE, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   # use empirical trees (or not)
   if (empirical_start == TRUE) {
     N <- empParams[[trset]]$N
