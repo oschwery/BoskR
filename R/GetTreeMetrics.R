@@ -49,7 +49,7 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE) {
     normalspec <- NULL  #empty this before next round
     spectra <- NULL  # empty this before next round
     if (empirical_start == TRUE) {
-      print(paste("tree", i, "of", length(emptrees), sep=" "))
+      print(paste("tree", i, "of", length(trees), sep=" "))
     } else if (empirical_start == FALSE) {
       print(paste("set", k, "tree", i, sep=" "))
     }
