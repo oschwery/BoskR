@@ -8,7 +8,7 @@
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree.
 GetTreeMetrics <- function(trees, empirical_start=FALSE) {
-  metricsmatrix <- matrix(nrow=length(trees), ncol=14)
+  metricsmatrix <- matrix(nrow=length(trees), ncol=12)
   colnames(metricsmatrix) <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness1_St", "Peakedness2_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness1_Nor", "Peakedness2_Nor")
   rownames(metricsmatrix) <- names(trees)
   spectrallist <- list()
@@ -35,15 +35,13 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE) {
     standardspec <- spectR(tree, method="standard")
     metricsmatrix[i, 6] <- standardspec$principal_eigenvalue
     metricsmatrix[i, 7] <- standardspec$asymmetry
-    metricsmatrix[i, 8] <- standardspec$peakedness1
-    metricsmatrix[i, 9] <- standardspec$peakedness2
-    metricsmatrix[i, 10] <- standardspec$eigengap
+    metricsmatrix[i, 8] <- standardspec$peakedness
+    metricsmatrix[i, 9] <- standardspec$eigengap
     #normalised spectral (disregard eigengap)
     normalspec <- spectR(tree, method="normal") #disabled until fixed
-    metricsmatrix[i, 11] <- normalspec$principal_eigenvalue
-    metricsmatrix[i, 12] <- normalspec$asymmetry
-    metricsmatrix[i, 13] <- normalspec$peakedness1
-    metricsmatrix[i, 14] <- normalspec$peakedness2
+    metricsmatrix[i, 10] <- normalspec$principal_eigenvalue
+    metricsmatrix[i, 11] <- normalspec$asymmetry
+    metricsmatrix[i, 12] <- normalspec$peakedness
     # drop to list
     spectra <- list(standardspec=standardspec, normalspec=normalspec)
     spectrallist[[i]] <- spectra
