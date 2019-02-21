@@ -52,7 +52,7 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
       SimAge <- c(SimAge, "NA")
     } else {
       if (is.null(names(empParams[trset]))) {
-        sourceTreeName <- c(sourceTreeName, rep(paste("Emptree", trset, current_method, sep="_")), times=length(metrictrees))
+        sourceTreeName <- c(sourceTreeName, rep(paste("Emptree", trset, current_method, sep="_"), times=length(metrictrees))
       } else {
         sourceTreeName <- c(sourceTreeName, rep(names(empParams[trset]), times=length(metrictrees)))
       }
