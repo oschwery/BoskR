@@ -59,7 +59,7 @@ GetMetricTreeSets <- function(empirical_start=FALSE, current_case=NULL, empParam
     }
     metrictreeSet[[setname]] <- metrictrees
     treeindexSims <- data.frame(TreeID=sourceTreeName, SimID=simTreeName, NtaxSim=NtaxSim, SimAge=SimAge)
-    return(list(metricTreeSet=metrictreeSet, treeindexSims=treeindexSims)
+    return(list(metricTreeSet=metrictreeSet, treeindexSims=treeindexSims))
   } else if (empirical_start == FALSE) {
     param_combos <- 1  #length(Lambdas)*length(Mus)
     for (trset in 1:param_combos) {
