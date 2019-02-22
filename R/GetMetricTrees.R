@@ -159,16 +159,7 @@ print(trset)
 if (empirical_start==TRUE) {
   print(names(empParams[trset]))
 }
-print(paste("N",N, sep=": "))
-print(paste("Numbsim1", Numbsim1, sep=": "))
-print(paste("Lambda", Lambda, sep=": "))
-print(paste("Mu", Mu, sep=": "))
-print(paste("K", K, sep=": "))
-print(paste("l", l, sep=": "))
-print(paste("a", a, sep=": "))
-print(paste("MuFun", MuFun, sep=": "))
-print(paste("TreeAge", TreeAge, sep=": "))
-print(paste("BiSSEpars", BiSSEpars, sep=": "))
+
 ##############
 # pick right approach
   if (is.na(N)) {
