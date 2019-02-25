@@ -6,10 +6,10 @@
 #'
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
-#' @param current_case Indicator whether empMetrics is based of simulated initial trees, in which case the value should be "simed"; mainly important for data format reasons.
+#' @param empirical_start Indicator whether empMetrics is based on empirical or simulated initial trees, default is TRUE (=empirical); mainly important for data format reasons.
 #' @param methodnr Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD.
 #' @return A list with two entries: `ECDs` is a list of Empirical Cumulative Distributions; `pValues` is a matrix with p-values for the targeted metrics
-PvalMetrics <- function(empMetrics, simMetrics, current_case, methodnr) {
+PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) {
   # loop getting distributions for all sim trees
   dists <- list()
   targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness1_St")  # CHANGE once you have likelihood implemented!
