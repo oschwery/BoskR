@@ -5,17 +5,14 @@
 \title{Simulate trees based on empirical estimations or set parameters}
 \usage{
 GetMetricTrees(trset = trset, empirical_start = FALSE,
-  current_case = NULL, empParams = empParams, current_method,
-  N = NULL, Numbsim1, Lambda, Mu, l = NULL, a = NULL,
-  LambdaFun = NULL, MuFun = NULL, TreeAge = NULL, BiSSEpars = NULL,
-  tree = NULL)
+  empParams = empParams, current_method, N = NULL, Numbsim1, Lambda,
+  Mu, l = NULL, a = NULL, LambdaFun = NULL, MuFun = NULL,
+  TreeAge = NULL, BiSSEpars = NULL, tree = NULL)
 }
 \arguments{
 \item{trset}{Integer indicating the tree set to be evaluated}
 
 \item{empirical_start}{\code{TRUE} to use parameters estimated from empirical trees, \code{FALSE} to use user-specified ones}
-
-\item{current_case}{Integer indicating which tree set tree belongs to (used for labeling purposes).}
 
 \item{empParams}{Nested list object with tree parameters as inferred through \code{GetParams} from one or several empirical trees}
 

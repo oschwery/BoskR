@@ -4,14 +4,14 @@
 \alias{PvalMetrics}
 \title{Get p-values for tree metrics}
 \usage{
-PvalMetrics(empMetrics, simMetrics, current_case, methodnr)
+PvalMetrics(empMetrics, simMetrics, empirical_start = TRUE, methodnr)
 }
 \arguments{
 \item{empMetrics}{Metrics of empirical tree or set of trees; output of \code{GetTreeMetrics} or formatted the same way.}
 
 \item{simMetrics}{Metrics of sets of simulated trees; output of \code{GetTreeMetrics} or formatted the same way.}
 
-\item{current_case}{Indicator whether empMetrics is based of simulated initial trees, in which case the value should be "simed"; mainly important for data format reasons.}
+\item{empirical_start}{Indicator whether empMetrics is based on empirical or simulated initial trees, default is TRUE (=empirical); mainly important for data format reasons.}
 
 \item{methodnr}{Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD.}
 }
