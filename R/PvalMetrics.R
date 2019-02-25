@@ -16,7 +16,7 @@ PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) 
   Methods <- c("BD", "TimeD-BD", "DD")
   current_method <- Methods[methodnr]
   pval <- matrix(nrow=nrow(empMetrics$metrics), ncol=2*length(targetmetrics))
-  if (current_case == "simed") {
+  if (empirical_start == FALSE) {
     k <- 1
     for (j in 1:nrow(empMetrics$metrics)) {
       dist <- list()
