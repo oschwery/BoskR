@@ -12,7 +12,7 @@
 PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) {
   # loop getting distributions for all sim trees
   dists <- list()
-  targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness1_St")  # CHANGE once you have likelihood implemented!
+  targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St")  # CHANGE once you have likelihood implemented!
   Methods <- c("BD", "TimeD-BD", "DD")
   current_method <- Methods[methodnr]
   pval <- matrix(nrow=nrow(empMetrics$metrics), ncol=2*length(targetmetrics))
