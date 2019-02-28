@@ -6,7 +6,7 @@
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
 #' @return An array of plots.
 plotPvalMetrics <- function(pmetrics, set=NULL) {
-  if (set == NULL) {
+  if (is.null(set)) {
     plotcounter <- 0
     for (j in 1:length(pmetrics$ECDs)) {
       if (plotcounter %% 4 == 0) {  # open new plot window after each 4 plots
@@ -19,12 +19,12 @@ plotPvalMetrics <- function(pmetrics, set=NULL) {
         plot(1, type="n", axes=F, xlab="", ylab="")
         plotcounter <- plotcounter+1
       } else {
-        plotPvas(pmetrics, set=j, inloop=TRUE)
+        plotPvals(pmetrics, set=j, inloop=TRUE)
         plotcounter <- plotcounter+1
       }
     }
   } else {
-    plotPvas(pmetrics, set=set, inloop=FALSE)
+    plotPvals(pmetrics, set=set, inloop=FALSE)
   }
 }
 
