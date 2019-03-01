@@ -4,8 +4,9 @@
 #'
 #' @param pmetrics Object with ECDs and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
+#' @param type "PDF" (default) to plot probability density function, "CDF" to plot cumulative distribution fucntion.
 #' @return An array of plots.
-plotPvalMetrics <- function(pmetrics, set=NULL) {
+plotPvalMetrics <- function(pmetrics, set=NULL, type="PDF") {
   if (is.null(set)) {
     plotcounter <- 0
     for (j in 1:length(pmetrics$ECDs)) {
@@ -19,12 +20,12 @@ plotPvalMetrics <- function(pmetrics, set=NULL) {
         plot(1, type="n", axes=F, xlab="", ylab="")
         plotcounter <- plotcounter+1
       } else {
-        plotPvals(pmetrics, set=j, inloop=TRUE)
+        plotPvals(pmetrics, set=j, type=type, inloop=TRUE)
         plotcounter <- plotcounter+1
       }
     }
   } else {
-    plotPvals(pmetrics, set=set, inloop=FALSE)
+    plotPvals(pmetrics, set=set, type=type, inloop=FALSE)
   }
 }
 
@@ -35,9 +36,10 @@ plotPvalMetrics <- function(pmetrics, set=NULL) {
 #'
 #' @param pmetrics Object with ECDs and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
+#' @param type "PDF" (default) to plot probability density function, "CDF" to plot cumulative distribution fucntion.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
-plotPvals <- function(pmetrics, set, inloop=FALSE) {
+plotPvals <- function(pmetrics, set, type="PDF" inloop=FALSE) {
   if (inloop == FALSE) {
     par(mfrow=c(length(set), ncol(pmetrics$pValues)/2))
   }
