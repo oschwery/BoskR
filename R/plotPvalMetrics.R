@@ -1,12 +1,11 @@
-#' Plot p-values for sets of tree metrics
+#' Plot p-values on CDF for sets of tree metrics
 #'
-#' Creates plots of p-values based on sets of simulated and empirical distributions of tree metrics
+#' Creates plots of p-values on their corresponding cumulative distribution function, based on sets of simulated and empirical distributions of tree metrics,
 #'
 #' @param pmetrics Object with ECDs and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
-#' @param type "PDF" (default) to plot probability density function, "CDF" to plot cumulative distribution fucntion.
 #' @return An array of plots.
-plotPvalMetrics <- function(pmetrics, set=NULL, type="PDF") {
+plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
   if (is.null(set)) {
     plotcounter <- 0
     for (j in 1:length(pmetrics$ECDs)) {
@@ -20,12 +19,12 @@ plotPvalMetrics <- function(pmetrics, set=NULL, type="PDF") {
         plot(1, type="n", axes=F, xlab="", ylab="")
         plotcounter <- plotcounter+1
       } else {
-        plotPvals(pmetrics, set=j, type=type, inloop=TRUE)
+        plotPvals(pmetrics, set=j, inloop=TRUE)
         plotcounter <- plotcounter+1
       }
     }
   } else {
-    plotPvals(pmetrics, set=set, type=type, inloop=FALSE)
+    plotPvals(pmetrics, set=set, inloop=FALSE)
   }
 }
 
@@ -36,10 +35,9 @@ plotPvalMetrics <- function(pmetrics, set=NULL, type="PDF") {
 #'
 #' @param pmetrics Object with ECDs and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
-#' @param type "PDF" (default) to plot probability density function, "CDF" to plot cumulative distribution fucntion.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
-plotPvals <- function(pmetrics, set, type="PDF" inloop=FALSE) {
+plotPvals <- function(pmetrics, set, inloop=FALSE) {
   if (inloop == FALSE) {
     par(mfrow=c(length(set), ncol(pmetrics$pValues)/2))
   }
