@@ -42,7 +42,7 @@ plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL) {
 plotPvalsPDF <- function(empMetrics, simMetrics, set, inloop=FALSE) {
   targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St")
   if (inloop == FALSE) {
-    par(mfrow=c(length(set), length(targetmetrics))
+    par(mfrow=c(length(set), length(targetmetrics)))
   }
   for (i in 1:length(empMetrics$metrics[, 1])) {
     for (j in 1:length(targetmetrics)) {
