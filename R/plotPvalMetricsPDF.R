@@ -44,11 +44,9 @@ plotPvalsPDF <- function(empMetrics, simMetrics, set, inloop=FALSE) {
   if (inloop == FALSE) {
     par(mfrow=c(length(set), length(targetmetrics)))
   }
-  for (i in 1:length(empMetrics$metrics[, 1])) {
-    for (j in 1:length(targetmetrics)) {
-      plot(density(as.numeric(simMetrics[[i]]$metrics[, targetmetrics[j]])), xlim=c(min(c(simMetrics[[i]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[i, targetmetrics[j]])), max((c(simMetrics[[i]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[i, targetmetrics[j]])))))
-      polygon(density(as.numeric(simMetrics[[i]]$metrics[, targetmetrics[j]])), col="lightgray", border="darkgray")
-      abline(v=empMetrics[1]$metrics[i, targetmetrics[j]], col="black", lwd=1.5)
-    }
+  for (j in 1:length(targetmetrics)) {
+    plot(density(as.numeric(simMetrics[[set]]$metrics[, targetmetrics[j]])), xlim=c(min(c(simMetrics[[set]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[set, targetmetrics[j]])), max((c(simMetrics[[set]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[set, targetmetrics[j]])))))
+    polygon(density(as.numeric(simMetrics[[set]]$metrics[, targetmetrics[j]])), col="lightgray", border="darkgray")
+    abline(v=empMetrics[1]$metrics[set, targetmetrics[j]], col="black", lwd=1.5)
   }
 }
