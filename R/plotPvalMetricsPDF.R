@@ -45,7 +45,7 @@ plotPvalsPDF <- function(empMetrics, simMetrics, set, inloop=FALSE) {
     par(mfrow=c(length(set), length(targetmetrics)))
   }
   for (j in 1:length(targetmetrics)) {
-    plot(density(as.numeric(simMetrics[[set]]$metrics[, targetmetrics[j]])), xlim=c(min(c(simMetrics[[set]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[set, targetmetrics[j]])), max((c(simMetrics[[set]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[set, targetmetrics[j]])))), xlab=tergetmetrics[j], ylab="Density", main=paste("PDF Tree", set, sep=" "))
+    plot(density(as.numeric(simMetrics[[set]]$metrics[, targetmetrics[j]])), xlim=c(min(c(simMetrics[[set]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[set, targetmetrics[j]])), max((c(simMetrics[[set]]$metrics[, targetmetrics[j]], empMetrics[1]$metrics[set, targetmetrics[j]])))), xlab=targetmetrics[j], ylab="Density", main=paste("PDF Tree", set, sep=" "))
     polygon(density(as.numeric(simMetrics[[set]]$metrics[, targetmetrics[j]])), col="lightgray", border="darkgray")
     abline(v=empMetrics[1]$metrics[set, targetmetrics[j]], col="black", lwd=1.5)
   }
