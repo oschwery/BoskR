@@ -8,18 +8,18 @@
 plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
   if (is.null(set)) {
     plotcounter <- 0
-    for (j in 1:length(pmetrics$ECDs)) {
+    for (k in 1:length(pmetrics$ECDs)) {
       if (plotcounter %% 4 == 0) {  # open new plot window after each 4 plots
         quartz()
         par(mfrow=c(4, 3))
       }
-      if (is.na(pmetrics$ECDs[j])) {
+      if (is.na(pmetrics$ECDs[k])) {
         plot(1, type="n", axes=F, xlab="", ylab="")
         plot(1, type="n", axes=F, xlab="", ylab="")
         plot(1, type="n", axes=F, xlab="", ylab="")
         plotcounter <- plotcounter+1
       } else {
-        plotPvalsCDF(pmetrics, set=j, inloop=TRUE)
+        plotPvalsCDF(pmetrics, set=k, inloop=TRUE)
         plotcounter <- plotcounter+1
       }
     }

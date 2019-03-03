@@ -9,18 +9,18 @@
 plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL) {
   if (is.null(set)) {
     plotcounter <- 0
-    for (j in 1:length(empMetrics$metrics[, 1])) {
+    for (k in 1:length(empMetrics$metrics[, 1])) {
       if (plotcounter %% 4 == 0) {  # open new plot window after each 4 plots
         quartz()
         par(mfrow=c(4, 3))
       }
-      if (is.na(empMetrics$metrics[j])) {
+      if (is.na(empMetrics$metrics[k])) {
         plot(1, type="n", axes=F, xlab="", ylab="")
         plot(1, type="n", axes=F, xlab="", ylab="")
         plot(1, type="n", axes=F, xlab="", ylab="")
         plotcounter <- plotcounter+1
       } else {
-        plotPvalsPDF(empMetrics, simMetrics, set=j, inloop=TRUE)
+        plotPvalsPDF(empMetrics, simMetrics, set=k, inloop=TRUE)
         plotcounter <- plotcounter+1
       }
     }
