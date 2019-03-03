@@ -19,12 +19,12 @@ plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
         plot(1, type="n", axes=F, xlab="", ylab="")
         plotcounter <- plotcounter+1
       } else {
-        plotPvals(pmetrics, set=j, inloop=TRUE)
+        plotPvalsCDF(pmetrics, set=j, inloop=TRUE)
         plotcounter <- plotcounter+1
       }
     }
   } else {
-    plotPvals(pmetrics, set=set, inloop=FALSE)
+    plotPvalsCDF(pmetrics, set=set, inloop=FALSE)
   }
 }
 
@@ -37,7 +37,7 @@ plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
-plotPvals <- function(pmetrics, set, inloop=FALSE) {
+plotPvalsCDF <- function(pmetrics, set, inloop=FALSE) {
   if (inloop == FALSE) {
     par(mfrow=c(length(set), ncol(pmetrics$pValues)/2))
   }
