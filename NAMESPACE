@@ -1,3 +1,3 @@
-export(GetMetricTrees, GetMetricTreeSets, CombineEmpiricalTrees, GetParams, GetTreeMetrics, plotPvalMetricsCDF, plotPvalMetricsPDF, PvalMetrics, DDtreeSim, LoadEmpiricalTrees)
+export(GetMetricTreeSets, GetParams, GetTreeMetrics, plotPvalMetricsCDF, plotPvalMetricsPDF, PvalMetrics)
 
 import(ape, BAMMtools, DDD, diversitree, geiger, laser, MonoPhy, phangorn, phyloTop, RPANDA, TESS, TreePar, TreeSim, treespace)
