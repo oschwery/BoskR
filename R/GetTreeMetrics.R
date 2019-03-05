@@ -7,7 +7,43 @@
 #' @param trees Tree or set of trees, list or multiPhylo-object
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree.
-GetTreeMetrics <- function(trees, empirical_start=FALSE) {
+
+GetTreeMetrics <- function(trees, empirical_start=FALSE, source=c("emp")) {
+  outlist <- c()
+  if (source == "emp") {
+    outlist <- GetMetrics(trees, empirical_start)
+  } else if (source == "sim") {
+    for (k in 1:length(trees$metricTreeSet)) {
+      metricname <- c()
+      metrics <- c()
+      print(names(trees$metricTreeSet[k]))
+      if (is.na(trees$metricTreeSet[[k]])) {
+        metrics <- NA
+      } else {
+        metrics <- try(GetMetrics(trees$metricTreeSet[[k]], empirical_start), FALSE)
+      }
+      metricname <- paste("metrics", names(trees$metricTreeSet[k]), sep="_")
+      outlist[[metricname]] <- metrics
+    }
+  } else {
+    stop('source must be either "emp" or "sim"')
+  }
+  outlist
+}
+
+#' Internal to get metrics describing tree shape
+#'
+#' `GetMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees, within the wrapper of 'GetTreeMetrics', which allows to use it for 
+#'
+#' The function will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
+#'
+#' @param trees Tree or set of trees, list or multiPhylo-object
+#' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
+#' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree.
+#'
+#' @noRd
+
+GetMetrics <- function(trees, empirical_start=FALSE) {
   metricsmatrix <- matrix(nrow=length(trees), ncol=12)
   colnames(metricsmatrix) <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
   rownames(metricsmatrix) <- names(trees)
