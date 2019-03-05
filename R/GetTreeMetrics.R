@@ -2,11 +2,12 @@
 #'
 #' `GetTreeMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees.
 #'
-#' The function will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
+#' The function wraps around the internal 'GetMetrics', which will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
 #'
-#' @param trees Tree or set of trees, list or multiPhylo-object
+#' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
-#' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree.
+#' @param source Character string to indicate whether `trees` is the empirical or simulated input trees (i.e. most likely a tree or set of trees), in which case it should be "emp", or the sets of simulated trees based on those input trees (i.e. a list of tree sets), in which case it should be "sim".
+#' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If `source="sim"`, it will be one such two-element list for each tree set provided in a nested list.
 
 GetTreeMetrics <- function(trees, empirical_start=FALSE, source=c("emp")) {
   outlist <- c()
@@ -33,7 +34,7 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, source=c("emp")) {
 
 #' Internal to get metrics describing tree shape
 #'
-#' `GetMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees, within the wrapper of 'GetTreeMetrics', which allows to use it for 
+#' `GetMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees, within the wrapper of 'GetTreeMetrics', which allows to use it for lists of tree sets (e.g. simulated trees based on a set of trees)
 #'
 #' The function will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
 #'
