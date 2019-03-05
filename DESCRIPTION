@@ -12,3 +12,4 @@ Suggests: knitr, testthat, spacodiR, rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
+Encoding: UTF-8
