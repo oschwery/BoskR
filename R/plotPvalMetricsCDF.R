@@ -37,6 +37,9 @@ plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
+#'
+#' @noRd
+
 plotPvalsCDF <- function(pmetrics, set, inloop=FALSE) {
   if (inloop == FALSE) {
     par(mfrow=c(length(set), ncol(pmetrics$pValues)/2))

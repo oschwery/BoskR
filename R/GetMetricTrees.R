@@ -95,7 +95,7 @@ print(SimAge)
 
 #' Simulate trees based on empirical estimations or set parameters
 #'
-#' `GetMetricTrees` simulates trees under a given model based on either parameter estimates from empirical trees or pre-set parameters.
+#' Internal function used by`GetMetricTreeSets`, which simulates trees under a given model based on either parameter estimates from empirical trees or pre-set parameters.
 #'
 #' The function will simulate a number of trees based on either the parameters inferred from one or several empirical trees (given through `empParams` if `empirical_start=TRUE`), or user-specified parameters (if `empirical_start=FALSE`)
 #'
@@ -115,6 +115,8 @@ print(SimAge)
 #' @param BiSSEpars Parameters from BiSSE
 #' @param tree Phylogeny
 #' @return A list of trees of class multiPhylo
+#'
+#' @noRd
 
 GetMetricTrees <- function(trset=trset, empirical_start=FALSE, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   # use empirical trees (or not)
@@ -216,6 +218,9 @@ if (empirical_start==TRUE) {
 #' @param age Crown age for simulated tree
 #' @param ddmodel Model for dependence of diversification rates on K, see `dd_sim` description.
 #' @return A set of simulated trees
+#'
+#' @noRd
+
 DDtreeSim <- function(numbsim, lambda, mu, K, age, ddmodel) {
   outtrees <- list()
   for (rounds in 1:numbsim) {

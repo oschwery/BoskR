@@ -39,6 +39,9 @@ plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL) {
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
+#'
+#' @noRd
+
 plotPvalsPDF <- function(empMetrics, simMetrics, set, inloop=FALSE) {
   targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St")
   if (inloop == FALSE) {

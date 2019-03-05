@@ -67,6 +67,9 @@ GetParams <- function(emptrees, current_method_est) {
 #'
 #' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
 #' @return A dataframe with BD parameters.
+#'
+#' @noRd
+
 BDredux <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
   # ape
@@ -91,6 +94,9 @@ BDredux <- function(treeset) {
 #'
 #' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
 #' @return A dataframe with TimeD-BD parameters.
+#'
+#' @noRd
+
 TimeDBDredux <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "vacant", "lnLik", "AIC")))
   # laser
@@ -116,6 +122,9 @@ TimeDBDredux <- function(treeset) {
 #'
 #' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
 #' @return A dataframe with TimeD-BD parameters.
+#'
+#' @noRd
+
 DDredux <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
     # DDD1
@@ -141,6 +150,9 @@ DDredux <- function(treeset) {
 #'
 #' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
 #' @return A dataframe with TimeD-BD parameters.
+#'
+#' @noRd
+
 RateEstTraitDep <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "q01", "q10", "lnLik", "AIC")))
   # diversitree2  THERE ARE WARNINGS FOR THE CODE, possibly related to solution close to start values
