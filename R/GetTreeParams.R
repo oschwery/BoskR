@@ -11,7 +11,7 @@
 GetTreeParams <- function(trees, current_method_est) {
   outparams <- c()
   if (!is.list(trees[[1]][[1]][[1]])) {
-    outparams <- GetParams(trees$metricTreeSet[[k]], current_method_est)
+    outparams <- GetParams(trees, current_method_est)
   } else if (is.list(trees[[1]][[1]][[1]])) {
     for (k in 1:length(trees$metricTreeSet)) {
       paramname <- c()
