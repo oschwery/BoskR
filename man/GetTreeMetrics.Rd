@@ -4,17 +4,15 @@
 \alias{GetTreeMetrics}
 \title{Get metrics describing tree shape}
 \usage{
-GetTreeMetrics(trees, empirical_start = FALSE, source = c("emp"))
+GetTreeMetrics(trees, empirical_start = FALSE)
 }
 \arguments{
 \item{trees}{Tree or set of trees, list or multiPhylo-object, or list of tree sets}
 
 \item{empirical_start}{\code{TRUE} if started out from empirical trees, \code{FALSE} if started from user-specified parameters}
-
-\item{source}{Character string to indicate whether \code{trees} is the empirical or simulated input trees (i.e. most likely a tree or set of trees), in which case it should be "emp", or the sets of simulated trees based on those input trees (i.e. a list of tree sets), in which case it should be "sim".}
 }
 \value{
-A list with two elements: \code{metrics}: a matrix with the values for all tree metrics for each tree, and \code{spectra}: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If \code{source="sim"}, it will be one such two-element list for each tree set provided in a nested list.
+A list with two elements: \code{metrics}: a matrix with the values for all tree metrics for each tree, and \code{spectra}: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If applied to the simulated trees based on a tree set, it will be one such two-element list for each tree set provided in a nested list.
 }
 \description{
 \code{GetTreeMetrics} calculates a number of metrics describing tree shape for a tree or a set of trees.
