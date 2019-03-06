@@ -9,7 +9,9 @@
 
 CombineTrees <- function(trees) {
   outtrees <- list()
+  outnames <- list()
+  for (i in 1:length(trees)) {
 
-
+  }
   outtrees
 }
