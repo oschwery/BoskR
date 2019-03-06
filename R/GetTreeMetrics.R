@@ -6,14 +6,13 @@
 #'
 #' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
-#' @param source Character string to indicate whether `trees` is the empirical or simulated input trees (i.e. most likely a tree or set of trees), in which case it should be "emp", or the sets of simulated trees based on those input trees (i.e. a list of tree sets), in which case it should be "sim".
-#' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If `source="sim"`, it will be one such two-element list for each tree set provided in a nested list.
+#' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If applied to the simulated trees based on a tree set, it will be one such two-element list for each tree set provided in a nested list.
 
-GetTreeMetrics <- function(trees, empirical_start=FALSE, source=c("emp")) {
+GetTreeMetrics <- function(trees, empirical_start=FALSE) {
   outlist <- c()
-  if (source == "emp") {
+  if (!is.list(trees[[1]][[1]][[1]])) {
     outlist <- GetMetrics(trees, empirical_start)
-  } else if (source == "sim") {
+  } else if (is.list(trees[[1]][[1]][[1]])) {
     for (k in 1:length(trees$metricTreeSet)) {
       metricname <- c()
       metrics <- c()
@@ -26,8 +25,6 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, source=c("emp")) {
       metricname <- paste("metrics", names(trees$metricTreeSet[k]), sep="_")
       outlist[[metricname]] <- metrics
     }
-  } else {
-    stop('source must be either "emp" or "sim"')
   }
   outlist
 }
