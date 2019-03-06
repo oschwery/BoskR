@@ -1,3 +1,26 @@
+
+GetTreeParams <- function(trees, empirical_start=FALSE) {
+  outparams <- c()
+  if (!is.list(trees[[1]][[1]][[1]])) {
+    outparams <- GetParams(trees$metricTreeSet[[k]], current_method_est)
+  } else if (is.list(trees[[1]][[1]][[1]])) {
+    for (k in 1:length(trees$metricTreeSet)) {
+      paramname <- c()
+      paramsies <- c()
+      print(names(trees$metricTreeSet[k]))
+      if (is.na(trees$metricTreeSet[[k]])) {
+        paramsies <- NA
+      } else {
+        paramsies <- try(GetParams(trees$metricTreeSet[[k]], current_method_est), FALSE)
+      }
+      paramname <- paste("params", names(trees$metricTreeSet[k]), sep="_")
+      outparams[[paramname]] <- paramsies
+    }
+  }
+  outparams
+}
+
+
 #' Get diversification parameters from trees
 #'
 #' `GetParams` estimates parameters from a supplied tree or tree set, which can subsequently be used as input for tree simulations using `GetMetricTrees`.
@@ -7,6 +30,9 @@
 #' @param emptrees Set of (probably empirical) phylogenies, list or multiPhylo-object.
 #' @param current_method_est String specifying the method to be used to estimate the parameters. Can be `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @return A nested list of parameter estimates for every tree in `emptrees`.
+#'
+#' @noRd
+
 GetParams <- function(emptrees, current_method_est) {
   params <- c()
   for (j in 1:length(emptrees)) {
