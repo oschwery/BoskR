@@ -1,5 +1,14 @@
+#' Get diversification parameters from trees
+#'
+#' `GetTreeParams` estimates parameters from a supplied tree or tree set, which can subsequently be used as input for tree simulations using `GetMetricTrees`.
+#'
+#' The function wraps around the internal `GetParams`, and uses either
+#'
+#' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
+#' @param current_method_est String specifying the method to be used to estimate the parameters. Can be `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
+#' @return A nested list of parameter estimates for every tree in `trees`, or every tree in each tree set therein respectively.
 
-GetTreeParams <- function(trees, empirical_start=FALSE) {
+GetTreeParams <- function(trees, current_method_est) {
   outparams <- c()
   if (!is.list(trees[[1]][[1]][[1]])) {
     outparams <- GetParams(trees$metricTreeSet[[k]], current_method_est)
@@ -21,9 +30,9 @@ GetTreeParams <- function(trees, empirical_start=FALSE) {
 }
 
 
-#' Get diversification parameters from trees
+#' Internal to get diversification parameters from trees
 #'
-#' `GetParams` estimates parameters from a supplied tree or tree set, which can subsequently be used as input for tree simulations using `GetMetricTrees`.
+#' `GetParams` estimates parameters from a supplied tree or tree set, within the wrapper of 'GetTreeParams', which allows to use it for lists of tree sets (e.g. simulated trees based on a set of trees). The output can subsequently be used as input for tree simulations using `GetMetricTrees`.
 #'
 #' The function uses either
 #'
