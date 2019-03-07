@@ -9,9 +9,27 @@
 
 CombineTrees <- function(trees) {
   outtrees <- list()
-  outnames <- list()
-  for (i in 1:length(trees)) {
-
+  if (class(trees) == "phylo") {
+    temptree <- list(trees)
+    class(temptree) <- "multiPhylo"
+    outtrees <- temptree
+  } else if (class(trees) == "multiPhylo") {
+    outtrees <- trees
+  } else if (class(trees) == "list") {
+    for (i in 1:length(trees)) {
+     if (class(trees[[i]]) == "phylo") {
+       temptree <- list(trees[[i]])
+       class(temptree) <- "multiPhylo"
+       outtrees <- c(outtrees, temptree)
+       temptree <- list()
+     } else if (class(trees[[i]]) == "multiPhylo") {
+       outtrees <- c(outtrees, trees[[i]])
+     } else if (is.list(trees[[i]]) & class(trees[[i]][[1]]) == "phylo") {
+       class(trees[[i]]) <- "multiPhylo"
+       outtrees <- c(outtrees, trees[[i]])
+     }
+   }
   }
+  class(outtrees) <- "multiPhylo"
   outtrees
 }
