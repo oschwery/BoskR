@@ -9,6 +9,8 @@
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If applied to the simulated trees based on a tree set, it will be one such two-element list for each tree set provided in a nested list.
 #'
 #' @export
+#'
+#' @import ape
 
 GetTreeMetrics <- function(trees, empirical_start=FALSE) {
   outlist <- c()
@@ -42,6 +44,10 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE) {
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree.
 #'
 #' @noRd
+#'
+#' @import ape
+#' @import RPANDA
+#' @import phyloTop
 
 GetMetrics <- function(trees, empirical_start=FALSE) {
   metricsmatrix <- matrix(nrow=length(trees), ncol=12)

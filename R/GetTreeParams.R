@@ -43,6 +43,8 @@ GetTreeParams <- function(trees, current_method_est) {
 #' @return A nested list of parameter estimates for every tree in `emptrees`.
 #'
 #' @noRd
+#'
+#' @import ape
 
 GetParams <- function(emptrees, current_method_est) {
   params <- c()
@@ -106,6 +108,8 @@ GetParams <- function(emptrees, current_method_est) {
 #' @return A dataframe with BD parameters.
 #'
 #' @noRd
+#'
+#' @import ape
 
 BDredux <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
@@ -133,6 +137,10 @@ BDredux <- function(treeset) {
 #' @return A dataframe with TimeD-BD parameters.
 #'
 #' @noRd
+#'
+#' @import ape
+#' @importFrom laser getBtimes
+#' @importFrom laser fitSPVAR
 
 TimeDBDredux <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "vacant", "lnLik", "AIC")))
@@ -161,6 +169,10 @@ TimeDBDredux <- function(treeset) {
 #' @return A dataframe with TimeD-BD parameters.
 #'
 #' @noRd
+#'
+#' @import ape
+#' @importFrom laser getBtimes
+#' @importFrom DDD dd_ML
 
 DDredux <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
@@ -189,6 +201,9 @@ DDredux <- function(treeset) {
 #' @return A dataframe with TimeD-BD parameters.
 #'
 #' @noRd
+#'
+#' @import ape
+#' @import diversitree
 
 RateEstTraitDep <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "q01", "q10", "lnLik", "AIC")))

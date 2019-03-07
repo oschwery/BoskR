@@ -8,6 +8,8 @@
 #' @return Same tree set as input, but corrected if necessary.
 #'
 #' @export
+#'
+#' @import ape
 
 TreeCorr <- function(emptrees) {
   emptrees <- CorrUltramet(emptrees)
@@ -26,6 +28,9 @@ TreeCorr <- function(emptrees) {
 #' @return Same tree set as input, but corrected if necessary.
 #'
 #' @noRd
+#'
+#' @import ape
+#' @importFrom phangorn nnls.tree
 
 CorrUltramet <- function(emptrees) {
   for (i in 1:length(emptrees)) {
@@ -56,6 +61,8 @@ CorrUltramet <- function(emptrees) {
 #' @return Same tree set as input, but corrected if necessary.
 #'
 #' @noRd
+#'
+#' @import ape
 
 CorrZerobranch <- function(emptrees) {
   for (i in 1:length(emptrees)) {
@@ -85,6 +92,8 @@ CorrZerobranch <- function(emptrees) {
 #' @return Same tree set as input, but reordered.
 #'
 #' @noRd
+#'
+#' @import ape
 
 ReorderCladewise <- function(emptrees) {
   for (i in 1:length(emptrees)) {

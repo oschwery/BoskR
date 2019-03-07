@@ -8,6 +8,8 @@
 #' @return List of trees in correct format to be used by downstream functions.
 #'
 #' @export
+#'
+#' @import ape
 
 CombineTrees <- function(trees) {
   outtrees <- list()

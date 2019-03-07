@@ -21,6 +21,8 @@
 #' @return A list of trees of class multiPhylo
 #'
 #' @export
+#'
+#' @import ape
 
 GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   metrictreeSet <- list()
@@ -119,6 +121,11 @@ print(SimAge)
 #' @return A list of trees of class multiPhylo
 #'
 #' @noRd
+#'
+#' @import ape
+#' @import diversitree
+#' @importFrom TreeSim sim.bd.age
+#' @importFrom TESS tess.sim.age
 
 GetMetricTrees <- function(trset=trset, empirical_start=FALSE, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   # use empirical trees (or not)
@@ -222,6 +229,9 @@ if (empirical_start==TRUE) {
 #' @return A set of simulated trees
 #'
 #' @noRd
+#'
+#' @import ape
+#' @importFrom DDD dd_sim
 
 DDtreeSim <- function(numbsim, lambda, mu, K, age, ddmodel) {
   outtrees <- list()
