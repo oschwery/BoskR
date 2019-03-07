@@ -6,6 +6,9 @@
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
 #' @return An array of plots.
+#'
+#' @export
+
 plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL) {
   if (is.null(set)) {
     plotcounter <- 0

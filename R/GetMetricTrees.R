@@ -19,6 +19,8 @@
 #' @param BiSSEpars Parameters from BiSSE
 #' @param tree Phylogeny
 #' @return A list of trees of class multiPhylo
+#'
+#' @export
 
 GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, current_method, N=NULL, Numbsim1, Lambda, Mu, l=NULL, a=NULL, LambdaFun=NULL, MuFun=NULL, TreeAge=NULL, BiSSEpars=NULL, tree=NULL) {
   metrictreeSet <- list()

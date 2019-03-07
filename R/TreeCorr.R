@@ -6,6 +6,8 @@
 #'
 #' @param emptrees Tree or list of trees.
 #' @return Same tree set as input, but corrected if necessary.
+#'
+#' @export
 
 TreeCorr <- function(emptrees) {
   emptrees <- CorrUltramet(emptrees)

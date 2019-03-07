@@ -9,6 +9,9 @@
 #' @param empirical_start Indicator whether empMetrics is based on empirical or simulated initial trees, default is TRUE (=empirical); mainly important for data format reasons.
 #' @param methodnr Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD.
 #' @return A list with two entries: `ECDs` is a list of Empirical Cumulative Distributions; `pValues` is a matrix with p-values for the targeted metrics
+#'
+#' @export
+
 PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) {
   # loop getting distributions for all sim trees
   dists <- list()

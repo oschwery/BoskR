@@ -5,6 +5,9 @@
 #' @param pmetrics Object with ECDs and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
 #' @return An array of plots.
+#'
+#' @export
+
 plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
   if (is.null(set)) {
     plotcounter <- 0

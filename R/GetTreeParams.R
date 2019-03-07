@@ -7,6 +7,8 @@
 #' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
 #' @param current_method_est String specifying the method to be used to estimate the parameters. Can be `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @return A nested list of parameter estimates for every tree in `trees`, or every tree in each tree set therein respectively.
+#'
+#' @export
 
 GetTreeParams <- function(trees, current_method_est) {
   outparams <- c()

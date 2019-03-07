@@ -7,6 +7,8 @@
 #' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If applied to the simulated trees based on a tree set, it will be one such two-element list for each tree set provided in a nested list.
+#'
+#' @export
 
 GetTreeMetrics <- function(trees, empirical_start=FALSE) {
   outlist <- c()

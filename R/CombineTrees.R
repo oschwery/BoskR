@@ -6,6 +6,8 @@
 #'
 #' @param trees Vector of tree objects: individual trees, lists of trees, and/or objects of class multiPhylo. Also accepts the output of `GetMetricTrees` from specified parameters.
 #' @return List of trees in correct format to be used by downstream functions.
+#'
+#' @export
 
 CombineTrees <- function(trees) {
   outtrees <- list()
