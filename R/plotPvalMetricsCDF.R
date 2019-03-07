@@ -13,6 +13,9 @@ plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
     plotcounter <- 0
     for (k in 1:length(pmetrics$ECDs)) {
       if (plotcounter %% 4 == 0) {  # open new plot window after each 4 plots
+        if(.Platform$OS.type=="windows") {  # make windows usable
+          quartz<-function() windows()
+        }
         quartz()
         par(mfrow=c(4, 3))
       }
