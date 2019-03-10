@@ -19,7 +19,7 @@ ScatterMetrics <- function(empMetrics, simMetrics, pair=1, skim=FALSE, combine=F
     for (i in 1:length(simMetrics)) {
       simComb <- rbind(simComb, simMetrics[[i]]$metrics)
     }
-    ScatterMetricsCombo <-
+    ScatterMetricsCombo(empMetrics, simComb, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pttype=pttype, ptsize=ptsize, plottitle=plottitle, perspective=perspective)
   }
   if (skim == TRUE) {
     for (i in 1:nrow(empMetrics$metrics)) {
