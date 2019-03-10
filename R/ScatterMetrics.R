@@ -13,14 +13,19 @@
 #' @import scales alpha
 
 
-ScattermetricsPairs <- function() {
+ScattermetricsPairs <- ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, skim=FALSE, colours=c("black", "red"), transparencyEmp=0.8 ,transparencySim=0.2, pttype=16, ptsize=0.8, plottitle=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), perspective=-230) {
   if (skim == TRUE) {
-    for (i in 1:length(empMetrics$))
+    for (i in 1:nrow(empMetrics$metrics)) {
+      ScatterMetricsPair(empMetrics, simMetrics, pair=i, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pttype=pttype, ptsize=ptsize, plottitle=plottitle, perspective=perspective)
+      invisible(readline(prompt="Press [enter] to continue"))
+    }
+  } else {
+    ScatterMetricsPair(empMetrics, simMetrics, pair=pair, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pttype=pttype, ptsize=ptsize, plottitle=plottitle, perspective=perspective)
   }
 }
 
 
-ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, colours=c("black", "red"), transparencyEmp=0.8 ,transparencySim=0.2, pttype=16, ptsize=0.8, plottitle=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), perspective=-230) {
+ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pttype=16, ptsize=0.8, plottitle=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), perspective=-230) {
   scatterplot3d(c(empMetrics$metrics[pair, "Asymmetry_St"], simMetrics[[pair]]$metrics[, "Asymmetry_St"]), c(empMetrics$metrics[pair, "Peakedness_St"], simMetrics[[pair]]$metrics[, "Peakedness_St"]), c(empMetrics$metrics[pair, "Princ_Eigenv_St"], simMetrics[[pair]]$metrics[, "Princ_Eigenv_St"]), xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pttype, cex.symbols=ptsize, highlight.3d=FALSE, color=c(alpha(colours[1], transparencyEmp), alpha(c(rep(colours[2], times=nrow(simMetrics[[pair]]$metrics))), transparencySim)), type="p", main=plottitle, angle=perspective)
 }
 
