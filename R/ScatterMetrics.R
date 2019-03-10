@@ -20,8 +20,7 @@ ScatterMetrics <- function(empMetrics, simMetrics, pair=1, skim=FALSE, combine=F
       simComb <- rbind(simComb, simMetrics[[i]]$metrics)
     }
     ScatterMetricsCombo(empMetrics, simComb, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pttype=pttype, ptsize=ptsize, plottitle=plottitle, perspective=perspective)
-  }
-  if (skim == TRUE) {
+  } else if (skim == TRUE) {
     for (i in 1:nrow(empMetrics$metrics)) {
       ScatterMetricsPair(empMetrics, simMetrics, pair=i, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pttype=pttype, ptsize=ptsize, plottitle=plottitle, perspective=perspective)
       invisible(readline(prompt="Press [enter] to continue"))
@@ -37,7 +36,7 @@ ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, colours=c("black"
 }
 
 ScatterMetricsCombo <- function(empMetrics, simComb, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pttype=16, ptsize=0.8, plottitle="Empirical vs. Simulated Metrics Sets Combined", perspective=-230) {
-  scatterplot3d(c(empMetrics$metrics[, "Asymmetry_St"], simComb[, "Asymmetry_St"]), c(empMetrics$metrics[, "Peakedness_St"], simComb[, "Peakedness_St"]), c(empMetrics$metrics[, "Princ_Eigenv_St"], simComb[, "Princ_Eigenv_St"]), xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pttype, cex.symbols=ptsize, highlight.3d=FALSE, color=c(alpha(rep(colours[1], times=nrow(empMetrics$metrics)), transparencyEmp), alpha(c(rep(colours[2], times=nrow(simComb$metrics))), transparencySim)), type="p", main=plottitle, angle=perspective)
+  scatterplot3d(c(empMetrics$metrics[, "Asymmetry_St"], simComb[, "Asymmetry_St"]), c(empMetrics$metrics[, "Peakedness_St"], simComb[, "Peakedness_St"]), c(empMetrics$metrics[, "Princ_Eigenv_St"], simComb[, "Princ_Eigenv_St"]), xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pttype, cex.symbols=ptsize, highlight.3d=FALSE, color=c(alpha(rep(colours[1], times=nrow(empMetrics$metrics)), transparencyEmp), alpha(c(rep(colours[2], times=nrow(simComb))), transparencySim)), type="p", main=plottitle, angle=perspective)
 }
 
 
