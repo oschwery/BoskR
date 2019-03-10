@@ -13,7 +13,7 @@
 #' @import scales alpha
 
 
-ScattermetricsPairs <- ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, skim=FALSE, colours=c("black", "red"), transparencyEmp=0.8 ,transparencySim=0.2, pttype=16, ptsize=0.8, plottitle=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), perspective=-230) {
+ScatterMetricsPairs <- ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, skim=FALSE, colours=c("black", "red"), transparencyEmp=0.8 ,transparencySim=0.2, pttype=16, ptsize=1.5, plottitle=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), perspective=-230) {
   if (skim == TRUE) {
     for (i in 1:nrow(empMetrics$metrics)) {
       ScatterMetricsPair(empMetrics, simMetrics, pair=i, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pttype=pttype, ptsize=ptsize, plottitle=plottitle, perspective=perspective)
