@@ -21,7 +21,7 @@ ScattermetricsPairs <- function() {
 
 
 ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, colours=c("black", "red"), transparency=0.2, pttype=16, ptsize=0.8, plottitle=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), perspective=-230) {
-  scatterplot3d(c(empMetrics$metrics[pair, "Asymmetry_St"], simMetrics[[pair]]$metrics[, "Asymmetry_St"]), c(empMetrics$metrics[pair, "Peakedness_St"], simMetrics[[pair]]$metrics[, "Peakedness_St"]), c(empMetrics$metrics[pair, "Princ_Eigenv_St"], simMetrics[[pair]]$metrics[, "Princ_Eigenv_St"]), xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pttype, cex.symbols=ptsize, highlight.3d=FALSE, color=c(alpha(c(colours[1], rep(colours[2], times=nrow(simMetrics[[pair]]$metrics))), transparency)), type="p", main=plottitle, angle=perspective)
+  scatterplot3d(c(empMetrics$metrics[pair, "Asymmetry_St"], simMetrics[[pair]]$metrics[, "Asymmetry_St"]), c(empMetrics$metrics[pair, "Peakedness_St"], simMetrics[[pair]]$metrics[, "Peakedness_St"]), c(empMetrics$metrics[pair, "Princ_Eigenv_St"], simMetrics[[pair]]$metrics[, "Princ_Eigenv_St"]), xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pttype, cex.symbols=ptsize, highlight.3d=FALSE, color=c(colours[1], alpha(c(rep(colours[2], times=nrow(simMetrics[[pair]]$metrics))), transparency)), type="p", main=plottitle, angle=perspective)
 }
 
 
