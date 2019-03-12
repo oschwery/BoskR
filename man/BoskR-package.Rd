@@ -9,11 +9,12 @@
 \packageDescription{BoskR}
 }
 \details{
-
-The DESCRIPTION file:
-\packageDESCRIPTION{BoskR}
+\packagePackage{BoskR}
+\packageType{BoskR}
+\packageVersion{BoskR}
+\packageDate{BoskR}
+\packageLicense{BoskR}
 \packageIndices{BoskR}
-~~ An overview of how to use the package, including the most important functions ~~
 }
 \author{
 \packageAuthor{BoskR}
@@ -21,14 +22,10 @@ The DESCRIPTION file:
 Maintainer: \packageMaintainer{BoskR}
 }
 \references{
-~~ Literature or other references for background information ~~
+In prep.
 }
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
 \keyword{ package }
 \seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
-\examples{
-~~ simple examples of the most important functions ~~
+\code{\link{CombineTrees}}, \code{\link{GetMetricTreeSets}}, \code{\link{GetTreeMetrics}}, \code{\link{GetTreeParams}}, \code{\link{PvalMetrics}}, \code{\link{ScatterMetrics}}, \code{\link{TreeCorr}}, \code{\link{plotPvalMetricsCDF}}, \code{\link{plotPvalMetricsPDF}},
+\code{\link[RPANDA:RPANDA-package]{RPANDA}}
 }
