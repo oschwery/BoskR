@@ -9,20 +9,20 @@
 \packageDescription{BoskR}
 }
 \details{
-\packagePackage{BoskR}
+\packagePackage{BoskR},
 
-\packageType{BoskR}
+\packageType{BoskR},
 
-\packageVersion{BoskR}
+\packageVersion{BoskR},
 
-\packageDate{BoskR}
+\packageDate{BoskR},
 
-\packageLicense{BoskR}
+\packageLicense{BoskR},
 
 \packageIndices{BoskR}
 }
 \author{
-\packageAuthors@R{BoskR}
+\packageAuthor{BoskR}
 }
 \references{
 In prep.
