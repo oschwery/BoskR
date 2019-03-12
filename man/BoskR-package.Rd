@@ -9,17 +9,20 @@
 \packageDescription{BoskR}
 }
 \details{
-\tabular{ll}{
 \packagePackage{BoskR}
+
 \packageType{BoskR}
+
 \packageVersion{BoskR}
+
 \packageDate{BoskR}
+
 \packageLicense{BoskR}
-}
+
 \packageIndices{BoskR}
 }
 \author{
-\packageAuthors{BoskR}
+\packageAuthors@R{BoskR}
 }
 \references{
 In prep.
