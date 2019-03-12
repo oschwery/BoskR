@@ -3,9 +3,9 @@ Type: Package
 Title: Assess Adequacy of Diversification Models Using Tree Shapes
 Version: 1.0
 Date: 2018-06-29
-Authors@R: person("Orlando", "Schwery",
+Authors@R: c(person("Orlando", "Schwery",
   email = "oschwery@vols.utk.edu",
-  role = c("aut", "cre"), comment = c(ORCID = "https://orcid.org/0000-0001-7373-7407"))
+  role = c("aut", "cre"), comment = c(ORCID = "https://orcid.org/0000-0001-7373-7407")))
 Description: Given a phylogeny (or several) and a diversification model (or several), the package makes use of graph Laplacians (as implemented in RPANDA) to infer tree shape metrics. The overlap of those metrics will be compared to the metrics from a set of trees simulated under the model in question and based on the same parameters as the initial tree. If the metrics indicate that the shapes of the simulated trees significantly differ from the initial one, the model should be deemed not adequate for this tree.
 License: GPL-3
 Depends: R (>= 3.5.1), ape

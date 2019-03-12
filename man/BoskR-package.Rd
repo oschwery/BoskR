@@ -22,7 +22,7 @@
 \packageIndices{BoskR}
 }
 \author{
-\packageAuthor{BoskR}
+\packageAuthors@R{BoskR}
 }
 \references{
 In prep.
