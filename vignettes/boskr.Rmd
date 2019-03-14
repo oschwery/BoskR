@@ -1,10 +1,10 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "BoskR Tutorial"
+author: "[Orlando Schwery](https://oschwery.github.io/)"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{BoskR Tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,27 +16,71 @@ knitr::opts_chunk$set(
 )
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+## 1 Introduction ##
+This is a tutorial vignette to provide a quick and easy introduction to the use of BoskR. It will make use of the inbuilt example files and lead through the most important functions of the package.
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+The purpose of the package BoskR is, to test whether a given diversification model is adequate to analyse an empirical phylogeny with. We can use different models to analyse diversification on a phylogeny, and pick the one that's best supported ( _e.g._ by likelihood or AIC), but that doesn't tell us anything about whether that model is an appropriate one to use in the first place, _i.e._ whether the model is capable of describing the patterns we're analysing at all.
 
-## Vignette Info
+The way BoskR is trying to judge adequacy is by tree shape. The logic behind this is, that if a model cannot produce trees of a shape similar to an empirical tree, it is also not suited to analyse that tree. The package makes use of tree metrics measured from the spectral density of a trees modified graph Laplacian, as calculated in the package RPANDA. Details on this can be found in the corresponding publications and manuals [add links to those here].
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+## 2 Installation ##
+### 2.1 CRAN ###
+In order to install the stable CRAN version of the package:
+
+```{r, eval=FALSE}
+install.packages("BoskR")
+```
+### 2.2 Development Version from GitHub ###
+If - for any reason - you would want to install the development version from GitHub, I suggest doing so by installing it temporarily with the help of the package `devtools`:
+```{r, eval=FALSE}
+# 1. Install package 'devtools' (if not already installed):
+install.packages("devtools")
+
+# 2. Load 'devtools' and temporarily install and load 'BoskR' in developers mode:
+library(devtools)
+dev_mode(on=T)
+install_github("oschwery/BoskR")  # install the package from GitHub
+library(BoskR)  # load the package
+
+#3. Leave developers mode after done trying out 'BoskR':
+dev_mode(on=F)
+# the package will not stay on your system permanently like that, which make sense in case of the
+# development version, as opposed to the stable version
+```
+
+## 3 Use ##
+
+When we load the package, all its functions and the other required packages are imported.
+``` {r, results="hide", warning=FALSE, message=FALSE}
+library(BoskR)
+```
+
+### 3.1 Load Data ###
+#### 3.1.1 Example Files ####
+
+
+
+##4 Final Notes##
+
+
+
+
+
+
+
+
 
 ## Styles
 
 The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
 
-    output: 
+    output:
       rmarkdown::html_vignette:
         css: mystyles.css
 
 ## Figures
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+The figure sizes have been customised so that you can easily put two images side-by-side.
 
 ```{r, fig.show='hold'}
 plot(1:10)
