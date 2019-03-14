@@ -21,31 +21,30 @@ This is a tutorial vignette to provide a quick and easy introduction to the use 
 
 The purpose of the package BoskR is, to test whether a given diversification model is adequate to analyse an empirical phylogeny with. We can use different models to analyse diversification on a phylogeny, and pick the one that's best supported ( _e.g._ by likelihood or AIC), but that doesn't tell us anything about whether that model is an appropriate one to use in the first place, _i.e._ whether the model is capable of describing the patterns we're analysing at all.
 
-The way BoskR is trying to judge adequacy is by tree shape. The logic behind this is, that if a model cannot produce trees of a shape similar to an empirical tree, it is also not suited to analyse that tree. The package makes use of tree metrics measured from the spectral density of a trees modified graph Laplacian, as calculated in the package RPANDA. Details on this can be found in the corresponding publications and manuals [add links to those here].
+The way BoskR is trying to judge adequacy is by tree shape. The logic behind this is, that if a model cannot produce trees of a shape similar to an empirical tree, it is also not suited to analyse that tree. The package makes use of tree metrics measured from the spectral density of a trees modified graph Laplacian, as calculated in the package `RPANDA`. Details on this can be found in the corresponding publications and manuals [add links to those here].
 
 ## 2 Installation ##
 ### 2.1 CRAN ###
-In order to install the stable CRAN version of the package:
+In order to install the stable CRAN version of the package [this is obviously not possible yet]:
 
 ```{r, eval=FALSE}
 install.packages("BoskR")
 ```
 ### 2.2 Development Version from GitHub ###
-If - for any reason - you would want to install the development version from GitHub, I suggest doing so by installing it temporarily with the help of the package `devtools`:
+If you want to install the development version from GitHub, you can do so using the package `devtools`:
 ```{r, eval=FALSE}
 # 1. Install package 'devtools' (if not already installed):
 install.packages("devtools")
 
-# 2. Load 'devtools' and temporarily install and load 'BoskR' in developers mode:
+# 2. Load 'devtools' and permanently or temporarily install and load 'BoskR':
 library(devtools)
-dev_mode(on=T)
+
+dev_mode(on=T)  # if you run this line, you launch developer mode, in which case the package will only be installed temporarily.
+
 install_github("oschwery/BoskR")  # install the package from GitHub
 library(BoskR)  # load the package
 
-#3. Leave developers mode after done trying out 'BoskR':
-dev_mode(on=F)
-# the package will not stay on your system permanently like that, which make sense in case of the
-# development version, as opposed to the stable version
+dev_mode(on=F)  # If you used it, leave developers mode after done trying out 'BoskR'
 ```
 
 ## 3 Use ##
