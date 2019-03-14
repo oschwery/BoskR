@@ -1,1 +1,7 @@
 inst/doc
+.DS_Store
+R/.DS_Store
+R/.Rhistory
+man/.DS_Store
+man/.Rapp.history
+man/.Rhistory
