@@ -48,14 +48,57 @@ dev_mode(on=F)  # If you used it, leave developers mode after done trying out 'B
 ```
 
 ## 3 Use ##
-
 When we load the package, all its functions and the other required packages are imported.
 ``` {r, results="hide", warning=FALSE, message=FALSE}
 library(BoskR)
 ```
 
-### 3.1 Load Data ###
+### 3.1 Load and Prepare Data ###
 #### 3.1.1 Example Files ####
+
+data(emptesttrees)
+
+CombineTrees(whales)
+
+
+# test and correct
+emptesttrees <- TreeCorr(emptesttrees)
+
+### 3.2 Estimate Parameters and Get Shape Metrics ###
+
+# estimate parameters from empirical trees
+emptestparams <- GetTreeParams(emptesttrees, curmeth)
+# get tree shape metrics from empirical trees
+emptestmetrics <- GetTreeMetrics(emptesttrees, empirical_start=TRUE)
+
+### 3.3 Simulate Trees Under Model ###
+
+# simulate trees based on empirical parameters
+emptestsims <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparams, current_method=curmeth, Numbsim1=sims)
+
+### 3.4 Get Metrics (and Parameters) of Simulated Trees ###
+
+# estimate parameters and tree shape metrics from simulated trees
+simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE)
+simtestparams <- GetTreeParams(emptestsims, curmeth)
+
+### 3.5 Get Metrics (and Parameters) of Simulated Trees ###
+
+# get p-values for each metrics for all trees
+pvalues <- PvalMetrics(emptestmetrics, simtestmetrics)
+
+### 3.6 Plot Results ###
+
+# plot pvalues on CDF and PDF
+plotPvalMetricsCDF(pvalues, set=NULL)
+plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=NULL)
+
+# plot 3D scatterplot of single pair of emp and sim tree metrics
+ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, colours=c("black", "red"))
+# plot 3D scatterplot of all pairs of emp and sim metrics, forwarding on prompt
+ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=TRUE, colours=c("black", "red"))
+# plot 3D scatterplot of ALL emp and sim Metrics combined
+ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, combine=TRUE, colours=c("black", "red"))
 
 
 
