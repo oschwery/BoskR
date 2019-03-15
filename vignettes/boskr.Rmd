@@ -97,7 +97,7 @@ simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE)
 To compare how our simulations compare to the input tree, we can use the distribution of tree metrics to calculate a p-value for the empirical trees metrics:
 ```{r}
 pvalues <- PvalMetrics(emptestmetrics, simtestmetrics)
-pvalues
+pvalues$pValues  # Display table of p-Values
 ```
 
 ### 3.6 Plot Results ###
