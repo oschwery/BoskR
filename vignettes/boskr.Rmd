@@ -95,20 +95,21 @@ simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE)
 
 ### 3.5 Compare Empirical and Simulated Tree Shapes ###
 To compare how our simulations compare to the input tree, we can use the distribution of tree metrics to calculate a p-value for the empirical trees metrics:
-```{r, results="hide"}
+```{r}
 pvalues <- PvalMetrics(emptestmetrics, simtestmetrics)
+pvalues
 ```
 
 ### 3.6 Plot Results ###
 For illustration and to get a better idea of what our results look like, we can plot them in a number of different ways.
-```{r, fig.width=7, fig.height=3}
+```{r, fig.width=7, fig.height=2}
 plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
 ```
 ```{r, fig.width=5, fig.height=5}
 ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, colours=c("black", "red"))
 ```
 
-##4 Final Notes##
+## 4 Final Notes ##
 
 
 
