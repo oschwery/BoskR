@@ -75,52 +75,36 @@ emptesttrees <- TreeCorr(emptesttrees)
 ```
 
 ### 3.2 Estimate Parameters and Get Shape Metrics ###
-
-# estimate parameters from empirical trees
+With our tree ready, we can move on to the main part of the procedure. We first estimate the diversification parameters from our empirical tree under our model of choice (we'll pick `"BD"` for a constant rate birth-death model for now), and measure the trees shape metrics:
 ```{r, results="hide"}
-emptestparams <- GetTreeParams(emptesttrees, curmeth)
-```
-# get tree shape metrics from empirical trees
-```{r, results="hide"}
-emptestmetrics <- GetTreeMetrics(emptesttrees, empirical_start=TRUE)
+emptestparams <- GetTreeParams(emptesttrees, "BD")  # estimate parameters from empirical tree
+emptestmetrics <- GetTreeMetrics(emptesttrees, empirical_start=TRUE) # get tree shape metrics from empirical trees
 ```
 
 ### 3.3 Simulate Trees Under Model ###
-
-# simulate trees based on empirical parameters
+Using the parameters we estimated in the previous step, we now simulate some trees (let's say 100) under the same model, so we can see what kinds of trees that model produces:
 ```{r, results="hide"}
-emptestsims <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparams, current_method=curmeth, Numbsim1=sims)
+emptestsims <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparams, current_method="BD", Numbsim1=100)
 ```
 
 ### 3.4 Get Metrics (and Parameters) of Simulated Trees ###
-
-# estimate parameters and tree shape metrics from simulated trees
+Now we get the tree metrics for our freshly simulated trees (we could alsouse `GetTreeParams` again to also estimate their parameters, but we'll save that for another day):
 ```{r, results="hide"}
 simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE)
-simtestparams <- GetTreeParams(emptestsims, curmeth)
 ```
-### 3.5 Get Metrics (and Parameters) of Simulated Trees ###
 
-# get p-values for each metrics for all trees
+### 3.5 Compare Empirical and Simulated Tree Shapes ###
+To compare how our simulations compare to the input tree, we can use the distribution of tree metrics to calculate a p-value for the empirical trees metrics:
 ```{r, results="hide"}
 pvalues <- PvalMetrics(emptestmetrics, simtestmetrics)
 ```
+
 ### 3.6 Plot Results ###
-
-# plot pvalues on CDF and PDF
-```{r, results="hide"}
-plotPvalMetricsCDF(pvalues, set=NULL)
+For illustration and to get a better idea of what our results look like, we can plot them in a number of different ways.
+```{r, fig.show='hold'}
 plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=NULL)
-```
-# plot 3D scatterplot of single pair of emp and sim tree metrics
-```{r, results="hide"}
 ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, colours=c("black", "red"))
-# plot 3D scatterplot of all pairs of emp and sim metrics, forwarding on prompt
-ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=TRUE, colours=c("black", "red"))
-# plot 3D scatterplot of ALL emp and sim Metrics combined
-ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, combine=TRUE, colours=c("black", "red"))
 ```
-
 
 ##4 Final Notes##
 
