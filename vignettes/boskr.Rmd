@@ -128,8 +128,6 @@ emptestsimsD <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparamsD
 simtestmetricsD <- GetTreeMetrics(emptestsimsD, empirical_start=TRUE)
 pvaluesD <- PvalMetrics(emptestmetrics, simtestmetricsD)
 ```
-
-
 ```{r, fig.width=7, fig.height=2}
 plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
 plotPvalMetricsPDF(emptestmetrics, simtestmetricsT, set=1)
@@ -141,13 +139,13 @@ ScatterMetrics(emptestmetrics, simtestmetricsT, pair=1, skim=FALSE, combine=FALS
 ScatterMetrics(emptestmetrics, simtestmetricsD, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "green"))
 ```
 
+We can see that...
 
 ### 4.2 Simulated Input ###
-If one wants to study the behaviour of a model in general, `GetMetricTreeSets()` can also just take parameter values as input, as opposed to an empirical phylogeny. These
+If one wants to study the behaviour of a model in general, `GetMetricTreeSets()` can also just take parameter values as input, as opposed to an empirical phylogeny.
 
 ### 4.3 Caveats and Outlook ###
-
-- look at trees
+In order to make sure the results aren't spurious, and in order to generally make sense of them, I would strongly encourage to actually plot a couple of the simulated trees, in order to compare them to the input tree and see how any differences in tree metrics manifest.
 
 Currently, only three models are implemented (constant rate birth-death, time-dependent birth-death, and diversity dependent), while this theoretically works with any model for which we can both estimate rates and simulate trees. I intend to add more models to the package in the near future, and welcome suggestions as to which to add.
 
