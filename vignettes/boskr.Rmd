@@ -69,13 +69,13 @@ emptesttrees <- CombineTrees(emptesttrees)
 ```
 
 #### 3.1.3 Test and Correct Tree Issues ####
-The analyses require fully resolved, ultrametric trees, and we can test our tree set for that and automatically correct it. If the a tree is not ultrametric due to rounding errors, and if we are fine to randomly resolve polytomies, we can let `TreeCorr()` do that for us, plus reordering all trees to `cladewise`.
+The analyses require fully resolved, ultrametric trees, and we can test our tree set for that and automatically correct it. If the a tree is not ultrametric due to rounding errors, and if we are fine to randomly resolve polytomies, we can let `TreeCorr()` do that (plus reordering all trees to `cladewise`) for us.
 ```{r}
 emptesttrees <- TreeCorr(emptesttrees)
 ```
 
 ### 3.2 Estimate Parameters and Get Shape Metrics ###
-With our tree ready, we can move on to the main part of the procedure. We first estimate the diversification parameters from our empirical tree under our model of choice (we'll pick `"BD"` for a constant rate birth-death model for now), and measure the trees shape metrics:
+With our tree ready, we can move on to the main part of the procedure. We first estimate the diversification parameters from our empirical tree under our model of choice (we'll pick `"BD"` for a constant rate birth-death model for now), and measure the tree's shape metrics:
 ```{r, results="hide"}
 emptestparams <- GetTreeParams(emptesttrees, "BD")  # estimate parameters from empirical tree
 emptestmetrics <- GetTreeMetrics(emptesttrees, empirical_start=TRUE) # get tree shape metrics from empirical trees
@@ -86,21 +86,17 @@ Using the parameters we estimated in the previous step, we now simulate some tre
 ```{r, results="hide", warning=FALSE, message=FALSE}
 emptestsims <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparams, current_method="BD", Numbsim1=100)
 ```
-
-### 3.4 Get Metrics (and Parameters) of Simulated Trees ###
-Now we get the tree metrics for our freshly simulated trees (we could alsouse `GetTreeParams()` again to also estimate their parameters, but we'll save that for another day):
+Now we get the tree metrics for our freshly simulated trees (we could also use `GetTreeParams()` again to also estimate their parameters, but we'll save that for another day):
 ```{r, results="hide", warning=FALSE, message=FALSE}
 simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE)
 ```
 
-### 3.5 Compare Empirical and Simulated Tree Shapes ###
+### 3.4 Compare Empirical and Simulated Tree Shapes ###
 To compare how our simulations compare to the input tree, we can use the distribution of tree metrics to calculate a p-value for the empirical trees metrics:
 ```{r}
 pvalues <- PvalMetrics(emptestmetrics, simtestmetrics)
 pvalues$pValues  # Display table of p-Values
 ```
-
-### 3.6 Plot Results ###
 For illustration and to get a better idea of what our results look like, we can plot them in a number of different ways.
 ```{r, fig.width=7, fig.height=2}
 plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
