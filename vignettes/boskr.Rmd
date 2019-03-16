@@ -53,8 +53,9 @@ When we load the package, all its functions and the other required packages are 
 ```{r, results="hide", warning=FALSE, message=FALSE}
 library(BoskR)
 ```
+
 ```{r, echo=FALSE}
-set.seed{1337}
+set.seed(1337)
 ```
 
 ### 3.1 Load and Prepare Data ###
@@ -142,7 +143,7 @@ ScatterMetrics(emptestmetrics, simtestmetricsD, pair=1, skim=FALSE, combine=FALS
 
 
 ### 4.2 Simulated Input ###
-If one wants to study the behaviour of a model in general, `GetMetricTreeSets()` can also just take parameter values as input, as opposed to an empirical phylogeny.
+If one wants to study the behaviour of a model in general, `GetMetricTreeSets()` can also just take parameter values as input, as opposed to an empirical phylogeny. These
 
 ### 4.3 Caveats and Outlook ###
 
