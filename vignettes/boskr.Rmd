@@ -53,6 +53,9 @@ When we load the package, all its functions and the other required packages are 
 ```{r, results="hide", warning=FALSE, message=FALSE}
 library(BoskR)
 ```
+```{r, echo=FALSE}
+set.seed{1337}
+```
 
 ### 3.1 Load and Prepare Data ###
 #### 3.1.1 Example Files ####
