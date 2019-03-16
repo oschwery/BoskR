@@ -19,9 +19,9 @@ knitr::opts_chunk$set(
 ## 1 Introduction ##
 This is a tutorial vignette to provide a quick and easy introduction to the use of BoskR. It will make use of the inbuilt example files and lead through the most important functions of the package.
 
-The purpose of the package BoskR is, to test whether a given diversification model is adequate to analyse an empirical phylogeny with. We can use different models to analyse diversification on a phylogeny, and pick the one that's best supported ( _e.g._ by likelihood or AIC), but that doesn't tell us anything about whether that model is an appropriate one to use in the first place, _i.e._ whether the model is capable of describing the patterns we're analysing at all.
+The purpose of BoskR is, to test whether a given diversification model is adequate to analyse an empirical phylogeny with. We can use different models to analyse diversification on a phylogeny, and pick the one that's best supported ( _e.g._ by likelihood or AIC), but that doesn't tell us anything about whether that model is an appropriate one to use in the first place, _i.e._ whether the model is capable of describing the patterns we are attempting to analyse at all.
 
-The way BoskR is trying to judge adequacy is by tree shape. The logic behind this is, that if a model cannot produce trees of a shape similar to an empirical tree, it is also not suited to analyse that tree. The package makes use of tree metrics measured from the spectral density of a trees modified graph Laplacian, as calculated in the package `RPANDA`. Details on this can be found in the corresponding publications and manuals [add links to those here].
+The way BoskR is trying to judge adequacy is by tree shape. The logic behind this is, that if a model cannot produce trees of a shape similar to an empirical tree, it is also not suited to analyse that tree. The package makes use of tree metrics measured from the spectral density of a tree's modified graph Laplacian, as obtained through the package RPANDA. Details on this can be found in the corresponding publication^[Eric Lewitus, Helene Morlon; Characterizing and Comparing Phylogenies from their Laplacian Spectrum, Systematic Biology, Volume 65, Issue 3, 1 May 2016, Pages 495–507, [https://doi.org/10.1093/sysbio/syv116](https://doi.org/10.1093/sysbio/syv116)] and package documentations^[[Package RPANDA on CRAN](https://CRAN.R-project.org/package=RPANDA)].
 
 ## 2 Installation ##
 ### 2.1 CRAN ###
@@ -32,7 +32,7 @@ install.packages("BoskR")
 ```
 
 ### 2.2 Development Version from GitHub ###
-If you want to install the development version from GitHub, you can do so using the package `devtools`:
+If you want to install the development version from GitHub, you can do so using the package devtools:
 ```{r, eval=FALSE}
 # 1. Install package 'devtools' (if not already installed):
 install.packages("devtools")
@@ -56,20 +56,20 @@ library(BoskR)
 
 ### 3.1 Load and Prepare Data ###
 #### 3.1.1 Example Files ####
-The package comes with a set of six empirical example trees to use, which can be loaded using `data` (for the sake of this demonstration, we want to only use the whales tree, so we extract that one).
+The package comes with a set of six empirical example trees to use, which can be loaded using `data()` (for the sake of this demonstration, we want to only use the whales tree, so we extract that one).
 ```{r, results="hide"}
 data(emptesttrees)  # load example treeset
 emptesttrees <- emptesttrees$Emp_1  # replace it by first tree only
 ```
 
 #### 3.1.2 Data Format and Own Data ####
-The downstream functions expect the input trees to be in a certain format (object of class `multiPhylo`/list of trees). We can use `CombineTrees` to combine any of our own input trees, and the function takes anything from single trees, lists of trees and multiPhylo objects. Here we can use it to make sure our single whale tree is in the right format as well.
+The downstream functions expect the input trees to be in a certain format (object of class `multiPhylo`/list of trees). We can use `CombineTrees()` to combine any of our own input trees, and the function takes anything from single trees, lists of trees and `multiPhylo` objects. Here we can use it to make sure our single whale tree is in the right format as well.
 ```{r, results="hide"}
 emptesttrees <- CombineTrees(emptesttrees)
 ```
 
 #### 3.1.3 Test and Correct Tree Issues ####
-The analyses require fully resolved, ultrametric trees, and we can test our tree set for that and automatically correct it. If the a tree is not ultrametric due to rounding errors, and if we are fine to randomly resolve polytomies, we can let `TreeCorr` do that for us, plus reordering all trees to `cladewise`.
+The analyses require fully resolved, ultrametric trees, and we can test our tree set for that and automatically correct it. If the a tree is not ultrametric due to rounding errors, and if we are fine to randomly resolve polytomies, we can let `TreeCorr()` do that for us, plus reordering all trees to `cladewise`.
 ```{r}
 emptesttrees <- TreeCorr(emptesttrees)
 ```
@@ -88,7 +88,7 @@ emptestsims <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparams, 
 ```
 
 ### 3.4 Get Metrics (and Parameters) of Simulated Trees ###
-Now we get the tree metrics for our freshly simulated trees (we could alsouse `GetTreeParams` again to also estimate their parameters, but we'll save that for another day):
+Now we get the tree metrics for our freshly simulated trees (we could alsouse `GetTreeParams()` again to also estimate their parameters, but we'll save that for another day):
 ```{r, results="hide", warning=FALSE, message=FALSE}
 simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE)
 ```
