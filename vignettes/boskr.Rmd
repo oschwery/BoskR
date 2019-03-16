@@ -131,7 +131,7 @@ plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
 plotPvalMetricsPDF(emptestmetrics, simtestmetricsT, set=1)
 plotPvalMetricsPDF(emptestmetrics, simtestmetricsD, set=1)
 ```
-```{r, fig.width=2.5, fig.height=2.5, fig.show='hold'}
+```{r, fig.width=5, fig.height=5, fig.show='hold'}
 ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "red"))
 ScatterMetrics(emptestmetrics, simtestmetricsT, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "blue"))
 ScatterMetrics(emptestmetrics, simtestmetricsD, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "green"))
@@ -142,6 +142,9 @@ ScatterMetrics(emptestmetrics, simtestmetricsD, pair=1, skim=FALSE, combine=FALS
 If one wants to study the behaviour of a model in general, `GetMetricTreeSets()` can also just take parameter values as input, as opposed to an empirical phylogeny.
 
 ### 4.3 Caveats and Outlook ###
+
 - look at trees
-- not enough models
+
+Currently, only three models are implemented (constant rate birth-death, time-dependent birth-death, and diversity dependent), while this theoretically works with any model for which we can both estimate rates and simulate trees. I intend to add more models to the package in the near future, and welcome suggestions as to which to add.
+
 - assumptions and settings and all
