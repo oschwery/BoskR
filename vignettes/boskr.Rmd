@@ -110,6 +110,36 @@ We could also have used `plotPvalMetricsCDF()` to look at the cumulative distrib
 ### 4.1 Interpretation ###
 Following the general idea, if our empirical tree is significantly different from the simulations in one or more of the metrics, or is outside the could of simulated trees in metric space, we should question the adequacy of the employed model (but see caveats below).
 
+We can compare the performance of several models:
+```{r, results="hide", warning=FALSE, message=FALSE}
+# TimeD-BD - Time dependent birth death
+emptestparamsT <- GetTreeParams(emptesttrees, "TimeD-BD")
+emptestsimsT <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparamsT, current_method="TimeD-BD", Numbsim1=100)
+simtestmetricsT <- GetTreeMetrics(emptestsimsT, empirical_start=TRUE)
+pvaluesT <- PvalMetrics(emptestmetrics, simtestmetricsT)
+# DD - diversity dependent
+emptestparamsD <- GetTreeParams(emptesttrees, "DD")
+emptestsimsD <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparamsD, current_method="DD", Numbsim1=100)
+simtestmetricsD <- GetTreeMetrics(emptestsimsD, empirical_start=TRUE)
+pvaluesD <- PvalMetrics(emptestmetrics, simtestmetricsD)
+```
+
+
+```{r, fig.width=7, fig.height=2}
+plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
+plotPvalMetricsPDF(emptestmetrics, simtestmetricsT, set=1)
+plotPvalMetricsPDF(emptestmetrics, simtestmetricsD, set=1)
+```
+```{r, fig.width=5, fig.height=5}
+ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, combine=FALSE colours=c("black", "red"))
+ScatterMetrics(emptestmetrics, simtestmetricsT, pair=1, skim=FALSE, combine=FALSE colours=c("black", "blue"))
+ScatterMetrics(emptestmetrics, simtestmetricsD, pair=1, skim=FALSE, combine=FALSE colours=c("black", "green"))
+```
+
+
 ### 4.2 Simulated Input ###
 
 ### 4.3 Caveats and Outlook ###
+- look at trees
+- not enough models
+- assumptions and settings and all
