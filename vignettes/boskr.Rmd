@@ -25,14 +25,14 @@ The way BoskR is trying to judge adequacy is by tree shape. The logic behind thi
 
 ## 2 Installation ##
 ### 2.1 CRAN ###
-In order to install the stable CRAN version of the package [this is obviously not possible yet]:
+To just use the stable out of the box version of BoskR, install the stable CRAN version of the package:
 
 ```{r, eval=FALSE}
 install.packages("BoskR")
 ```
 
 ### 2.2 Development Version from GitHub ###
-If you want to install the development version from GitHub, you can do so using the package devtools:
+If you want to install the development version from [GitHub](https://github.com/oschwery/BoskR), you can do so using the package devtools:
 ```{r, eval=FALSE}
 # 1. Install package 'devtools' (if not already installed):
 install.packages("devtools")
