@@ -104,6 +104,7 @@ plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
 ```{r, fig.width=5, fig.height=5}
 ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "red"))
 ```
+
 We could also have used `plotPvalMetricsCDF()` to look at the cumulative distribution functions of each metric instead of the probability density function. If we had looked at several trees, we could have used `skim=TRUE` to click through scatterplots of each tree separately, or `combine=TRUE` to get a plot with all empirical and simulated metrics combined.
 
 ## 4 Final Notes ##
@@ -126,11 +127,11 @@ pvaluesD <- PvalMetrics(emptestmetrics, simtestmetricsD)
 
 
 ```{r, fig.width=7, fig.height=2}
-plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
-plotPvalMetricsPDF(emptestmetrics, simtestmetricsT, set=1)
-plotPvalMetricsPDF(emptestmetrics, simtestmetricsD, set=1)
+plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1, colours="red")
+plotPvalMetricsPDF(emptestmetrics, simtestmetricsT, set=1, colours="blue")
+plotPvalMetricsPDF(emptestmetrics, simtestmetricsD, set=1, colours="green")
 ```
-```{r, fig.width=5, fig.height=5}
+```{r, fig.width=2.5, fig.height=2.5, fig.show='hold'}
 ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "red"))
 ScatterMetrics(emptestmetrics, simtestmetricsT, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "blue"))
 ScatterMetrics(emptestmetrics, simtestmetricsD, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "green"))
@@ -138,6 +139,7 @@ ScatterMetrics(emptestmetrics, simtestmetricsD, pair=1, skim=FALSE, combine=FALS
 
 
 ### 4.2 Simulated Input ###
+If one wants to study the behaviour of a model in general, `GetMetricTreeSets()` can also just take parameter values as input, as opposed to an empirical phylogeny.
 
 ### 4.3 Caveats and Outlook ###
 - look at trees
