@@ -147,6 +147,6 @@ If one wants to study the behaviour of a model in general, `GetMetricTreeSets()`
 ### 4.3 Caveats and Outlook ###
 In order to make sure the results aren't spurious, and in order to generally make sense of them, I would strongly encourage to actually plot a couple of the simulated trees, in order to compare them to the input tree and see how any differences in tree metrics manifest.
 
-Currently, only three models are implemented (constant rate birth-death, time-dependent birth-death, and diversity dependent), while this theoretically works with any model for which we can both estimate rates and simulate trees. I intend to add more models to the package in the near future, and welcome suggestions as to which to add.
+It is also worth paying attention to which settings 
 
-- assumptions and settings and all
+Currently, only three models are implemented (constant rate birth-death, time-dependent birth-death, and diversity dependent), while this theoretically works with any model for which we can both estimate rates and simulate trees. I intend to add more models to the package in the near future, and welcome suggestions as to which to add.
