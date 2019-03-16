@@ -127,9 +127,9 @@ pvaluesD <- PvalMetrics(emptestmetrics, simtestmetricsD)
 
 
 ```{r, fig.width=7, fig.height=2}
-plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1, colours="red")
-plotPvalMetricsPDF(emptestmetrics, simtestmetricsT, set=1, colours="blue")
-plotPvalMetricsPDF(emptestmetrics, simtestmetricsD, set=1, colours="green")
+plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
+plotPvalMetricsPDF(emptestmetrics, simtestmetricsT, set=1)
+plotPvalMetricsPDF(emptestmetrics, simtestmetricsD, set=1)
 ```
 ```{r, fig.width=2.5, fig.height=2.5, fig.show='hold'}
 ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, combine=FALSE, colours=c("black", "red"))
