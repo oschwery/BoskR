@@ -82,7 +82,7 @@ emptestmetrics <- GetTreeMetrics(emptesttrees, empirical_start=TRUE) # get tree 
 ```
 
 ### 3.3 Simulate Trees Under Model ###
-Using the parameters we estimated in the previous step, we now simulate some trees (let's say 100) under the same model, so we can see what kinds of trees that model produces:
+Using the parameters we estimated in the previous step, we now simulate some trees (let's say `100`) under the same model, so we can see what kinds of trees that model produces:
 ```{r, results="hide", warning=FALSE, message=FALSE}
 emptestsims <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparams, current_method="BD", Numbsim1=100)
 ```
@@ -102,8 +102,9 @@ For illustration and to get a better idea of what our results look like, we can 
 plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
 ```
 ```{r, fig.width=5, fig.height=5}
-ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, colours=c("black", "red"))
+ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, combine=FALSE colours=c("black", "red"))
 ```
+We could also have used `plotPvalMetricsCDF()` to look at the cumulative distribution functions of each metric instead of the probability density function. If we had looked at several trees, we could have used `skim=TRUE` to click through scatterplots of each tree separately, or `combine=TRUE` to get a plot with all empirical and simulated metrics combined.
 
 ## 4 Final Notes ##
 
