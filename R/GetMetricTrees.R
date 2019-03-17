@@ -166,9 +166,11 @@ GetMetricTrees <- function(trset=trset, empirical_start=FALSE, empParams=empPara
     BiSSEpars <- c(median(as.numeric(empirical_solution$lambda0), na.rm=TRUE), median(as.numeric(empirical_solution$lambda1), na.rm=TRUE), median(as.numeric(empirical_solution$mu0), na.rm=TRUE), median(as.numeric(empirical_solution$mu1), na.rm=TRUE), median(as.numeric(empirical_solution$q01), na.rm=TRUE), median(as.numeric(empirical_solution$q10), na.rm=TRUE))
   }
 # display used metrics
-print(trset)
+print(paste("Tree Set", trset, sep=" "))
 if (empirical_start==TRUE) {
-  print(names(empParams[trset]))
+  if (!is.na(names(empParams[trset]))) {
+    print(names(empParams[trset]))
+  }
 }
 
 ##############
