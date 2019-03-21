@@ -56,11 +56,7 @@ GetMetrics <- function(trees, empirical_start=FALSE) {
   spectrallist <- list()
   for (i in 1:length(trees)) {
     tree <- c()
-    if (empirical_start == TRUE) {
-      tree <- trees[[i]]
-    } else if (empirical_start == FALSE) {
-      tree <- trees[[i]]
-    }
+    tree <- trees[[i]]
     #Colless
     metricsmatrix[i, 1] <- colless.phylo(tree, normalise = TRUE)
     #Sackin
