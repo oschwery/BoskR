@@ -168,7 +168,7 @@ GetMetricTrees <- function(trset=trset, empirical_start=FALSE, empParams=empPara
 # display used metrics
 print(paste("Tree Set", trset, sep=" "))
 if (empirical_start==TRUE) {
-  if (!is.na(names(empParams[trset]))) {
+  if (!is.null(names(empParams[trset]))) {
     print(names(empParams[trset]))
   }
 }
