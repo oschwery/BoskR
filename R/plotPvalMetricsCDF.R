@@ -52,7 +52,8 @@ plotPvalsCDF <- function(pmetrics, set, inloop=FALSE) {
   }
   for (i in 1:(ncol(pmetrics$pValues)/2)) {
     plot(pmetrics$ECDs[[set]][[i]], xlab= colnames(pmetrics$pValues)[i], main=paste("CDF Tree", set, sep=" "))
-    abline(v=pmetrics$pValues[set, i])
+    abline(v=(pmetrics$pValues[set, i])/2)
+    abline(v=1-((pmetrics$pValues[set, i])/2))
     abline(h=pmetrics$pValues[set, i+(ncol(pmetrics$pValues)/2)])
   }
 }
