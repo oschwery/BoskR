@@ -22,14 +22,14 @@ PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) 
   if (empirical_start == FALSE) {
     k <- 1
     for (j in 1:nrow(empMetrics$metrics)) {
-      dist <- list()
+      dist <- list()  # primer for ECD's
       if (paste("metrics", rownames(empMetrics$metrics)[j], current_method, sep="_") == names(simMetrics[k])) {
         for (i in 1:length(targetmetrics)) {
-          deP <- c()
-          dist[[i]] <- ecdf(simMetrics[[k]]$metrics[, targetmetrics[i]])
-          pval[j, i] <- empMetrics[1]$metrics[j, targetmetrics[i]]
-          deP <- dist[[i]](c(empMetrics[1]$metrics[j, targetmetrics[i]]))
-          pval[j, i+length(targetmetrics)] <- (min(c(deP, 1-deP)))/2
+          deP <- c()  # primer for actual p-Value
+          dist[[i]] <- ecdf(simMetrics[[k]]$metrics[, targetmetrics[i]])  # create ecd function for a metric
+          pval[j, i] <- empMetrics[1]$metrics[j, targetmetrics[i]]  # add empirical value to be evaluated into output matrix
+          deP <- dist[[i]](c(empMetrics[1]$metrics[j, targetmetrics[i]]))  # evaluate ecdf for this value
+          pval[j, i+length(targetmetrics)] <- (min(c(deP, 1-deP)))*2  # take smaller value (i.e. low or high end) and multiply by two for two-tailedness
         }
         names(dist) <- targetmetrics
         dists[[j]] <- dist
@@ -47,7 +47,7 @@ PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) 
         dist[[i]] <- ecdf(simMetrics[[j]]$metrics[, targetmetrics[i]])  # create ecd function for a metric
         pval[j, i] <- empMetrics[1]$metrics[j, targetmetrics[i]]  # add empirical value to be evaluated into output matrix
         deP <- dist[[i]](c(empMetrics[1]$metrics[j, targetmetrics[i]]))  # evaluate ecdf for this value
-        pval[j, i+length(targetmetrics)] <- (min(c(deP, 1-deP)))/2  # take smaller value (i.e. low or high end) and divide by two for two-tailedness
+        pval[j, i+length(targetmetrics)] <- (min(c(deP, 1-deP)))*2  # take smaller value (i.e. low or high end) and multiply by two for two-tailedness
       }
       names(dist) <- targetmetrics
       dists[[j]] <- dist
