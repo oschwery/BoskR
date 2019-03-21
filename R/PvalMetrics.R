@@ -14,7 +14,7 @@
 
 PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) {
   # loop getting distributions for all sim trees
-  dists <- list()
+  dists <- list()  # primer for ECDs
   targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St")  # CHANGE once you have likelihood implemented!
   Methods <- c("BD", "TimeD-BD", "DD")
   current_method <- Methods[methodnr]
@@ -41,13 +41,13 @@ PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) 
     }
   } else {
     for (j in 1:nrow(empMetrics$metrics)) {
-      dist <- list()
+      dist <- list()  # primer for ECD's
       for (i in 1:length(targetmetrics)) {
-        deP <- c()
-        dist[[i]] <- ecdf(simMetrics[[j]]$metrics[, targetmetrics[i]])
-        pval[j, i] <- empMetrics[1]$metrics[j, targetmetrics[i]]
-        deP <- dist[[i]](c(empMetrics[1]$metrics[j, targetmetrics[i]]))
-        pval[j, i+length(targetmetrics)] <- (min(c(deP, 1-deP)))/2
+        deP <- c()  # primer for actual p-Value
+        dist[[i]] <- ecdf(simMetrics[[j]]$metrics[, targetmetrics[i]])  # create ecd function for a metric
+        pval[j, i] <- empMetrics[1]$metrics[j, targetmetrics[i]]  # add empirical value to be evaluated into output matrix
+        deP <- dist[[i]](c(empMetrics[1]$metrics[j, targetmetrics[i]]))  # evaluate ecdf for this value
+        pval[j, i+length(targetmetrics)] <- (min(c(deP, 1-deP)))/2  # take smaller value (i.e. low or high end) and divide by two for two-tailedness
       }
       names(dist) <- targetmetrics
       dists[[j]] <- dist
