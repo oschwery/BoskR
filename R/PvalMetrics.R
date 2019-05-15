@@ -53,9 +53,9 @@ PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr) 
           deP <- dist[[i]](c(empMetrics[1]$metrics[j, targetmetrics[i]]))  # evaluate ecdf for this value
           pval[j, i+length(targetmetrics)] <- (min(c(deP, 1-deP)))*2  # take smaller value (i.e. low or high end) and multiply by two for two-tailedness
         }
+        names(dist) <- targetmetrics
+        dists[[j]] <- dist
       }
-      names(dist) <- targetmetrics
-      dists[[j]] <- dist
     }
   }
   colnames(pval)  <- c(targetmetrics, paste("p-Value ", targetmetrics, sep=""))
