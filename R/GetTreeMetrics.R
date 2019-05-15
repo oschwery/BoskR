@@ -15,7 +15,7 @@
 GetTreeMetrics <- function(trees, empirical_start=FALSE) {
   outlist <- c()
   if (!is.list(trees[[1]][[1]][[1]])) {
-    outlist <- GetMetrics(trees, empirical_start)
+    outlist <- try(GetMetrics(trees, empirical_start), FALSE)
   } else if (is.list(trees[[1]][[1]][[1]])) {
     for (k in 1:length(trees$metricTreeSet)) {
       metricname <- c()
