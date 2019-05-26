@@ -54,7 +54,7 @@ GetParams <- function(emptrees, current_method_est) {
     # rate estimations empirical tree
     if (current_method_est == "BD") {
       empirical_solution <- try(BDredux(tree), FALSE)
-    } else if (current_method_est == "TimeD-BD") {
+    } else if (strsplit(x=current_method_est, split="_")[[1]][1] == "Time") {
       empirical_solution <- try(TimeDepBD(tree, current_method_est), FALSE)
     } else if (current_method_est == "DD") {
       empirical_solution <- try(DDredux(tree), FALSE)
