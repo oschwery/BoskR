@@ -55,7 +55,7 @@ GetParams <- function(emptrees, current_method_est) {
     if (current_method_est == "BD") {
       empirical_solution <- try(BDredux(tree), FALSE)
     } else if (current_method_est == "TimeD-BD") {
-      empirical_solution <- try(TimeDBDredux(tree), FALSE)
+      empirical_solution <- try(TimeDepBD(tree, current_method_est), FALSE)
     } else if (current_method_est == "DD") {
       empirical_solution <- try(DDredux(tree), FALSE)
     } else if (current_method_est == "CD") {
@@ -131,7 +131,7 @@ BDredux <- function(treeset) {
 #'
 #' Internal function used by `GetParams` to estimate TimeD-BD parameters from a supplied tree or tree set.
 #'
-#' The function uses `fitSPVAR` from the package `laser`.
+#' The function uses `fit_bd` from the package `RPANDA`.
 #'
 #' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
 #' @return A dataframe with TimeD-BD parameters.
@@ -139,20 +139,64 @@ BDredux <- function(treeset) {
 #' @noRd
 #'
 #' @import ape
-#' @importFrom laser getBtimes
-#' @importFrom laser fitSPVAR
+#' @importFrom picante node.age
+#' @importFrom RPANDA fit_bd
 
-TimeDBDredux <- function(treeset) {
+TimeDepBD <- function(treeset, current_method_est) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "vacant", "lnLik", "AIC")))
-  # laser
-  laser_result <- list()
+  # RPANDA
+  RPANDA_result <- list()
   for (i in 1:length(treeset)) {
-    branching_times <- getBtimes(string=write.tree(treeset[[i]]))
-    laser_result[[i]] <- list(fitSPVAR(branching_times, init=c(5, 0.1, 0.01)))
+    tot_time <- max(node.age(treeset[[i]])$ages)  # get max time for crown age
+    # set Lambda formula and settings
+    if (strsplit(x=current_method_est, split="_")[[1]][2] == "const") {
+      f.lamb <- function(t,y){y[1]}
+      lamb_par<-c(0.09)
+      cst.lamb <- TRUE
+      expo.lamb <- FALSE
+    } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin") {
+      f.lamb <- function(t,y){y[1] + y[2] * t}
+      lamb_par<-c(0.09, 0.001)
+      cst.lamb <- FALSE
+      expo.lamb <- FALSE
+    } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp") {
+      f.lamb <- function(t,y){y[1] * exp(y[2] * t)}
+      lamb_par <- c(0.05, 0.01)
+      cst.lamb <- FALSE
+      expo.lamb <- TRUE
+    }
+    # set mu formula and settings
+    if (strsplit(x=current_method_est, split="_")[[1]][3] == "PB") {
+      f.mu <- function(t,y){0}
+      mu_par<-c()
+      fix.mu <- TRUE
+      cst.mu <- FALSE
+      expo.mu <- FALSE
+    } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+      f.mu <- function(t,y){y[1]}
+      mu_par <- c(0.005)
+      fix.mu <- FALSE
+      cst.mu <- TRUE
+      expo.mu <- FALSE
+    } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+      f.mu <- function(t,y){y[1] + y[2] * t}
+      mu_par <- c(0.005, 0.0001)
+      fix.mu <- FALSE
+      cst.mu <- FALSE
+      expo.mu <- FALSE
+    } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
+      f.mu <- function(t,y){y[1] * exp(y[2] * t)}
+      mu_par <- c(0.005, 0.0001)
+      fix.mu <- FALSE
+      cst.mu <- FALSE
+      expo.mu <- TRUE
+    }
+    # run the model
+    RPANDA_result[[i]] <- list(fit_bd(treeset[[i]], tot_time, f.lamb, f.mu, lamb_par, mu_par, f=1, meth = "Nelder-Mead", cst.lamb, cst.mu, expo.lamb, expo.mu, fix.mu, dt=1e-3, cond="crown"))
   }
   # fill result into matrix
   for (i in 1:length(treeset)) {
-    outmatrix[(i+(0*length(treeset))),] <- c("time-dep bd", paste(deparse(substitute(treeset)),i, sep=" "), "laser_fitSPVAR", laser_result[[i]][[1]]$lam0,  laser_result[[i]][[1]]$mu0, NA, NA, (laser_result[[i]][[1]]$k), NA, laser_result[[i]][[1]]$LH, laser_result[[i]][[1]]$aic)
+    outmatrix[(i+(0*length(treeset))),] <- c("time-dep bd", paste(deparse(substitute(treeset)),i, sep=" "), "laser_fitSPVAR", RPANDA_result[[i]][[1]]$lam0,  RPANDA_result[[i]][[1]]$mu0, NA, NA, (RPANDA_result[[i]][[1]]$k), NA, RPANDA_result[[i]][[1]]$LH, RPANDA_result[[i]][[1]]$aic)
   }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)
