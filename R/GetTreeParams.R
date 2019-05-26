@@ -193,15 +193,16 @@ TimeDepBD <- function(treeset, current_method_est) {
     }
     # run the model
     RPANDA_result[[i]] <- list(fit_bd(treeset[[i]], tot_time, f.lamb, f.mu, lamb_par, mu_par, f=1, meth = "Nelder-Mead", cst.lamb, cst.mu, expo.lamb, expo.mu, fix.mu, dt=1e-3, cond="crown"))
+    RPANDA_result[[i]]$model <- current_method_est
   }
   # fill result into matrix
   for (i in 1:length(treeset)) {
-    outmatrix[(i+(0*length(treeset))),] <- c("time-dep bd", paste(deparse(substitute(treeset)),i, sep=" "), "laser_fitSPVAR", RPANDA_result[[i]][[1]]$lam0,  RPANDA_result[[i]][[1]]$mu0, NA, NA, (RPANDA_result[[i]][[1]]$k), NA, RPANDA_result[[i]][[1]]$LH, RPANDA_result[[i]][[1]]$aic)
+    outmatrix[(i+(0*length(treeset))),] <- c(RPANDA_result[[i]]$model, paste(deparse(substitute(treeset)),i, sep=" "), paste("RPANDA fit_bd", "lambda", strsplit(x=current_method_est, split="_")[[1]][2], "mu", strsplit(x=current_method_est, split="_")[[1]][3] sep=" "), RPANDA_result[[i]]$lambda_par[1],  RPANDA_result[[i]]$mu_par[1], NA, NA, (RPANDA_result[[i]][[1]]$k), NA, RPANDA_result[[i]]$LH, RPANDA_result[[i]]$aicc)
   }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)
 }
-
+("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "vacant", "lnLik", "AIC")))
 
 #' Get DD diversification parameters from trees
 #'
