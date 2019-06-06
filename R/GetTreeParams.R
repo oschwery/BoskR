@@ -92,24 +92,24 @@ GetParams <- function(emptrees, current_method_est) {
       # assign lambda function based on method
       LambdaFun <- c()
       if (strsplit(x=current_method_est, split="_")[[1]][2] == "const") {
-        LambdaFun <- function(t,y){y[1]}
+        LambdaFun <- function(t){Lambda}
       } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin") {
-        LambdaFun <- function(t,y){y[1] + y[2] * t}
+        LambdaFun <- function(t){Lambda + a] * t}
       } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp") {
-        LambdaFun <- function(t,y){y[1] * exp(y[2] * t)}
+        LambdaFun <- function(t){Lambda * exp(a * t)}
       } else {
         LambdaFun <- function(t) l * exp(a*t)
       }
       # assign mu function based on method
       MuFun <- c()
       if (strsplit(x=current_method_est, split="_")[[1]][3] == "PB") {
-        MuFun <- function(t,y){0}
+        MuFun <- function(t){0}
       } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
-        MuFun <- function(t,y){y[1]}
+        MuFun <- function(t){Mu}
       } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
-        MuFun <- function(t,y){y[1] + y[2] * t}
+        MuFun <- function(t){Mu + a2 * t}
       } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
-        MuFun <- function(t,y){y[1] * exp(y[2] * t)}
+        MuFun <- function(t){Mu * exp(a2 * t)}
       } else {
         MuFun <- as.numeric(empirical_solution[1,]$mu0)
       }
