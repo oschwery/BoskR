@@ -180,7 +180,7 @@ if (empirical_start==TRUE) {
   } else if (!is.na(N)) {
     if (current_method == "BD") {
       trees <- try(sim.bd.age(age=TreeAge, numbsim=Numbsim1, lambda=Lambda, mu=Mu, frac=1, mrca=TRUE, complete=FALSE, K=0), FALSE)
-    } else if (current_method == "TimeD-BD") {
+    } else  if (strsplit(x=current_method, split="_")[[1]][1] == "Time") {
       trees <- try(tess.sim.age(n=Numbsim1, age=TreeAge, lambda=LambdaFun, mu=MuFun, massExtinctionTimes = c(), massExtinctionSurvivalProbabilities = c(), samplingProbability = 1, samplingStrategy = "uniform", maxTaxa = Inf, MRCA = TRUE), FALSE)
     } else if (current_method == "DD") {
       if (empirical_start == TRUE) {
