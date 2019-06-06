@@ -143,7 +143,7 @@ BDredux <- function(treeset) {
 #' @importFrom RPANDA fit_bd
 
 TimeDepBD <- function(treeset, current_method_est) {
-  outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "vacant", "lnLik", "AIC")))
+  outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "2nd a, k, etc", "lnLik", "AIC")))
   # RPANDA
   RPANDA_result <- list()
   for (i in 1:length(treeset)) {
@@ -197,12 +197,11 @@ TimeDepBD <- function(treeset, current_method_est) {
   }
   # fill result into matrix
   for (i in 1:length(treeset)) {
-    outmatrix[(i+(0*length(treeset))),] <- c(RPANDA_result[[i]]$model, paste(deparse(substitute(treeset)),i, sep=" "), paste("RPANDA fit_bd", "lambda", strsplit(x=current_method_est, split="_")[[1]][2], "mu", strsplit(x=current_method_est, split="_")[[1]][3] sep=" "), RPANDA_result[[i]]$lambda_par[1],  RPANDA_result[[i]]$mu_par[1], NA, NA, (RPANDA_result[[i]][[1]]$k), NA, RPANDA_result[[i]]$LH, RPANDA_result[[i]]$aicc)
+    outmatrix[(i+(0*length(treeset))),] <- c(RPANDA_result[[i]]$model, paste(deparse(substitute(treeset)),i, sep=" "), paste("RPANDA fit_bd", "lambda", strsplit(x=current_method_est, split="_")[[1]][2], "mu", strsplit(x=current_method_est, split="_")[[1]][3] sep=" "), RPANDA_result[[i]]$lambda_par[1],  RPANDA_result[[i]]$mu_par[1], NA, NA, RPANDA_result[[i]]$lambda_par[2], RPANDA_result[[i]]$mu_par[2], RPANDA_result[[i]]$LH, RPANDA_result[[i]]$aicc)
   }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)
 }
-("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "vacant", "lnLik", "AIC")))
 
 #' Get DD diversification parameters from trees
 #'
