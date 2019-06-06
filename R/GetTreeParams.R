@@ -2,10 +2,12 @@
 #'
 #' `GetTreeParams` estimates parameters from a supplied tree or tree set, which can subsequently be used as input for tree simulations using `GetMetricTrees`.
 #'
-#' The function wraps around the internal `GetParams`, and uses either
+#' @details The function wraps around the internal `GetParams`, and uses either [...]
+#'
+#' The parameter `current_method_est` can be `"BD", "Time_lambda_mu", "DD", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model, mu can be set to "PB". Example: a time dependent model with exponential speciation rate and constant extinction rate would be specified by "Time_exp_const".
 #'
 #' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
-#' @param current_method_est String specifying the method to be used to estimate the parameters. Can be `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
+#' @param current_method_est String specifying the method to be used to estimate the parameters. For possible values see details section.
 #' @return A nested list of parameter estimates for every tree in `trees`, or every tree in each tree set therein respectively.
 #'
 #' @export
