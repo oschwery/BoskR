@@ -93,7 +93,7 @@ GetParams <- function(emptrees, current_method_est) {
       MuFun <- as.numeric(empirical_solution[1,]$mu0)
       TreeAge <- max(branching.times(tree[[1]]))
       BiSSEpars <- c(median(as.numeric(empirical_solution$lambda0), na.rm=TRUE), median(as.numeric(empirical_solution$lambda1), na.rm=TRUE), median(as.numeric(empirical_solution$mu0), na.rm=TRUE), median(as.numeric(empirical_solution$mu1), na.rm=TRUE), median(as.numeric(empirical_solution$q01), na.rm=TRUE), median(as.numeric(empirical_solution$q10), na.rm=TRUE))
-      lik <- as.numeric(empirical_solution[1,]$lik)
+      lik <- as.numeric(empirical_solution[1,]$lnLik)
       AIC <- as.numeric(empirical_solution[1,]$AIC)
       params[[j]] <- list(N=N, Lambda=Lambda, Mu=Mu, K=K, l=l, a=a, a2=a2, LambdaFun=LambdaFun, MuFun=MuFun, TreeAge=TreeAge, BiSSEpars=BiSSEpars, lik=lik, AIC=AIC)
     }
