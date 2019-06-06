@@ -149,6 +149,10 @@ TimeDepBD <- function(treeset, current_method_est) {
   for (i in 1:length(treeset)) {
     tot_time <- max(node.age(treeset[[i]])$ages)  # get max time for crown age
     # set Lambda formula and settings
+    f.lamb <- c()
+    lamb_par<-c()
+    cst.lamb <- c()
+    expo.lamb <- c()
     if (strsplit(x=current_method_est, split="_")[[1]][2] == "const") {
       f.lamb <- function(t,y){y[1]}
       lamb_par<-c(0.09)
@@ -166,6 +170,11 @@ TimeDepBD <- function(treeset, current_method_est) {
       expo.lamb <- TRUE
     }
     # set mu formula and settings
+    f.mu <- c()
+    mu_par<-c()
+    fix.mu <- c()
+    cst.mu <- c()
+    expo.mu <- c()
     if (strsplit(x=current_method_est, split="_")[[1]][3] == "PB") {
       f.mu <- function(t,y){0}
       mu_par<-c()
@@ -194,6 +203,9 @@ TimeDepBD <- function(treeset, current_method_est) {
     # run the model
     RPANDA_result[[i]] <- list(fit_bd(treeset[[i]], tot_time, f.lamb, f.mu, lamb_par, mu_par, f=1, meth = "Nelder-Mead", cst.lamb, cst.mu, expo.lamb, expo.mu, fix.mu, dt=1e-3, cond="crown"))
     RPANDA_result[[i]]$model <- current_method_est
+    if (is.null(RPANDA_result[[i]]$mu_par)) {
+      RPANDA_result[[i]]$mu_par <- NA
+    }
   }
   # fill result into matrix
   for (i in 1:length(treeset)) {
