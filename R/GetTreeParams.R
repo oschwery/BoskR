@@ -89,8 +89,31 @@ GetParams <- function(emptrees, current_method_est) {
       l <- as.numeric(empirical_solution[1,]$lambda0)
       a <- as.numeric(empirical_solution[1,]$"a, k, etc")
       a2 <- as.numeric(empirical_solution[1,]$"2nd a, k, etc")
-      LambdaFun <- function(t) l * exp(a*t)
-      MuFun <- as.numeric(empirical_solution[1,]$mu0)
+      # assign lambda function based on method
+      LambdaFun <- c()
+      if (strsplit(x=current_method_est, split="_")[[1]][2] == "const") {
+        LambdaFun <- function(t,y){y[1]}
+      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin") {
+        LambdaFun <- function(t,y){y[1] + y[2] * t}
+      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp") {
+        LambdaFun <- function(t,y){y[1] * exp(y[2] * t)}
+      } else {
+        LambdaFun <- function(t) l * exp(a*t)
+      }
+      # assign mu function based on method
+      MuFun <- c()
+      if (strsplit(x=current_method_est, split="_")[[1]][3] == "PB") {
+        MuFun <- function(t,y){0}
+      } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+        MuFun <- function(t,y){y[1]}
+      } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+        MuFun <- function(t,y){y[1] + y[2] * t}
+      } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
+        MuFun <- function(t,y){y[1] * exp(y[2] * t)}
+      } else {
+        MuFun <- as.numeric(empirical_solution[1,]$mu0)
+      }
+
       TreeAge <- max(branching.times(tree[[1]]))
       BiSSEpars <- c(median(as.numeric(empirical_solution$lambda0), na.rm=TRUE), median(as.numeric(empirical_solution$lambda1), na.rm=TRUE), median(as.numeric(empirical_solution$mu0), na.rm=TRUE), median(as.numeric(empirical_solution$mu1), na.rm=TRUE), median(as.numeric(empirical_solution$q01), na.rm=TRUE), median(as.numeric(empirical_solution$q10), na.rm=TRUE))
       lik <- as.numeric(empirical_solution[1,]$lnLik)
