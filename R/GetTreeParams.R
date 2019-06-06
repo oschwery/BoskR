@@ -205,7 +205,7 @@ TimeDepBD <- function(treeset, current_method_est) {
       expo.mu <- TRUE
     }
     # run the model
-    RPANDA_result[[i]] <- list(fit_bd(treeset[[i]], tot_time, f.lamb, f.mu, lamb_par, mu_par, f=1, meth = "Nelder-Mead", cst.lamb, cst.mu, expo.lamb, expo.mu, fix.mu, dt=1e-3, cond="crown"))
+    RPANDA_result[[i]] <- fit_bd(treeset[[i]], tot_time, f.lamb, f.mu, lamb_par, mu_par, f=1, meth = "Nelder-Mead", cst.lamb, cst.mu, expo.lamb, expo.mu, fix.mu, dt=1e-3, cond="crown")
     RPANDA_result[[i]]$model <- current_method_est
     if (is.null(RPANDA_result[[i]]$mu_par)) {
       RPANDA_result[[i]]$mu_par <- NA
