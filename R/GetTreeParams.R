@@ -94,7 +94,7 @@ GetParams <- function(emptrees, current_method_est) {
       if (strsplit(x=current_method_est, split="_")[[1]][2] == "const") {
         LambdaFun <- function(t){Lambda}
       } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin") {
-        LambdaFun <- function(t){Lambda + a] * t}
+        LambdaFun <- function(t){Lambda + a * t}
       } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp") {
         LambdaFun <- function(t){Lambda * exp(a * t)}
       } else {
