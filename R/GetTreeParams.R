@@ -73,13 +73,14 @@ GetParams <- function(emptrees, current_method_est) {
       K <- NA
       l <- NA
       a <- NA
+      a2 <- NA
       LambdaFun <- NA
       MuFun <- NA
       TreeAge <- NA
       BiSSEpars <- c(NA, NA, NA, NA, NA, NA)
       lik <- NA
       AIC <- NA
-      params[[j]] <- list(N=N, Lambda=Lambda, Mu=Mu, K=K, l=l, a=a, LambdaFun=LambdaFun, MuFun=MuFun, TreeAge=TreeAge, BiSSEpars=BiSSEpars, lik=lik, AIC=AIC)
+      params[[j]] <- list(N=N, Lambda=Lambda, Mu=Mu, K=K, l=l, a=a, a2=a2, LambdaFun=LambdaFun, MuFun=MuFun, TreeAge=TreeAge, BiSSEpars=BiSSEpars, lik=lik, AIC=AIC)
     } else {
       N <- length(tree[[1]]$tip.label)
       Lambda <- median(as.numeric(empirical_solution$lambda0), na.rm=TRUE)
@@ -87,13 +88,14 @@ GetParams <- function(emptrees, current_method_est) {
       K <- as.numeric(empirical_solution[1,]$lambda1)
       l <- as.numeric(empirical_solution[1,]$lambda0)
       a <- as.numeric(empirical_solution[1,]$"a, k, etc")
+      a2 <- as.numeric(empirical_solution[1,]$"2nd a, k, etc")
       LambdaFun <- function(t) l * exp(a*t)
       MuFun <- as.numeric(empirical_solution[1,]$mu0)
       TreeAge <- max(branching.times(tree[[1]]))
       BiSSEpars <- c(median(as.numeric(empirical_solution$lambda0), na.rm=TRUE), median(as.numeric(empirical_solution$lambda1), na.rm=TRUE), median(as.numeric(empirical_solution$mu0), na.rm=TRUE), median(as.numeric(empirical_solution$mu1), na.rm=TRUE), median(as.numeric(empirical_solution$q01), na.rm=TRUE), median(as.numeric(empirical_solution$q10), na.rm=TRUE))
       lik <- as.numeric(empirical_solution[1,]$lik)
       AIC <- as.numeric(empirical_solution[1,]$AIC)
-      params[[j]] <- list(N=N, Lambda=Lambda, Mu=Mu, K=K, l=l, a=a, LambdaFun=LambdaFun, MuFun=MuFun, TreeAge=TreeAge, BiSSEpars=BiSSEpars, lik=lik, AIC=AIC)
+      params[[j]] <- list(N=N, Lambda=Lambda, Mu=Mu, K=K, l=l, a=a, a2=a2, LambdaFun=LambdaFun, MuFun=MuFun, TreeAge=TreeAge, BiSSEpars=BiSSEpars, lik=lik, AIC=AIC)
     }
   }
   params
