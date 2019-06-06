@@ -9,7 +9,7 @@ GetTreeParams(trees, current_method_est)
 \arguments{
 \item{trees}{Tree or set of trees, list or multiPhylo-object, or list of tree sets}
 
-\item{current_method_est}{String specifying the method to be used to estimate the parameters. Can be \code{"BD", "TimeD-BD", "DD", "CD", "TraitD"} for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.}
+\item{current_method_est}{String specifying the method to be used to estimate the parameters. For possible values see details section.}
 }
 \value{
 A nested list of parameter estimates for every tree in \code{trees}, or every tree in each tree set therein respectively.
@@ -18,5 +18,7 @@ A nested list of parameter estimates for every tree in \code{trees}, or every tr
 \code{GetTreeParams} estimates parameters from a supplied tree or tree set, which can subsequently be used as input for tree simulations using \code{GetMetricTrees}.
 }
 \details{
-The function wraps around the internal \code{GetParams}, and uses either
+The function wraps around the internal \code{GetParams}, and uses either \link{...}
+
+The parameter \code{current_method_est} can be `"BD", "Time_lambda_mu", "DD", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model, mu can be set to "PB". Example: a time dependent model with exponential speciation rate and constant extinction rate would be specified by "Time_exp_const".
 }
