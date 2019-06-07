@@ -59,7 +59,7 @@ GetParams <- function(emptrees, current_method_est) {
     } else if (strsplit(x=current_method_est, split="_")[[1]][1] == "Time") {
       empirical_solution <- try(TimeDepBD(tree, current_method_est), FALSE)
     } else if (strsplit(x=current_method_est, split="_")[[1]][1] == "DD") {
-      empirical_solution <- try(DDredux(tree), FALSE)
+      empirical_solution <- try(DDredux(tree, current_method_est), FALSE)
     } else if (current_method_est == "CD") {
       empirical_solution <- try(Newfunction(tree), FALSE)  # WRITE THOSE
     } else if (current_method_est == "TraitD") {
