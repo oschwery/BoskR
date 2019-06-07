@@ -58,7 +58,7 @@ GetParams <- function(emptrees, current_method_est) {
       empirical_solution <- try(BDredux(tree), FALSE)
     } else if (strsplit(x=current_method_est, split="_")[[1]][1] == "Time") {
       empirical_solution <- try(TimeDepBD(tree, current_method_est), FALSE)
-    } else if (current_method_est == "DD") {
+    } else if (strsplit(x=current_method_est, split="_")[[1]][1] == "DD") {
       empirical_solution <- try(DDredux(tree), FALSE)
     } else if (current_method_est == "CD") {
       empirical_solution <- try(Newfunction(tree), FALSE)  # WRITE THOSE
@@ -262,13 +262,27 @@ TimeDepBD <- function(treeset, current_method_est) {
 #' @importFrom laser getBtimes
 #' @importFrom DDD dd_ML
 
-DDredux <- function(treeset) {
+DDredux <- function(treeset, current_method_est) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
     # DDD1
     DDD1_result <- list()
+    # set correct model
+    DDmodel <- c()
+    if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin" & strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+      DDmodel <- 1
+    } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp" & strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+      DDmodel <- 2
+    } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "const" & strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+      DDmodel <- 3
+    } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "const" & strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
+      DDmodel <- 4
+    } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin" & strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+      DDmodel <- 5
+    }
+    # run es
     for (i in 1:length(treeset)) {
       branching_times <- getBtimes(string=write.tree(treeset[[i]]))
-      DDD1_result[[i]] <- list(dd_ML(branching_times, ddmodel = 1, cond = 1, soc = 2))
+      DDD1_result[[i]] <- list(dd_ML(branching_times, ddmodel = DDmodel, cond = 1, soc = 2))
     }
     # fill result into matrix
     for (i in 1:length(treeset)) {
