@@ -91,25 +91,29 @@ GetParams <- function(emptrees, current_method_est) {
       a2 <- as.numeric(empirical_solution[1,]$"2nd a, k, etc")
       # assign lambda function based on method
       LambdaFun <- c()
-      if (strsplit(x=current_method_est, split="_")[[1]][2] == "const") {
-        LambdaFun <- function(t){Lambda}
-      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin") {
-        LambdaFun <- function(t){Lambda + a * t}
-      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp") {
-        LambdaFun <- function(t){Lambda * exp(a * t)}
+      if (strsplit(x=current_method_est, split="_")[[1]][1] == "Time") {
+        if (strsplit(x=current_method_est, split="_")[[1]][2] == "const") {
+          LambdaFun <- function(t){Lambda}
+        } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin") {
+          LambdaFun <- function(t){Lambda + a * t}
+        } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp") {
+          LambdaFun <- function(t){Lambda * exp(a * t)}
+        }
       } else {
         LambdaFun <- function(t) l * exp(a*t)
       }
       # assign mu function based on method
       MuFun <- c()
-      if (strsplit(x=current_method_est, split="_")[[1]][3] == "PB") {
-        MuFun <- function(t){0}
-      } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
-        MuFun <- function(t){Mu}
-      } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
-        MuFun <- function(t){Mu + a2 * t}
-      } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
-        MuFun <- function(t){Mu * exp(a2 * t)}
+      if (strsplit(x=current_method_est, split="_")[[1]][1] == "Time") {
+        if (strsplit(x=current_method_est, split="_")[[1]][3] == "PB") {
+          MuFun <- function(t){0}
+        } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+          MuFun <- function(t){Mu}
+        } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+          MuFun <- function(t){Mu + a2 * t}
+        } else if (strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
+          MuFun <- function(t){Mu * exp(a2 * t)}
+        }
       } else {
         MuFun <- as.numeric(empirical_solution[1,]$mu0)
       }
