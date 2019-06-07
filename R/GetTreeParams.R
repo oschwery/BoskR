@@ -4,7 +4,11 @@
 #'
 #' @details The function wraps around the internal `GetParams`, and uses either [...]
 #'
-#' The parameter `current_method_est` can be `"BD", "Time_lambda_mu", "DD", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model, mu can be set to "PB". Example: a time dependent model with exponential speciation rate and constant extinction rate would be specified by "Time_exp_const".
+#' The parameter `current_method_est` can be `"BD", "Time_lambda_mu", "DD_lambda_mu", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time- and diversity-dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model (only time-dependent), mu can be set to "PB".
+#'
+#' For diversity-dependent models, only five combinations are available: linear lambda, exponential lambda, linear mu, exponential mu, and both linear.
+#'
+#' Example: a time dependent model with exponential speciation rate and constant extinction rate would be specified by "Time_exp_const".
 #'
 #' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
 #' @param current_method_est String specifying the method to be used to estimate the parameters. For possible values see details section.
