@@ -184,15 +184,15 @@ if (empirical_start==TRUE) {
       trees <- try(tess.sim.age(n=Numbsim1, age=TreeAge, lambda=LambdaFun, mu=MuFun, massExtinctionTimes = c(), massExtinctionSurvivalProbabilities = c(), samplingProbability = 1, samplingStrategy = "uniform", maxTaxa = Inf, MRCA = TRUE), FALSE)
     } else if (strsplit(x=current_method, split="_")[[1]][1] == "DD") {
       DDmodel <- c()
-      if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin" & strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+      if (strsplit(x=current_method, split="_")[[1]][2] == "lin" & strsplit(x=current_method, split="_")[[1]][3] == "const") {
         DDmodel <- 1
-      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp" & strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+      } else if (strsplit(x=current_method, split="_")[[1]][2] == "exp" & strsplit(x=current_method, split="_")[[1]][3] == "const") {
         DDmodel <- 2
-      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "const" & strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+      } else if (strsplit(x=current_method, split="_")[[1]][2] == "const" & strsplit(x=current_method, split="_")[[1]][3] == "lin") {
         DDmodel <- 3
-      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "const" & strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
+      } else if (strsplit(x=current_method, split="_")[[1]][2] == "const" & strsplit(x=current_method, split="_")[[1]][3] == "exp") {
         DDmodel <- 4
-      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin" & strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+      } else if (strsplit(x=current_method, split="_")[[1]][2] == "lin" & strsplit(x=current_method, split="_")[[1]][3] == "lin") {
         DDmodel <- 5
       }
       if (empirical_start == TRUE) {
