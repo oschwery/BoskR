@@ -182,7 +182,19 @@ if (empirical_start==TRUE) {
       trees <- try(sim.bd.age(age=TreeAge, numbsim=Numbsim1, lambda=Lambda, mu=Mu, frac=1, mrca=TRUE, complete=FALSE, K=0), FALSE)
     } else  if (strsplit(x=current_method, split="_")[[1]][1] == "Time") {
       trees <- try(tess.sim.age(n=Numbsim1, age=TreeAge, lambda=LambdaFun, mu=MuFun, massExtinctionTimes = c(), massExtinctionSurvivalProbabilities = c(), samplingProbability = 1, samplingStrategy = "uniform", maxTaxa = Inf, MRCA = TRUE), FALSE)
-    } else if (current_method == "DD") {
+    } else if (strsplit(x=current_method, split="_")[[1]][1] == "DD") {
+      DDmodel <- c()
+      if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin" & strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+        DDmodel <- 1
+      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "exp" & strsplit(x=current_method_est, split="_")[[1]][3] == "const") {
+        DDmodel <- 2
+      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "const" & strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+        DDmodel <- 3
+      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "const" & strsplit(x=current_method_est, split="_")[[1]][3] == "exp") {
+        DDmodel <- 4
+      } else if (strsplit(x=current_method_est, split="_")[[1]][2] == "lin" & strsplit(x=current_method_est, split="_")[[1]][3] == "lin") {
+        DDmodel <- 5
+      }
       if (empirical_start == TRUE) {
         trees <- try(DDtreeSim(numbsim=Numbsim1, lambda=Lambda, mu=Mu, K=K,  age=TreeAge, ddmodel=1), FALSE)
       } else if (empirical_start == FALSE) {
