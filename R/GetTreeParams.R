@@ -198,6 +198,7 @@ BDredux <- function(treeset) {
 #' The function uses `fit_bd` from the package `RPANDA`.
 #'
 #' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
+#' @param current_method_est String specifying the method to be used to estimate the parameters. For possible values see details section.
 #' @return A dataframe with TimeD-BD parameters.
 #'
 #' @noRd
@@ -287,6 +288,7 @@ TimeDepBD <- function(treeset, current_method_est) {
 #' The function uses `dd_ML` from the package `DDD`.
 #'
 #' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
+#' @param current_method_est String specifying the method to be used to estimate the parameters. For possible values see details section.
 #' @return A dataframe with TimeD-BD parameters.
 #'
 #' @noRd
