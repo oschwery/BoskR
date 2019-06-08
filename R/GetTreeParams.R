@@ -4,7 +4,7 @@
 #'
 #' @details The function wraps around the internal `GetParams`, and uses either [...]
 #'
-#' The parameter `current_method_est` can be `"BD", "Time_lambda_mu", "DD_lambda_mu", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time- and diversity-dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model (only time-dependent), mu can be set to "PB".
+#' The parameter `current_method_est` can be `"Yule", "BD", "Time_lambda_mu", "DD_lambda_mu", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time- and diversity-dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model (only time-dependent), mu can be set to "PB".
 #'
 #' For diversity-dependent models, only five combinations are available: linear lambda, exponential lambda, linear mu, exponential mu, and both linear.
 #'
@@ -45,7 +45,7 @@ GetTreeParams <- function(trees, current_method_est) {
 #' The function uses either
 #'
 #' @param emptrees Set of (probably empirical) phylogenies, list or multiPhylo-object.
-#' @param current_method_est String specifying the method to be used to estimate the parameters. Can be `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
+#' @param current_method_est String specifying the method to be used to estimate the parameters. Can be `"Yule", "BD", "Time_lambda_mu", "DD_lambda_mu", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @return A nested list of parameter estimates for every tree in `emptrees`.
 #'
 #' @noRd
@@ -58,7 +58,9 @@ GetParams <- function(emptrees, current_method_est) {
     tree <- emptrees[j]
     current_name <- names(emptrees[j])
     # rate estimations empirical tree
-    if (current_method_est == "BD") {
+    if (current_method_est == "Yule") {
+      empirical_solution <- try(YuleApe(tree), FALSE)
+    } else if (current_method_est == "BD") {
       empirical_solution <- try(BDredux(tree), FALSE)
     } else if (strsplit(x=current_method_est, split="_")[[1]][1] == "Time") {
       empirical_solution <- try(TimeDepBD(tree, current_method_est), FALSE)
