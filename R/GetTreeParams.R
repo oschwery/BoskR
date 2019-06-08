@@ -157,7 +157,7 @@ YuleApe <- function(treeset) {
   }
   # fill result into matrix
   for (i in 1:length(treeset)) {
-    outmatrix[i,] <- c("yule", paste(deparse(substitute(treeset)),i, sep=" "), "ape_yule", apeyule_result[[i]]$lambda, NA, NA, NA, NA, NA, apeyule_result[[i]]$loglik, ((2*1)-(2*apeyule_result[[i]]$loglik))
+    outmatrix[i,] <- c("yule", paste(deparse(substitute(treeset)),i, sep=" "), "ape_yule", apeyule_result[[i]]$lambda, NA, NA, NA, NA, NA, apeyule_result[[i]]$loglik, ((2*1)-(2*apeyule_result[[i]]$loglik)))
   }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)
