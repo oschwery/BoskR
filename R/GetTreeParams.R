@@ -323,7 +323,7 @@ DDredux <- function(treeset, current_method_est) {
     }
     # fill result into matrix
     for (i in 1:length(treeset)) {
-      outmatrix[i,] <- c("dd", paste(deparse(substitute(treeset)),i, sep=" "), "DDD1_dd_ML ddmodel=1 cond=1", DDD1_result[[i]]$lambda, DDD1_result[[i]]$mu, DDD1_result[[i]]$K, NA, (DDD1_result[[i]]$mu/DDD1_result[[i]]$lambda), (DDD1_result[[i]]$lambda-DDD1_result[[i]]$mu), DDD1_result[[i]]$loglik, (-2*(DDD1_result[[i]]$loglik)+(2*length(DDD1_result[[i]]$df))))
+      outmatrix[i,] <- c("dd", paste(deparse(substitute(treeset)),i, sep=" "), paste("DDD_dd_ML ddmodel=", DDmodel, " cond=1", sep=""), DDD1_result[[i]]$lambda, DDD1_result[[i]]$mu, DDD1_result[[i]]$K, NA, (DDD1_result[[i]]$mu/DDD1_result[[i]]$lambda), (DDD1_result[[i]]$lambda-DDD1_result[[i]]$mu), DDD1_result[[i]]$loglik, (-2*(DDD1_result[[i]]$loglik)+(2*length(DDD1_result[[i]]$df))))
     }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)

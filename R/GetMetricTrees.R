@@ -6,7 +6,7 @@
 #'
 #' @param empirical_start `TRUE` to use parameters estimated from empirical trees, `FALSE` to use user-specified ones
 #' @param empParams Nested list object with tree parameters as inferred through `GetParams` from one or several empirical trees
-#' @param current_method Method to be used for simulation, either `"BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
+#' @param current_method Method to be used for simulation, either `"Yule", "BD", "TimeD-BD", "DD", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.
 #' @param N Number of taxa
 #' @param Numbsim1 Number of trees to simulate per each
 #' @param Lambda Speciation rate
