@@ -146,16 +146,16 @@ GetParams <- function(emptrees, current_method_est) {
 #'
 #' @import ape
 
-Yule <- function(treeset) {
+YuleApe <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
   # ape
   apeyule_result <- list()
   for (i in 1:length(treeset)) {
-    ape_result[[i]] <- list(birthdeath(treeset[[i]]))
+    apeyule_result[[i]] <- yule(treeset[[i]], use.root.edge=FALSE)
   }
   # fill result into matrix
   for (i in 1:length(treeset)) {
-    outmatrix[i,] <- c("bd", paste(deparse(substitute(treeset)),i, sep=" "), "ape_birthdeath", (ape_result[[i]][[1]]$para[2])/(1-(ape_result[[i]][[1]]$para[1])), ((ape_result[[i]][[1]]$para[2])*(ape_result[[i]][[1]]$para[1]))/(1-(ape_result[[i]][[1]]$para[1])), NA, NA, (ape_result[[i]][[1]]$para[1]), (ape_result[[i]][[1]]$para[2]), ((ape_result[[i]][[1]]$dev)/(-2)), ((-2)*((ape_result[[i]][[1]]$dev)/(-2))+(2*length(ape_result[[i]][[1]]$para))))
+    outmatrix[i,] <- c("bd", paste(deparse(substitute(treeset)),i, sep=" "), "ape_birthdeath", (ape_result[[i]]$para[2])/(1-(ape_result[[i]]$para[1])), ((ape_result[[i]]$para[2])*(ape_result[[i]]$para[1]))/(1-(ape_result[[i]]$para[1])), NA, NA, (ape_result[[i]]$para[1]), (ape_result[[i]]$para[2]), ((ape_result[[i]]$dev)/(-2)), ((-2)*((ape_result[[i]]$dev)/(-2))+(2*length(ape_result[[i]]$para))))
   }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)
