@@ -296,7 +296,6 @@ TimeDepBD <- function(treeset, current_method_est) {
 #' @noRd
 #'
 #' @import ape
-#' @importFrom laser getBtimes
 #' @importFrom DDD dd_ML
 
 DDredux <- function(treeset, current_method_est) {
@@ -318,7 +317,7 @@ DDredux <- function(treeset, current_method_est) {
     }
     # run es
     for (i in 1:length(treeset)) {
-      branching_times <- getBtimes(string=write.tree(treeset[[i]]))
+      branching_times <- branching.times(treeset[[i]])
       DDD1_result[[i]] <- dd_ML(branching_times, ddmodel = DDmodel, cond = 1, soc = 2)
     }
     # fill result into matrix
