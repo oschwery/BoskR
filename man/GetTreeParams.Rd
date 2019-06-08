@@ -20,5 +20,9 @@ A nested list of parameter estimates for every tree in \code{trees}, or every tr
 \details{
 The function wraps around the internal \code{GetParams}, and uses either \link{...}
 
-The parameter \code{current_method_est} can be `"BD", "Time_lambda_mu", "DD", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model, mu can be set to "PB". Example: a time dependent model with exponential speciation rate and constant extinction rate would be specified by "Time_exp_const".
+The parameter \code{current_method_est} can be `"Yule", "BD", "Time_lambda_mu", "DD_lambda_mu", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time- and diversity-dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model (only time-dependent), mu can be set to "PB".
+
+For diversity-dependent models, only five combinations are available: linear lambda, exponential lambda, linear mu, exponential mu, and both linear.
+
+Example: a time dependent model with exponential speciation rate and constant extinction rate would be specified by "Time_exp_const".
 }
