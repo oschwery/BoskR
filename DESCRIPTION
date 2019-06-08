@@ -7,7 +7,7 @@ Authors@R: c(person("Orlando", "Schwery", email = "oschwery@vols.utk.edu", role 
 Description: Given a phylogeny (or several) and a diversification model (or several), the package makes use of graph Laplacians (as implemented in RPANDA) to infer tree shape metrics. The overlap of those metrics will be compared to the metrics from a set of trees simulated under the model in question and based on the same parameters as the initial tree. If the metrics indicate that the shapes of the simulated trees significantly differ from the initial one, the model should be deemed not adequate for this tree.
 License: GPL-3
 Depends: R (>= 3.5.1), ape
-Imports: RPANDA (>= 1.5), diversitree, phyloTop, DDD, TESS, TreeSim, laser, phangorn, scales, scatterplot3d
+Imports: RPANDA (>= 1.5), diversitree, phyloTop, DDD, TESS, TreeSim, phangorn, scales, scatterplot3d
 Suggests: knitr, testthat, spacodiR, rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

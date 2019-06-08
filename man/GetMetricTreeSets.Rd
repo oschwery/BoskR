@@ -14,7 +14,7 @@ GetMetricTreeSets(empirical_start = FALSE, empParams = empParams,
 
 \item{empParams}{Nested list object with tree parameters as inferred through \code{GetParams} from one or several empirical trees}
 
-\item{current_method}{Method to be used for simulation, either \code{"BD", "TimeD-BD", "DD", "CD", "TraitD"} for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.}
+\item{current_method}{Method to be used for simulation, either \code{"Yule", "BD", "TimeD-BD", "DD", "CD", "TraitD"} for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.}
 
 \item{N}{Number of taxa}
 
