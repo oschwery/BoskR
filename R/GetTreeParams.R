@@ -133,6 +133,35 @@ GetParams <- function(emptrees, current_method_est) {
 }
 
 
+#' Get birth only diversification parameters from trees
+#'
+#' Internal function used by `GetParams` to estimate Yule birth only parameters from a supplied tree or tree set.
+#'
+#' The function uses `yule` from the package `ape`.
+#'
+#' @param treeset Set of (probably empirical) phylogenies, list or multiPhylo-object.
+#' @return A dataframe with BD parameters.
+#'
+#' @noRd
+#'
+#' @import ape
+
+Yule <- function(treeset) {
+  outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
+  # ape
+  apeyule_result <- list()
+  for (i in 1:length(treeset)) {
+    ape_result[[i]] <- list(birthdeath(treeset[[i]]))
+  }
+  # fill result into matrix
+  for (i in 1:length(treeset)) {
+    outmatrix[i,] <- c("bd", paste(deparse(substitute(treeset)),i, sep=" "), "ape_birthdeath", (ape_result[[i]][[1]]$para[2])/(1-(ape_result[[i]][[1]]$para[1])), ((ape_result[[i]][[1]]$para[2])*(ape_result[[i]][[1]]$para[1]))/(1-(ape_result[[i]][[1]]$para[1])), NA, NA, (ape_result[[i]][[1]]$para[1]), (ape_result[[i]][[1]]$para[2]), ((ape_result[[i]][[1]]$dev)/(-2)), ((-2)*((ape_result[[i]][[1]]$dev)/(-2))+(2*length(ape_result[[i]][[1]]$para))))
+  }
+  outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
+  return(outframe=outframe)
+}
+
+
 #' Get BD diversification parameters from trees
 #'
 #' Internal function used by `GetParams` to estimate BD parameters from a supplied tree or tree set.
@@ -146,16 +175,16 @@ GetParams <- function(emptrees, current_method_est) {
 #'
 #' @import ape
 
-BDredux <- function(treeset) {
+BDredux2 <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
   # ape
   ape_result <- list()
   for (i in 1:length(treeset)) {
-    ape_result[[i]] <- list(birthdeath(treeset[[i]]))
+    ape_result[[i]] <- birthdeath(treeset[[i]])
   }
   # fill result into matrix
   for (i in 1:length(treeset)) {
-    outmatrix[i,] <- c("bd", paste(deparse(substitute(treeset)),i, sep=" "), "ape_birthdeath", (ape_result[[i]][[1]]$para[2])/(1-(ape_result[[i]][[1]]$para[1])), ((ape_result[[i]][[1]]$para[2])*(ape_result[[i]][[1]]$para[1]))/(1-(ape_result[[i]][[1]]$para[1])), NA, NA, (ape_result[[i]][[1]]$para[1]), (ape_result[[i]][[1]]$para[2]), ((ape_result[[i]][[1]]$dev)/(-2)), ((-2)*((ape_result[[i]][[1]]$dev)/(-2))+(2*length(ape_result[[i]][[1]]$para))))
+    outmatrix[i,] <- c("bd", paste(deparse(substitute(treeset)),i, sep=" "), "ape_birthdeath", (ape_result[[i]]$para[2])/(1-(ape_result[[i]]$para[1])), ((ape_result[[i]]$para[2])*(ape_result[[i]]$para[1]))/(1-(ape_result[[i]]$para[1])), NA, NA, (ape_result[[i]]$para[1]), (ape_result[[i]]$para[2]), ((ape_result[[i]]$dev)/(-2)), ((-2)*((ape_result[[i]]$dev)/(-2))+(2*length(ape_result[[i]]$para))))
   }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)
