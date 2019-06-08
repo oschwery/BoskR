@@ -175,7 +175,7 @@ Yule <- function(treeset) {
 #'
 #' @import ape
 
-BDredux2 <- function(treeset) {
+BDredux <- function(treeset) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "d/b (epsilon)", "b-d (r)", "lnLik", "AIC")))
   # ape
   ape_result <- list()
@@ -315,11 +315,11 @@ DDredux <- function(treeset, current_method_est) {
     # run es
     for (i in 1:length(treeset)) {
       branching_times <- getBtimes(string=write.tree(treeset[[i]]))
-      DDD1_result[[i]] <- list(dd_ML(branching_times, ddmodel = DDmodel, cond = 1, soc = 2))
+      DDD1_result[[i]] <- dd_ML(branching_times, ddmodel = DDmodel, cond = 1, soc = 2)
     }
     # fill result into matrix
     for (i in 1:length(treeset)) {
-      outmatrix[i,] <- c("dd", paste(deparse(substitute(treeset)),i, sep=" "), "DDD1_dd_ML ddmodel=1 cond=1", DDD1_result[[i]][[1]]$lambda, DDD1_result[[i]][[1]]$mu, DDD1_result[[i]][[1]]$K, NA, (DDD1_result[[i]][[1]]$mu/DDD1_result[[i]][[1]]$lambda), (DDD1_result[[i]][[1]]$lambda-DDD1_result[[i]][[1]]$mu), DDD1_result[[i]][[1]]$loglik, (-2*(DDD1_result[[i]][[1]]$loglik)+(2*length(DDD1_result[[i]][[1]]$df))))
+      outmatrix[i,] <- c("dd", paste(deparse(substitute(treeset)),i, sep=" "), "DDD1_dd_ML ddmodel=1 cond=1", DDD1_result[[i]]$lambda, DDD1_result[[i]]$mu, DDD1_result[[i]]$K, NA, (DDD1_result[[i]]$mu/DDD1_result[[i]]$lambda), (DDD1_result[[i]]$lambda-DDD1_result[[i]]$mu), DDD1_result[[i]]$loglik, (-2*(DDD1_result[[i]]$loglik)+(2*length(DDD1_result[[i]]$df))))
     }
   outframe <- as.data.frame(outmatrix, stringsAsFactors=FALSE)
   return(outframe=outframe)
