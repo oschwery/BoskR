@@ -206,8 +206,8 @@ BDredux <- function(treeset) {
 #' @noRd
 #'
 #' @import ape
+#' @import RPANDA
 #' @importFrom picante node.age
-#' @importFrom RPANDA fit_bd
 
 TimeDepBD <- function(treeset, current_method_est) {
   outmatrix <- matrix(data=NA, nrow=length(treeset), ncol=11, dimnames=list(c(), c("Model", "Tree", "Method", "lambda0", "mu0", "lambda1", "mu1", "a, k, etc", "2nd a, k, etc", "lnLik", "AIC")))
