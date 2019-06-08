@@ -178,7 +178,9 @@ if (empirical_start==TRUE) {
   if (is.na(N)) {
     trees <- NA
   } else if (!is.na(N)) {
-    if (current_method == "BD") {
+    if (current_method == "Yule") {
+      trees <- try(sim.bd.age(age=TreeAge, numbsim=Numbsim1, lambda=Lambda, mu=0, frac=1, mrca=TRUE, complete=FALSE, K=0), FALSE)
+    } else  if (current_method == "BD") {
       trees <- try(sim.bd.age(age=TreeAge, numbsim=Numbsim1, lambda=Lambda, mu=Mu, frac=1, mrca=TRUE, complete=FALSE, K=0), FALSE)
     } else  if (strsplit(x=current_method, split="_")[[1]][1] == "Time") {
       trees <- try(tess.sim.age(n=Numbsim1, age=TreeAge, lambda=LambdaFun, mu=MuFun, massExtinctionTimes = c(), massExtinctionSurvivalProbabilities = c(), samplingProbability = 1, samplingStrategy = "uniform", maxTaxa = Inf, MRCA = TRUE), FALSE)
