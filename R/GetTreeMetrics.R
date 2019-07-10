@@ -27,6 +27,9 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE) {
         metrics <- try(GetMetrics(trees$metricTreeSet[[k]], empirical_start), FALSE)
       }
       metricname <- paste("metrics", names(trees$metricTreeSet[k]), sep="_")
+      if (class(metrics) == "try-error") {
+        metrics <- NA
+      }
       outlist[[metricname]] <- metrics
     }
   }
