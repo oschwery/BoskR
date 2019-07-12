@@ -73,16 +73,16 @@ GetMetrics <- function(trees, empirical_start=FALSE) {
     metricsmatrix[i, 5] <- avgLadder(tree, normalise = FALSE)
     # RPANDA metrics
     # standard spectral
-    standardspec <- spectR(tree, method="standard")
+    standardspec <- spectR(tree, meth="standard")
     metricsmatrix[i, 6] <- standardspec$principal_eigenvalue
     metricsmatrix[i, 7] <- standardspec$asymmetry
-    metricsmatrix[i, 8] <- standardspec$peakedness
+    metricsmatrix[i, 8] <- standardspec$peak_height
     metricsmatrix[i, 9] <- standardspec$eigengap
     #normalised spectral (disregard eigengap)
-    normalspec <- spectR(tree, method="normal") #disabled until fixed
+    normalspec <- spectR(tree, meth="normal") #disabled until fixed
     metricsmatrix[i, 10] <- normalspec$principal_eigenvalue
     metricsmatrix[i, 11] <- normalspec$asymmetry
-    metricsmatrix[i, 12] <- normalspec$peakedness
+    metricsmatrix[i, 12] <- normalspec$peak_height
     # drop to list
     spectra <- list(standardspec=standardspec, normalspec=normalspec)
     spectrallist[[i]] <- spectra
