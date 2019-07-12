@@ -76,13 +76,13 @@ GetMetrics <- function(trees, empirical_start=FALSE) {
     standardspec <- spectR(tree, meth="standard")
     metricsmatrix[i, 6] <- standardspec$principal_eigenvalue
     metricsmatrix[i, 7] <- standardspec$asymmetry
-    metricsmatrix[i, 8] <- standardspec$peak_height
+    metricsmatrix[i, 8] <- standardspec$peakedness
     metricsmatrix[i, 9] <- standardspec$eigengap
     #normalised spectral (disregard eigengap)
     normalspec <- spectR(tree, meth="normal") #disabled until fixed
     metricsmatrix[i, 10] <- normalspec$principal_eigenvalue
     metricsmatrix[i, 11] <- normalspec$asymmetry
-    metricsmatrix[i, 12] <- normalspec$peak_height
+    metricsmatrix[i, 12] <- normalspec$peakedness
     # drop to list
     spectra <- list(standardspec=standardspec, normalspec=normalspec)
     spectrallist[[i]] <- spectra
