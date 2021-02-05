@@ -7,7 +7,7 @@ This is a developing version of my R package to test adequacy of birth-death div
 Once completed will be made available as a stable version on CRAN and a development version here.
 
 
-## Associated articles in prep:
+### Associated articles in prep:
 
 **Schwery O.,**	& O’Meara B.C. (**2020**) BoskR-Testing Adequacy of Diversification Models Using Tree Shape. bioRxiv.:2020.12.21.423829. [LINK](https://www.biorxiv.org/content/10.1101/2020.12.21.423829v1)
 
