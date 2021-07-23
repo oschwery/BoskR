@@ -20,7 +20,7 @@ In prep.
 \code{\link[RPANDA:RPANDA-package]{RPANDA}}
 }
 \author{
-\strong{Maintainer}: Orlando Schwery \email{oschwery@vols.utk.edu} (0000-0001-7373-7407)
+\strong{Maintainer}: Orlando Schwery \email{oschwery@vols.utk.edu} (\href{https://orcid.org/0000-0001-7373-7407}{ORCID})
 
 }
 \keyword{package}

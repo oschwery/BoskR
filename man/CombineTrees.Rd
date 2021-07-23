@@ -4,10 +4,12 @@
 \alias{CombineTrees}
 \title{Rearrange Input Trees}
 \usage{
-CombineTrees(trees)
+CombineTrees(trees, sims = FALSE)
 }
 \arguments{
 \item{trees}{Vector of tree objects: individual trees, lists of trees, and/or objects of class multiPhylo. Also accepts the output of \code{GetMetricTrees} from specified parameters.}
+
+\item{sims}{Logical, \code{FALSE} if combining empirical trees, \code{TRUE} if combining simulations based on an empirical tree. This setting is mainly for the case where trees were simulated under a model that is not implemented, so they can be supplied to \code{GetTreeMetrics}. Default is \code{FALSE}.}
 }
 \value{
 List of trees in correct format to be used by downstream functions.

@@ -4,17 +4,29 @@
 \alias{GetMetricTreeSets}
 \title{Simulate trees based on empirical estimations or set parameters}
 \usage{
-GetMetricTreeSets(empirical_start = FALSE, empParams = empParams,
-  current_method, N = NULL, Numbsim1, Lambda, Mu, l = NULL, a = NULL,
-  LambdaFun = NULL, MuFun = NULL, TreeAge = NULL, BiSSEpars = NULL,
-  tree = NULL)
+GetMetricTreeSets(
+  empirical_start = FALSE,
+  empParams = empParams,
+  current_method,
+  N = NULL,
+  Numbsim1,
+  Lambda,
+  Mu,
+  l = NULL,
+  a = NULL,
+  LambdaFun = NULL,
+  MuFun = NULL,
+  TreeAge = NULL,
+  BiSSEpars = NULL,
+  tree = NULL
+)
 }
 \arguments{
 \item{empirical_start}{\code{TRUE} to use parameters estimated from empirical trees, \code{FALSE} to use user-specified ones}
 
 \item{empParams}{Nested list object with tree parameters as inferred through \code{GetParams} from one or several empirical trees}
 
-\item{current_method}{Method to be used for simulation, either \code{"Yule", "BD", "TimeD-BD", "DD", "CD", "TraitD"} for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.}
+\item{current_method}{Method to be used for simulation, either \verb{"Yule", "BD", "TimeD-BD", "DD", "CD", "TraitD"} for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.}
 
 \item{N}{Number of taxa}
 

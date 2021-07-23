@@ -113,6 +113,19 @@ ScatterMetrics(emptestmetrics, simtestmetrics, pair=1, skim=FALSE, combine=FALSE
 
 We could also have used `plotPvalMetricsCDF()` to look at the cumulative distribution functions of each metric instead of the probability density function. If we had looked at several trees, we could have used `skim=TRUE` to click through scatterplots of each tree separately, or `combine=TRUE` to get a plot with all empirical and simulated metrics combined.
 
+### 3.5 Adequacy of Models That Aren't Implemented in BoskR ###
+Currently, only three models are implemented (constant rate birth-death, time-dependent birth-death, and diversity dependent). However, this approach theoretically works with any model for which we can both estimate rates and simulate trees.
+
+So, if we want to test the adequacy of _e.g._ an environmental-dependent birth-death model, we can simply use that model to estimate the rates of our empirical tree, and use the estimated parameters to simulate an appropriate number of trees under the same model and parameters again.
+
+Using that initial tree and the simulated set, we can use the same procedure as above with the following modifications:
+1. Skip `GetTreeParams` and `GetMetricTreeSets`, as we already estimated the parameters under this model and simulated the corresponding tree set
+2. Run `CombineTrees()` for the simulated tree set as well, to ensure that it is in the correct input-format for the subsequent functions. To do this for a simulated tree set, set the additional parameter `sims` to `TRUE`. At this point, you have to supply your trees as an object of class `multiPhylo` (essentialy a list of trees, with the class-label set to `multiPhylo`).
+   ```{r, results="hide"}
+   emptestsims <- CombineTrees(emptestsims, sims=FALSE)
+   ```
+3. Now go straight to estimating the metrics of both initial tree and simulations separately, and from there follow the standard procedure to get p-values, plot results, etc.
+
 ## 4 Final Notes ##
 ### 4.1 Interpretation and Caveats ###
 Following the general idea, if our empirical tree is significantly different from the simulations in one or more of the metrics, or is outside the could of simulated trees in metric space, we should question the adequacy of the employed model.
@@ -124,4 +137,4 @@ If one wants to study the behaviour of a model in general, `GetMetricTreeSets()`
 
 Another potential use for this approach might be as a way to make sure simulated trees (used _e.g._ to create a distribution of scenarios to compare an empirical solution to) are within a certain range of shape around the empirical example, if the question makes that necessary.
 
-Currently, only three models are implemented (constant rate birth-death, time-dependent birth-death, and diversity dependent), while this theoretically works with any model for which we can both estimate rates and simulate trees. I intend to add more models to the package in the near future, and welcome suggestions as to which to add.
+I may want to add more models to the package in the near future, and welcome suggestions as to which to add.

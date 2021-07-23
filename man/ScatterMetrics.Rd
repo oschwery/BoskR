@@ -4,12 +4,20 @@
 \alias{ScatterMetrics}
 \title{3D Metrics Scatterplot}
 \usage{
-ScatterMetrics(empMetrics, simMetrics, pair = 1, skim = FALSE,
-  combine = FALSE, colours = c("black", "red"),
-  transparencyEmp = 0.8, transparencySim = 0.2, pch = 16,
+ScatterMetrics(
+  empMetrics,
+  simMetrics,
+  pair = 1,
+  skim = FALSE,
+  combine = FALSE,
+  colours = c("black", "red"),
+  transparencyEmp = 0.8,
+  transparencySim = 0.2,
+  pch = 16,
   cex.symbols = 1.5,
   main = paste("Empirical vs. Simulated Metrics Set", pair, sep = " "),
-  angle = -230)
+  angle = -230
+)
 }
 \arguments{
 \item{empMetrics}{Metrics of empirical tree or set of trees; output of \code{GetTreeMetrics} or formatted the same way.}

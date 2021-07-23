@@ -4,7 +4,9 @@
 \name{emptesttrees}
 \alias{emptesttrees}
 \title{Set of Test Trees for BoskR}
-\format{A list of phylogenies (of class phy)}
+\format{
+A list of phylogenies (of class phy)
+}
 \source{
 ADD THEM HERE
 }
