@@ -4,16 +4,24 @@
 \alias{PvalMetrics}
 \title{Get p-values for tree metrics}
 \usage{
-PvalMetrics(empMetrics, simMetrics, empirical_start = TRUE, methodnr)
+PvalMetrics(
+  empMetrics,
+  simMetrics,
+  empirical_start = TRUE,
+  methodnr,
+  metricset = "spectR"
+)
 }
 \arguments{
 \item{empMetrics}{Metrics of empirical tree or set of trees; output of \code{GetTreeMetrics} or formatted the same way.}
 
 \item{simMetrics}{Metrics of sets of simulated trees; output of \code{GetTreeMetrics} or formatted the same way.}
 
-\item{empirical_start}{Indicator whether empMetrics is based on empirical or simulated initial trees, default is TRUE (=empirical); mainly important for data format reasons.}
+\item{empirical_start}{Indicator whether empMetrics is based on empirical or simulated initial trees, default is \code{TRUE} (=empirical); mainly important for data format reasons.}
 
-\item{methodnr}{Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD.}
+\item{methodnr}{Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD; is only used if \code{empirical_start} is \code{TRUE}}
+
+\item{metricset}{String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch"; for more information on the options see Details.}
 }
 \value{
 A list with two entries: \code{ECDs} is a list of Empirical Cumulative Distributions; \code{pValues} is a matrix with p-values for the targeted metrics
@@ -22,5 +30,5 @@ A list with two entries: \code{ECDs} is a list of Empirical Cumulative Distribut
 Estimates p-values based on simulated and empirical distributions of tree metrics
 }
 \details{
-The function uses an Empirical Cumulative Distribution function to determine the area under the curve of the metric values of the simulated trees, to get to a p-value for the position of the metrics of the empirical tree on that distribution.
+The function uses an Empirical Cumulative Distribution function to determine the area under the curve of the metric values of the simulated trees, to get to a p-value for the position of the metrics of the empirical tree on that distribution. The argument \code{metricset} allows to chose between: \code{"spectR"}- the standard (i.e. unnormalised) spectral densities, \code{"spectRnorm"} - the normalised spectral densities, \code{"classic"} - a couple of more 'conventional' measures of tree shape, being Colless index, Sackin index, number of cherries, number of pitchforks, average ladder size, and gamma statistic; finally `"nodibranch" - includes minimum, maximum, and median for both node ages and branch lengths respectively. For more information on the spectral densities, i.e. the Eigenvalues of the tree's modified graph Laplacian, see R package RPANDA and associated papers.
 }

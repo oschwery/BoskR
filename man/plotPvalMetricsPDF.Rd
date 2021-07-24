@@ -4,7 +4,7 @@
 \alias{plotPvalMetricsPDF}
 \title{Plot p-values on PDF for sets of tree metrics}
 \usage{
-plotPvalMetricsPDF(empMetrics, simMetrics, set = NULL)
+plotPvalMetricsPDF(empMetrics, simMetrics, set = NULL, metricset = "spectR")
 }
 \arguments{
 \item{empMetrics}{Metrics of empirical tree or set of trees; output of \code{GetTreeMetrics} or formatted the same way.}
@@ -12,6 +12,8 @@ plotPvalMetricsPDF(empMetrics, simMetrics, set = NULL)
 \item{simMetrics}{Metrics of sets of simulated trees; output of \code{GetTreeMetrics} or formatted the same way.}
 
 \item{set}{Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.}
+
+\item{metricset}{String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch"; for more information on the options see Details of \code{PvalMetrics()}.}
 }
 \value{
 An array of plots.

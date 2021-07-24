@@ -126,6 +126,20 @@ Using that initial tree and the simulated set, we can use the same procedure as 
    ```
 3. Now go straight to estimating the metrics of both initial tree and simulations separately, and from there follow the standard procedure to get p-values, plot results, etc.
 
+### 3.6 Alternative Metrics ###
+Beyond the three main tree shape metrics, _i.e._ Principal Eigenvalue, Asymmetry, and Peakedness of the spectral sensity of the tree's modified graph Laplaican, BoskR also calculates the normalised versions of those. Additionally, it calculates a set of more classical shape metrics (Colless index, Sackin index, number of cherries, number of pitchforks, average ladder size, and the gamma statistic), as well as a set consisting of the minimum, median, and maximum node ages and branch lengths respectively.
+
+For an extended exploration of model adequacy and its reasons, those additional sets can also be explored. Note however, that at this point they are a bit experimental and their reliability is not entirely tested yet.
+
+All sets are calculated anyway by `GetTreeMetrics`, but the subsequent functions `PvalMetrics` and `plotPvalMetricsPDF` will by default only make use of the standard set (`"spectR"`). The others can be chosen instead when specifying the variable `metricset` accordingly, _i.e._ either `"spectRnorm"`, `"classic"`, or `"nodibranch"` respectively.
+```{r}
+pvalues_classic <- PvalMetrics(emptestmetrics, simtestmetrics, metricset="classic")
+pvalues_classic$pValues  # Display table of p-Values
+```
+```{r, fig.width=7, fig.height=2}
+plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1, metricset="classic")
+```
+
 ## 4 Final Notes ##
 ### 4.1 Interpretation and Caveats ###
 Following the general idea, if our empirical tree is significantly different from the simulations in one or more of the metrics, or is outside the could of simulated trees in metric space, we should question the adequacy of the employed model.
