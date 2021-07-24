@@ -119,6 +119,7 @@ Currently, only three models are implemented (constant rate birth-death, time-de
 So, if we want to test the adequacy of _e.g._ an environmental-dependent birth-death model, we can simply use that model to estimate the rates of our empirical tree, and use the estimated parameters to simulate an appropriate number of trees under the same model and parameters again.
 
 Using that initial tree and the simulated set, we can use the same procedure as above with the following modifications:
+
 1. Skip `GetTreeParams` and `GetMetricTreeSets`, as we already estimated the parameters under this model and simulated the corresponding tree set
 2. Run `CombineTrees()` for the simulated tree set as well, to ensure that it is in the correct input-format for the subsequent functions. To do this for a simulated tree set, set the additional parameter `sims` to `TRUE`. At this point, you have to supply your trees as an object of class `multiPhylo` (essentialy a list of trees, with the class-label set to `multiPhylo`).
    ```{r, results="hide"}
@@ -136,7 +137,7 @@ All sets are calculated anyway by `GetTreeMetrics`, but the subsequent functions
 pvalues_classic <- PvalMetrics(emptestmetrics, simtestmetrics, metricset="classic")
 pvalues_classic$pValues  # Display table of p-Values
 ```
-```{r, fig.width=7, fig.height=2}
+```{r, fig.width=9, fig.height=2}
 plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1, metricset="classic")
 ```
 
