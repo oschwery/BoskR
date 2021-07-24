@@ -17,12 +17,12 @@ plotPvalMetricsCDF <- function(pmetrics, set=NULL) {
           quartz<-function() windows()
         }
         quartz()
-        par(mfrow=c(4, 3))
+        par(mfrow=c(4, length(pmetrics$ECDs[[k]])))
       }
       if (is.na(pmetrics$ECDs[k])) {
+        for (mets in 1:length(pmetrics$ECDs[[k]])) {
         plot(1, type="n", axes=F, xlab="", ylab="")
-        plot(1, type="n", axes=F, xlab="", ylab="")
-        plot(1, type="n", axes=F, xlab="", ylab="")
+        }
         plotcounter <- plotcounter+1
       } else {
         plotPvalsCDF(pmetrics, set=k, inloop=TRUE)

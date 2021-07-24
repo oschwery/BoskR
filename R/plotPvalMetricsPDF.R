@@ -5,33 +5,40 @@
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
+#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch"; for more information on the options see Details of `PvalMetrics()`.
 #' @return An array of plots.
 #'
 #' @export
 
-plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL) {
+plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL, metricset="spectR") {
   if (is.null(set)) {
     plotcounter <- 0
+    empno <- c()
+    if (metricset == "spectR" | metricset == "spectRnorm") {
+      empno = 3
+    } else if (metricset == "classic" | metricset == "nodibranch") {
+      empno = 6
+    }
     for (k in 1:length(empMetrics$metrics[, 1])) {
       if (plotcounter %% 4 == 0) {  # open new plot window after each 4 plots
         if(.Platform$OS.type=="windows") {  # make windows usable
           quartz<-function() windows()
         }
         quartz()
-        par(mfrow=c(4, 3))
+        par(mfrow=c(4, empno))
       }
       if (is.na(empMetrics$metrics[k])) {
-        plot(1, type="n", axes=F, xlab="", ylab="")
-        plot(1, type="n", axes=F, xlab="", ylab="")
-        plot(1, type="n", axes=F, xlab="", ylab="")
+        for (emp in 1:empno) {
+          plot(1, type="n", axes=F, xlab="", ylab="")
+        }
         plotcounter <- plotcounter+1
       } else {
-        plotPvalsPDF(empMetrics, simMetrics, set=k, inloop=TRUE)
+        plotPvalsPDF(empMetrics, simMetrics, set=k, metricset, inloop=TRUE)
         plotcounter <- plotcounter+1
       }
     }
   } else {
-    plotPvalsPDF(empMetrics, simMetrics, set=set, inloop=FALSE)
+    plotPvalsPDF(empMetrics, simMetrics, set=set, metricset, inloop=FALSE)
   }
 }
 
@@ -43,13 +50,23 @@ plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL) {
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
+#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "combo"; for more information on the options see Details of `PvalMetrics()`.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
 #'
 #' @noRd
 
-plotPvalsPDF <- function(empMetrics, simMetrics, set, inloop=FALSE) {
-  targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St")
+plotPvalsPDF <- function(empMetrics, simMetrics, set, metricset, inloop=FALSE) {
+  targetmetrics <-c()
+  if (metricset == "spectR") {
+    targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St")  # CHANGE once you have likelihood implemented!
+  } else if (metricset == "spectRnorm") {
+    targetmetrics <- c("Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
+  } else if (metricset == "classic") {
+    targetmetrics <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma")
+  } else if (metricset == "nodibranch") {
+    targetmetrics <- c("Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength")
+  }
   if (inloop == FALSE) {
     par(mfrow=c(length(set), length(targetmetrics)))
   }
