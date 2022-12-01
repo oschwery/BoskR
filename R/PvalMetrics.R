@@ -24,9 +24,9 @@ PvalMetrics <- function(empMetrics, simMetrics, empirical_start=TRUE, methodnr, 
   } else if (metricset == "classic") {
     targetmetrics <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma")
   } else if (metricset == "nodibranch") {
-    targetmetrics <- c("Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength")
+    targetmetrics <- c("N_tax", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength")
   } else if (metricset == "All") {
-    targetmetrics <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
+    targetmetrics <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma", "N_tax", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
   }
   
   Methods <- c("BD", "TimeD-BD", "DD")

@@ -55,8 +55,9 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
 #' @import phyloTop
 
 GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
-  metricsmatrix <- matrix(nrow=length(trees), ncol=19)
-  colnames(metricsmatrix) <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
+  metricsnames <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma", "N_tax", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
+  metricsmatrix <- matrix(nrow=length(trees), ncol=length(metricsnames))
+  colnames(metricsmatrix) <- metricsnames
   rownames(metricsmatrix) <- names(trees)
   spectrallist <- list()
   for (i in 1:length(trees)) {
@@ -75,27 +76,29 @@ GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
     metricsmatrix[i, 5] <- avgLadder(tree, normalise = FALSE)
     # gamma statistic
     metricsmatrix[i, 6] <- gammaStat(tree)
+    # Number of tips
+    metricsmatrix[i, 7] <- length(tree$tip.label)
     # node ages
     ages <- branching.times(tree)
-    metricsmatrix[i, 7] <- min(ages)
-    metricsmatrix[i, 8] <- median(ages)
-    metricsmatrix[i, 9] <- max(ages)
+    metricsmatrix[i, 8] <- min(ages)
+    metricsmatrix[i, 9] <- median(ages)
+    metricsmatrix[i, 10] <- max(ages)
     # branch lengths
-    metricsmatrix[i, 10] <- min(tree$edge.length)
-    metricsmatrix[i, 11] <- median(tree$edge.length)
-    metricsmatrix[i, 12] <- max(tree$edge.length)
+    metricsmatrix[i, 11] <- min(tree$edge.length)
+    metricsmatrix[i, 12] <- median(tree$edge.length)
+    metricsmatrix[i, 13] <- max(tree$edge.length)
     # RPANDA metrics
     # standard spectral
     standardspec <- spectR(tree, meth="standard")
-    metricsmatrix[i, 13] <- standardspec$principal_eigenvalue
-    metricsmatrix[i, 14] <- standardspec$asymmetry
-    metricsmatrix[i, 15] <- standardspec$peakedness
-    metricsmatrix[i, 16] <- standardspec$eigengap
+    metricsmatrix[i, 14] <- standardspec$principal_eigenvalue
+    metricsmatrix[i, 15] <- standardspec$asymmetry
+    metricsmatrix[i, 16] <- standardspec$peakedness
+    metricsmatrix[i, 17] <- standardspec$eigengap
     #normalised spectral (disregard eigengap)
     normalspec <- spectR(tree, meth="normal") #disabled until fixed
-    metricsmatrix[i, 17] <- normalspec$principal_eigenvalue
-    metricsmatrix[i, 18] <- normalspec$asymmetry
-    metricsmatrix[i, 19] <- normalspec$peakedness
+    metricsmatrix[i, 18] <- normalspec$principal_eigenvalue
+    metricsmatrix[i, 19] <- normalspec$asymmetry
+    metricsmatrix[i, 20] <- normalspec$peakedness
     # drop to list
     if (return_spectra == TRUE) {
       spectra <- list(standardspec=standardspec, normalspec=normalspec)
