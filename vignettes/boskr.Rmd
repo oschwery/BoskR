@@ -123,7 +123,7 @@ Using that initial tree and the simulated set, we can use the same procedure as 
 1. Skip `GetTreeParams` and `GetMetricTreeSets`, as we already estimated the parameters under this model and simulated the corresponding tree set
 2. Run `CombineTrees()` for the simulated tree set as well, to ensure that it is in the correct input-format for the subsequent functions. To do this for a simulated tree set, set the additional parameter `sims` to `TRUE`. At this point, you have to supply your trees as an object of class `multiPhylo` (essentialy a list of trees, with the class-label set to `multiPhylo`).
    ```{r, results="hide"}
-   emptestsims <- CombineTrees(emptestsims, sims=FALSE)
+   emptestsims <- CombineTrees(emptestsims, sims=TRUE)
    ```
 3. Now go straight to estimating the metrics of both initial tree and simulations separately, and from there follow the standard procedure to get p-values, plot results, etc.
 
