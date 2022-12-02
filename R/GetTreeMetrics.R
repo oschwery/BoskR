@@ -13,10 +13,10 @@
 #'
 #' @import ape
 
-GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
+GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=FALSE) {
   outlist <- c()
   if (!is.list(trees[[1]][[1]][[1]]) & !is.na(trees[[1]][[1]][[1]])) {
-    outlist <- try(GetMetrics(trees, empirical_start, return_spectra), FALSE)
+    outlist <- try(GetMetrics(trees, empirical_start, return_spectra, quick_run), FALSE)
   } else if (is.list(trees[[1]][[1]][[1]]) | is.na(trees[[1]][[1]][[1]])) {
     for (k in 1:length(trees$metricTreeSet)) {
       metricname <- c()
@@ -25,7 +25,7 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
       if (is.na(trees$metricTreeSet[[k]])) {
         metrics <- NA
       } else {
-        metrics <- try(GetMetrics(trees$metricTreeSet[[k]], empirical_start, return_spectra), FALSE)
+        metrics <- try(GetMetrics(trees$metricTreeSet[[k]], empirical_start, return_spectra, quick_run), FALSE)
       }
       metricname <- paste("metrics", names(trees$metricTreeSet[k]), sep="_")
       if (class(metrics) == "try-error") {
@@ -45,7 +45,8 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
 #'
 #' @param trees Tree or set of trees, list or multiPhylo-object
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
-#' @param return_spectra `TRUE` to return the full Laplacian spectra of each tree, `FALSE` to only return the list of metrics (traditional and based on spectra).
+#' @param return_spectra `TRUE` to return the full Laplacian spectra of each tree, `FALSE` to only return the list of metrics (traditional and based on spectra). This defaults to `FALSE` if `quick_run` is `TRUE`.
+#' @param quick_run If `TRUE`, ommits the time and memory intensive step of calculating the Laplacian spectra and estimates the remaining metrics only.
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If `return_spectra` is `FALSE`, only `metrics` will be returned.
 #'
 #' @noRd
@@ -54,8 +55,11 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
 #' @import RPANDA
 #' @import phyloTop
 
-GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
-  metricsnames <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma", "N_tax", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength", "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
+GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=FALSE) {
+  metricsnames <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma", "N_tax", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength")
+  if (quick_run != TRUE) {
+    metricsnames <- c(metricsnames, "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
+  }
   metricsmatrix <- matrix(nrow=length(trees), ncol=length(metricsnames))
   colnames(metricsmatrix) <- metricsnames
   rownames(metricsmatrix) <- names(trees)
@@ -88,25 +92,35 @@ GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE) {
     metricsmatrix[i, 12] <- median(tree$edge.length)
     metricsmatrix[i, 13] <- max(tree$edge.length)
     # RPANDA metrics
-    # standard spectral
-    standardspec <- spectR(tree, meth="standard")
-    metricsmatrix[i, 14] <- standardspec$principal_eigenvalue
-    metricsmatrix[i, 15] <- standardspec$asymmetry
-    metricsmatrix[i, 16] <- standardspec$peakedness
-    metricsmatrix[i, 17] <- standardspec$eigengap
-    #normalised spectral (disregard eigengap)
-    normalspec <- spectR(tree, meth="normal") #disabled until fixed
-    metricsmatrix[i, 18] <- normalspec$principal_eigenvalue
-    metricsmatrix[i, 19] <- normalspec$asymmetry
-    metricsmatrix[i, 20] <- normalspec$peakedness
-    # drop to list
-    if (return_spectra == TRUE) {
-      spectra <- list(standardspec=standardspec, normalspec=normalspec)
-      spectrallist[[i]] <- spectra
-      spectra <- NULL  # empty this before next round
+    if(quick_run != TRUE) {
+      # standard spectral
+      if (return_spectra == TRUE) {
+        standardspec <- spectR(tree, meth="standard")
+      } else if (return_spectra == FALSE) {
+        standardspec <- spectR(tree, meth="standard")[2:5]
       }
-    standardspec <- NULL  #empty this before next round
-    normalspec <- NULL  #empty this before next round
+      metricsmatrix[i, 14] <- standardspec$principal_eigenvalue
+      metricsmatrix[i, 15] <- standardspec$asymmetry
+      metricsmatrix[i, 16] <- standardspec$peakedness
+      metricsmatrix[i, 17] <- standardspec$eigengap
+      #normalised spectral (disregard eigengap)
+      if (return_spectra == TRUE) {
+        normalspec <- spectR(tree, meth="normal")
+      } else if (return_spectra == FALSE) {
+        normalspec <- spectR(tree, meth="normal")[2:4]
+      }
+      metricsmatrix[i, 18] <- normalspec$principal_eigenvalue
+      metricsmatrix[i, 19] <- normalspec$asymmetry
+      metricsmatrix[i, 20] <- normalspec$peakedness
+      # drop to list
+      if (return_spectra == TRUE) {
+        spectra <- list(standardspec=standardspec, normalspec=normalspec)
+        spectrallist[[i]] <- spectra
+        spectra <- NULL  # empty this before next round
+        }
+      standardspec <- NULL  #empty this before next round
+      normalspec <- NULL  #empty this before next round
+    }
     if (empirical_start == TRUE) {
       print(paste("tree", i, "of", length(trees), sep=" "))
     } else if (empirical_start == FALSE) {
