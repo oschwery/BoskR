@@ -1,11 +1,11 @@
 #' Plot p-values on PDF for sets of tree metrics
 #'
-#' Creates plots of p-values on their corresponding probability density function, based on sets of simulated and empirical distributions of tree metrics,
+#' Creates plots of p-values on their corresponding probability density functio (PDF), based on sets of simulated and empirical distributions of tree metrics,
 #'
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
-#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch"; for more information on the options see Details of `PvalMetrics()`.
+#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch" (but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of `PvalMetrics()`.
 #' @return An array of plots.
 #'
 #' @export
@@ -14,10 +14,14 @@ plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL, metricset="spec
   if (is.null(set)) {
     plotcounter <- 0
     empno <- c()
-    if (metricset == "spectR" | metricset == "spectRnorm") {
+    if (metricset == "spectR") {
+      empno = 4
+    } else if (metricset == "spectRnorm") {
       empno = 3
-    } else if (metricset == "classic" | metricset == "nodibranch") {
+    } else if (metricset == "classic") {
       empno = 6
+    } else if (metricset == "nodibranch") {
+      empno = 7
     }
     for (k in 1:length(empMetrics$metrics[, 1])) {
       if (plotcounter %% 4 == 0) {  # open new plot window after each 4 plots
@@ -50,7 +54,7 @@ plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL, metricset="spec
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
-#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "combo"; for more information on the options see Details of `PvalMetrics()`.
+#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch" (but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of `PvalMetrics()`.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
 #'
@@ -59,13 +63,13 @@ plotPvalMetricsPDF <- function(empMetrics, simMetrics, set=NULL, metricset="spec
 plotPvalsPDF <- function(empMetrics, simMetrics, set, metricset, inloop=FALSE) {
   targetmetrics <-c()
   if (metricset == "spectR") {
-    targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St")  # CHANGE once you have likelihood implemented!
+    targetmetrics <- c("Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St")  # CHANGE once you have likelihood implemented!
   } else if (metricset == "spectRnorm") {
     targetmetrics <- c("Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")
   } else if (metricset == "classic") {
     targetmetrics <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma")
   } else if (metricset == "nodibranch") {
-    targetmetrics <- c("Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength")
+    targetmetrics <- c("N_tax", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength")
   }
   if (inloop == FALSE) {
     par(mfrow=c(length(set), length(targetmetrics)))
