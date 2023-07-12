@@ -48,7 +48,7 @@ CheckRootedness <- function(emptrees) {
 #'
 #' Tests input treeset for branch length rounding errors.
 #'
-#' The internal function tests whether trees are not ultrametric due to rounding errors and corrects them using `nnls.tree` as [discribed on the phytools blog](http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html).
+#' The internal function tests whether trees are not ultrametric due to rounding errors and corrects them using `nnls.tree` as [discribed on the phytools blog](http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html). As highlighted there, this should only be used to 
 #'
 #' @param emptrees Tree or list of trees.
 #' @return Same tree set as input, but corrected if necessary.
@@ -64,7 +64,7 @@ CorrUltramet <- function(emptrees) {
     nnls <- c()
     if (is.ultrametric(tree) == FALSE) {
       print(paste("not ultrametric", names(emptrees[i]), sep=" "))
-      nnls<-nnls.tree(cophenetic(tree), tree, rooted=TRUE)
+      nnls<-nnls.tree(cophenetic(tree), tree, method="ultrametric", rooted=is.rooted(tree))
       if (is.ultrametric(nnls) == TRUE) {
         emptrees[[i]] <- nnls
         print(paste("fixed", names(emptrees[i]), sep=" "))
@@ -74,7 +74,8 @@ CorrUltramet <- function(emptrees) {
     }
     tree <- c()
   }
-  emptrees
+  print("Remember this correction should only be used to fix rounding errors, not to pretend non-ultrametric ones are ultrametric!")
+  return(emptrees)
 }
 
 #' Correct Zero Length Branches/Polytomies
