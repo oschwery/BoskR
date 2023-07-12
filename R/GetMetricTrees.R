@@ -44,7 +44,7 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
     } else {
       setname <- paste(names(empParams[trset]), current_method, sep="_")
     }
-    if (is.na(metrictrees)) {
+    if (is.na(metrictrees)[1]) {
       if (is.null(names(empParams[trset]))) {
         sourceTreeName <- c(sourceTreeName, paste("Emptree", trset, current_method, sep="_"))
       } else {
