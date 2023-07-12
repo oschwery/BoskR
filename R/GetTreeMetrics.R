@@ -16,14 +16,14 @@
 
 GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=FALSE) {
   outlist <- c()
-  if (!is.list(trees[[1]][[1]][[1]]) & !is.na(trees[[1]][[1]][[1]])) {
+  if (!is.list(trees[[1]][[1]][[1]]) & !is.na(trees[[1]][[1]][[1]])[1]) {
     outlist <- try(GetMetrics(trees, empirical_start, return_spectra, quick_run), FALSE)
-  } else if (is.list(trees[[1]][[1]][[1]]) | is.na(trees[[1]][[1]][[1]])) {
+  } else if (is.list(trees[[1]][[1]][[1]]) | is.na(trees[[1]][[1]][[1]])[1]) {
     for (k in 1:length(trees$metricTreeSet)) {
       metricname <- c()
       metrics <- c()
       print(names(trees$metricTreeSet[k]))
-      if (is.na(trees$metricTreeSet[[k]])) {
+      if (is.na(trees$metricTreeSet[[k]])[1]) {
         metrics <- NA
       } else {
         metrics <- try(GetMetrics(trees$metricTreeSet[[k]], empirical_start, return_spectra, quick_run), FALSE)
