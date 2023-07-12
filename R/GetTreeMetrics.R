@@ -2,11 +2,12 @@
 #'
 #' `GetTreeMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees.
 #'
-#' The function wraps around the internal 'GetMetrics', which will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
+#' The function wraps around the internal 'GetMetrics', which will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), the node age and branch length-based metrics (number of taxa, minimum, median, and maximum node age and branch length respectively), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
 #'
 #' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
 #' @param return_spectra `TRUE` to return the full Laplacian spectra of each tree, `FALSE` to only return the list of metrics (traditional and based on spectra).
+#' @param quick_run If `TRUE`, ommits the time and memory intensive step of calculating the Laplacian spectra and estimates the remaining metrics only.
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If applied to the simulated trees based on a tree set, it will be one such two-element list for each tree set provided in a nested list. If `return_spectra` is `FALSE`, only `metrics` will be returned.
 #'
 #' @export
@@ -41,7 +42,7 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, q
 #'
 #' `GetMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees, within the wrapper of 'GetTreeMetrics', which allows to use it for lists of tree sets (e.g. simulated trees based on a set of trees)
 #'
-#' The function will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
+#' The function will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), the node age and branch length-based metrics (number of taxa, minimum, median, and maximum node age and branch length respectively), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
 #'
 #' @param trees Tree or set of trees, list or multiPhylo-object
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters
