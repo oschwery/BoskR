@@ -12,11 +12,37 @@
 #' @import ape
 
 TreeCorr <- function(emptrees) {
+  CheckRootedness(emptrees)
   emptrees <- CorrUltramet(emptrees)
   emptrees <- CorrZerobranch(emptrees)
   emptrees <- ReorderCladewise(emptrees)
   emptrees
 }
+
+#' Test whether trees are rooted
+#'
+#' Tests input treeset for whether they are rooted trees.
+#'
+#' The internal function tests whether all trees are rooted, which they have to be for subsequent analyses. If any are unrooted, the function returns an error and indicates the indices of the unrooted trees.
+#'
+#' @param emptrees Tree or list of trees
+#' @return Either message that all trees are rooted, or error and indices of unrootes trees (to be removed/rooted).
+#'
+#' @noRd
+
+CheckRootedness <- function(emptrees) {
+  rootstatus <- c()
+    for (i in 1:length(emptrees)) {
+      rootstatus <- c(rootstatus, is.rooted(emptrees[[i]]))
+    }
+    if (FALSE %in% rootstatus) {
+      stop(paste("The following trees are not rooted: ", which(rootstatus==FALSE), sep=""))
+    } else {
+      print("All trees are rooted.")
+    }
+}
+
+
 
 #' Correct Non-Ultrameitric Trees
 #'
@@ -38,7 +64,7 @@ CorrUltramet <- function(emptrees) {
     nnls <- c()
     if (is.ultrametric(tree) == FALSE) {
       print(paste("not ultrametric", names(emptrees[i]), sep=" "))
-      nnls<-nnls.tree(cophenetic(tree),tree,rooted=TRUE)
+      nnls<-nnls.tree(cophenetic(tree), tree, rooted=TRUE)
       if (is.ultrametric(nnls) == TRUE) {
         emptrees[[i]] <- nnls
         print(paste("fixed", names(emptrees[i]), sep=" "))
@@ -51,7 +77,7 @@ CorrUltramet <- function(emptrees) {
   emptrees
 }
 
-#' Correct Zelo Length Branches/Polytomies
+#' Correct Zero Length Branches/Polytomies
 #'
 #' Tests input treeset for branches of lenght zero/politomies and randomly resolves them.
 #'
