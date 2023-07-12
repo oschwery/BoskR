@@ -2,7 +2,7 @@
 #'
 #' Tests input treeset for branch length rounding errors, zero length branches, and order.
 #'
-#' The function is a wrapper around the internals `CorrUltramet`, `CorrZerobranch`, and `ReorderCladewise`. Trees which are not ultrametric due to rounding errors are being corrected using `nnls.tree` as [discribed on the phytools blog](http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html), polytomies are randomly resolved and all trees are reordered to 'cladewise' using the ape functions `multi2di` and `reorder.phylo` respectively.
+#' The function is a wrapper around the internals `CorrUltramet`, `CorrZerobranch`, and `ReorderCladewise`. Trees which are not ultrametric due to rounding errors are being corrected using `nnls.tree` as [discribed on the phytools blog](http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html), polytomies are randomly resolved and all trees are reordered to 'cladewise' using the ape functions `multi2di` and `reorder.phylo` respectively. Make sure these corrections are what you want to do and that you do not misuse them (_e.g._ do not correct truly non-ultrametric trees to be ultrametric like this).
 #'
 #' @param emptrees Tree or list of trees.
 #' @return Same tree set as input, but corrected if necessary.
@@ -48,7 +48,7 @@ CheckRootedness <- function(emptrees) {
 #'
 #' Tests input treeset for branch length rounding errors.
 #'
-#' The internal function tests whether trees are not ultrametric due to rounding errors and corrects them using `nnls.tree` as [discribed on the phytools blog](http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html). As highlighted there, this should only be used to 
+#' The internal function tests whether trees are not ultrametric due to rounding errors and corrects them using `nnls.tree` as [discribed on the phytools blog](http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html). As highlighted there, this should only be used to fix rounding errors from loading actually ultrametric trees, and not to pretend that non-ultrametric ones are ultrametric.
 #'
 #' @param emptrees Tree or list of trees.
 #' @return Same tree set as input, but corrected if necessary.
