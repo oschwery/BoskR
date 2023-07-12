@@ -67,10 +67,11 @@ GetMetricTreeSets <- function(empirical_start=FALSE, empParams=empParams, curren
     }
     metrictreeSet[[setname]] <- metrictrees
   }
-print(sourceTreeName)
-print(simTreeName)
-print(NtaxSim)
-print(SimAge)
+# Comented these out, as they are in $treeindexSims
+# print(sourceTreeName)
+# print(simTreeName)
+# print(NtaxSim)
+# print(SimAge)
 
     treeindexSims <- data.frame(TreeID=sourceTreeName, SimID=simTreeName, NtaxSim=NtaxSim, SimAge=SimAge)
     return(list(metricTreeSet=metrictreeSet, treeindexSims=treeindexSims))
