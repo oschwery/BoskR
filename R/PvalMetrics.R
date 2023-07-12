@@ -7,7 +7,7 @@
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param empirical_start Indicator whether empMetrics is based on empirical or simulated initial trees, default is `TRUE` (=empirical); mainly important for data format reasons.
-#' @param methodnr Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD; is only used if `empirical_start` is `TRUE`
+#' @param methodnr Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD; is only used if `empirical_start` is `FALSE`
 #' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch", or "ALL" and "AllQuick"; for more information on the options see Details.
 #' @return A list with two entries: `ECDs` is a list of Empirical Cumulative Distributions; `pValues` is a matrix with p-values for the targeted metrics
 #'
