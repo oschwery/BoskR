@@ -220,7 +220,7 @@ if (empirical_start==TRUE) {
       }
     }
   }
-  if (class(trees) != "try-error" && !is.na(trees)) {
+  if (class(trees) != "try-error" && !is.na(trees)[1]) {  # only check first entry of trees for NA, to avoid problem of multiples
     class(trees) <- "multiPhylo"
   }
   prefix <- "Tree"
