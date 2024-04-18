@@ -36,7 +36,7 @@ ScatterMetrics <- function(empMetrics, simMetrics=NULL, pair=1, sets=1, setsize=
     }
     ScatterMetricsCombo(empMetrics, simComb, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pch=pch, cex.symbols=cex.symbols, main=main, angle=angle)
   } else if (sets > 1) {
-    ScatterMetricsSets(empMetrics, sets=sets, setsize=setsize, separate=separate, setnames=setnames, colours=colours, transparencyEmp=transparencyEmp, pch=pch, cex.symbols=cex.symbols, main="Metrics Set", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
+    ScatterMetricsSets(empMetrics, sets=sets, setsize=setsize, separate=separate, setnames=setnames, colours=colours, transparencyEmp=transparencyEmp, pch=pch, cex.symbols=cex.symbols, main="Metrics Set", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL)
 
   } else if (skim == TRUE) {
     for (i in 1:nrow(empMetrics$metrics)) {
