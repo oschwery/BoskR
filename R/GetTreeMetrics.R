@@ -104,6 +104,9 @@ GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick
       metricsmatrix[i, 15] <- standardspec$asymmetry
       metricsmatrix[i, 16] <- standardspec$peakedness
       metricsmatrix[i, 17] <- standardspec$eigengap
+      if (return_spectra == FALSE) {
+        standardspec <- NULL  #empty this before next round
+      }
       #normalised spectral (disregard eigengap)
       if (return_spectra == TRUE) {
         normalspec <- spectR(tree, meth="normal")
@@ -113,6 +116,9 @@ GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick
       metricsmatrix[i, 18] <- normalspec$principal_eigenvalue
       metricsmatrix[i, 19] <- normalspec$asymmetry
       metricsmatrix[i, 20] <- normalspec$peakedness
+      if (return_spectra == FALSE) {
+        normalspec <- NULL  #empty this before next round
+      }
       # drop to list
       if (return_spectra == TRUE) {
         spectra <- list(standardspec=standardspec, normalspec=normalspec)
@@ -131,8 +137,11 @@ GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick
   if (return_spectra == TRUE) {
     names(spectrallist) <- names(trees)
     outlist <- list(metrics=metricsmatrix, spectra=spectrallist)
+    spectrallist <- NULL
+    metricsmatrix <- NULL
   } else {
     outlist <- list(metrics=metricsmatrix)
+    metricsmatrix <- NULL
   }
   outlist
 }
