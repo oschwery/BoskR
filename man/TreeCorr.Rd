@@ -16,5 +16,5 @@ Same tree set as input, but corrected if necessary.
 Tests input treeset for branch length rounding errors, zero length branches, and order.
 }
 \details{
-The function is a wrapper around the internals \code{CorrUltramet}, \code{CorrZerobranch}, and \code{ReorderCladewise}. Trees which are not ultrametric due to rounding errors are being corrected using \code{nnls.tree} as \href{http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html}{discribed on the phytools blog}, polytomies are randomly resolved and all trees are reordered to 'cladewise' using the ape functions \code{multi2di} and \code{reorder.phylo} respectively.
+The function is a wrapper around the internals \code{CorrUltramet}, \code{CorrZerobranch}, and \code{ReorderCladewise}. Trees which are not ultrametric due to rounding errors are being corrected using \code{nnls.tree} as \href{http://blog.phytools.org/2016/08/fixing-ultrametric-tree-whose-edges-are.html}{discribed on the phytools blog}, polytomies are randomly resolved and all trees are reordered to 'cladewise' using the ape functions \code{multi2di} and \code{reorder.phylo} respectively. Make sure these corrections are what you want to do and that you do not misuse them (\emph{e.g.} do not correct truly non-ultrametric trees to be ultrametric like this).
 }

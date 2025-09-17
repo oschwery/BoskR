@@ -4,12 +4,14 @@
 \alias{plotPvalMetricsCDF}
 \title{Plot p-values on CDF for sets of tree metrics}
 \usage{
-plotPvalMetricsCDF(pmetrics, set = NULL)
+plotPvalMetricsCDF(pmetrics, set = NULL, metricset = "spectR")
 }
 \arguments{
 \item{pmetrics}{Object with ECDs and p-values of empirical and simulated tree shapes, output of \code{PvalMetrics} or formatted the same way.}
 
 \item{set}{Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.}
+
+\item{metricset}{String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch" (but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of \code{PvalMetrics()}.}
 }
 \value{
 An array of plots.

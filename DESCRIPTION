@@ -11,5 +11,5 @@ Imports: RPANDA (>= 1.5), diversitree, phyloTop, DDD, TESS, TreeSim, phangorn, p
 Suggests: knitr, testthat, spacodiR, rmarkdown, markdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 Encoding: UTF-8

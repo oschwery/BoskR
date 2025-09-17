@@ -13,11 +13,11 @@ plotPvalMetricsPDF(empMetrics, simMetrics, set = NULL, metricset = "spectR")
 
 \item{set}{Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.}
 
-\item{metricset}{String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch"; for more information on the options see Details of \code{PvalMetrics()}.}
+\item{metricset}{String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch" (but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of \code{PvalMetrics()}.}
 }
 \value{
 An array of plots.
 }
 \description{
-Creates plots of p-values on their corresponding probability density function, based on sets of simulated and empirical distributions of tree metrics,
+Creates plots of p-values on their corresponding probability density functio (PDF), based on sets of simulated and empirical distributions of tree metrics,
 }

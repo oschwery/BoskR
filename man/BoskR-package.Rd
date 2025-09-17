@@ -6,7 +6,7 @@
 \alias{BoskR-package}
 \title{BoskR - Assess Adequacy of Diversification Models Using Tree Shapes}
 \description{
-Given a phylogeny (or several) and a diversification model (or several), the package makes use of graph Laplacians (as implemented in RPANDA) to infer tree shape metrics. The overlap of those metrics will be compared to the metrics from a set of trees simulated under the model in question and based on the same parameters as the initial tree. If the metrics indicate that the shapes of the simulated trees significantly differ from the initial one, the model should be deemed not adequate for this tree.
+Given a phylogeny (or several) and a diversification model (or several), the package makes use of graph Laplacians (as implemented in RPANDA) and other tree shape metrics to infer summary statistics. The overlap of those metrics will be compared to the metrics from a set of trees simulated under the model in question and based on the same parameters as the initial tree. If the metrics indicate that the shapes of the simulated trees significantly differ from the initial one, the model should be deemed not adequate for this tree.
 }
 \details{
 \packageIndices{BoskR}
@@ -20,7 +20,7 @@ In prep.
 \code{\link[RPANDA:RPANDA-package]{RPANDA}}
 }
 \author{
-\strong{Maintainer}: Orlando Schwery \email{oschwery@vols.utk.edu} (\href{https://orcid.org/0000-0001-7373-7407}{ORCID})
+\strong{Maintainer}: Orlando Schwery \email{schwery.macroevo@pm.me} (\href{https://orcid.org/0000-0001-7373-7407}{ORCID})
 
 }
 \keyword{package}

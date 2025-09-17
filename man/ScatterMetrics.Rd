@@ -6,9 +6,13 @@
 \usage{
 ScatterMetrics(
   empMetrics,
-  simMetrics,
+  simMetrics = NULL,
   pair = 1,
+  sets = 1,
+  setsize = NA,
   skim = FALSE,
+  separate = FALSE,
+  setnames = NA,
   combine = FALSE,
   colours = c("black", "red"),
   transparencyEmp = 0.8,
@@ -16,7 +20,10 @@ ScatterMetrics(
   pch = 16,
   cex.symbols = 1.5,
   main = paste("Empirical vs. Simulated Metrics Set", pair, sep = " "),
-  angle = -230
+  angle = -230,
+  xlim = NULL,
+  ylim = NULL,
+  zlim = NULL
 )
 }
 \arguments{
@@ -24,13 +31,21 @@ ScatterMetrics(
 
 \item{simMetrics}{Metrics of sets of simulated trees; output of \code{GetTreeMetrics} or formatted the same way.}
 
-\item{pair}{Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted. Value is ignored if \code{skim} or \code{combine} are \code{TRUE}.}
+\item{pair}{Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted. Value is ignored if \code{skim} or \code{combine} are \code{TRUE}, or \code{sets} is larger than 1 (the default).}
+
+\item{sets}{Integer for number of different subsets within \code{empMetrics}, e.g., sets originating from different models; is ignored if 1 (default).}
+
+\item{setsize}{Size of each of the sets. If \code{NA} (default), set size will be determined automatically by dividing the metrics samples by the number of sets; single numbers get recycled for each set, and a vector of sizes can be provided if the sets all differ.}
 
 \item{skim}{Logical, creates interactive plot of all pairs of empirical trees and their simulations if \code{TRUE}; one can advance through the plots by hitting enter.}
 
+\item{separate}{Boolean for whether sets should be plotted in same plot or separate plots (default is \code{FALSE}); does not automatically open new plot devices or panels.}
+
+\item{setnames}{Names for each set, to be used to label plots when \code{separate=TRUE}}
+
 \item{combine}{Logical, combines all empirical and simulated trees into one plot if \code{TRUE}.}
 
-\item{colours}{Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively).}
+\item{colours}{Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively); or vector ndicating the desired colours for each set, in same order as sets are in metrics object.}
 
 \item{transparencyEmp}{Value determining the transparency of the empirical tree plot points (0: completely transparent, 1: completely opaque; corresponding to \code{alpha} from package \code{scales}).}
 
@@ -40,9 +55,11 @@ ScatterMetrics(
 
 \item{cex.symbols}{Size of plot symbols; default 1.5.}
 
-\item{main}{String for plot title; default "Empirical vs. Simulated Metrics Set", followed by pair number plotted, or "Combined".}
+\item{main}{String for plot title; default "Empirical vs. Simulated Metrics Set", followed by pair number plotted, or "Combined", or "Metrics Sets" preceeded by setname.}
 
 \item{angle}{Rotation of the plot, determined by angle between x and y axis (corresponding to \code{scatterplot3d}); default -230.}
+
+\item{xlim}{Min and max values of x-axis, default is \code{NULL} (fits to data automatically), can be manually adjusted as \code{c(min, max)}; same for \code{ylim} and \code{zlim}.}
 }
 \value{
 3D scatterplot of trees in metric space, or a series of such plots to skip through.
