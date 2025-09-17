@@ -13,6 +13,8 @@
 #' @export
 #'
 #' @import ape
+#' @import RPANDA
+#' @import phyloTop
 
 GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=FALSE) {
   outlist <- c()
