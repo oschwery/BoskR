@@ -21,9 +21,7 @@ This is a tutorial vignette to provide a quick and easy introduction to the use 
 
 The purpose of BoskR is, to test whether a given diversification model is adequate to analyse an empirical phylogeny with. We can use different models to analyse diversification on a phylogeny, and pick the one that's best supported ( _e.g._ by likelihood or AIC), but that doesn't tell us anything about whether that model is an appropriate one to use in the first place, _i.e._ whether the model is capable of describing the patterns we are attempting to analyse at all.
 
-The way BoskR is trying to judge adequacy is by tree shape. The logic behind this is, that if a model cannot produce trees of a shape similar to an empirical tree, it is also not suited to analyse that tree. The package makes use of tree metrics measured from the spectral density of a tree's modified graph Laplacian, as obtained through the package RPANDA. Details on this can be found in the corresponding publication^[Eric Lewitus, Helene Morlon; Characterizing and Comparing Phylogenies from their Laplacian Spectrum, Systematic Biology, Volume 65, Issue 3, 1 May 2016, Pages 495–507, [https://doi.org/10.1093/sysbio/syv116](https://doi.org/10.1093/sysbio/syv116)] and package documentations^[[Package RPANDA on CRAN](https://CRAN.R-project.org/package=RPANDA)].
-
-These metrics have now also been complemented with more 'classical' metrics (_e.g._, Colless, node ages), to gain more information on the trees (and perhaps save some time) - see **section 3.6**.
+The way BoskR is trying to judge adequacy is by tree shape. The logic behind this is, that if a model cannot produce trees of a shape similar to an empirical tree, it is also not suited to analyse that tree. The package makes use of a number of 'classical' metrics (_e.g._, Colless, node ages). These metrics can also be complemented with those measured from the spectral density of a tree's modified graph Laplacian, as obtained through the package RPANDA^[Details on this can be found in the corresponding publication (Eric Lewitus, Helene Morlon; Characterizing and Comparing Phylogenies from their Laplacian Spectrum, Systematic Biology, Volume 65, Issue 3, 1 May 2016, Pages 495–507, [https://doi.org/10.1093/sysbio/syv116](https://doi.org/10.1093/sysbio/syv116)) and package documentations ([Package RPANDA on CRAN](https://CRAN.R-project.org/package=RPANDA)).], to gain more information on the trees, however, this option has been turned off by default for now, as it can be quite taxing on runtime and memory use.
 
 ## 2 Installation ##
 ### 2.1 CRAN ###
@@ -87,9 +85,9 @@ With our tree ready, we can move on to the main part of the procedure. We first 
 ```{r, results="hide"}
 emptestparams <- GetTreeParams(emptesttrees, "BD")  # estimate parameters from empirical tree
 ```
-Now we can also already get this tree's shape metrics. The calculation of the Laplacian spectra can be a bit time-intensive, so if in a hurry, setting `quick_run` to `TRUE` will skip these and only calculate the other metrics (see below). They can also use quite a bit of memory, thus `return_spectra` is by default set to `FALSE`, which means the actual Laplacian spectra aren't saved, but only the metrics derived from it. Unless you want to dig deeper for some reason, you probably don't need to bother with them anyways.
-```
-emptestmetrics <- GetTreeMetrics(emptesttrees, empirical_start=TRUE, return_spectra=FALSE, quick_run=FALSE) # get tree shape metrics from empirical trees
+Now we can also already get this tree's shape metrics. We set `empirical_start` to `TRUE`, as we used our empirical whale tree as the starting point of the analysis, and leave the remaining options on their default values^[The option in question is `quick_run` which is set to `TRUE`. This ensure that we skip the calculation of the Laplacian spectra, as they can be a bit time-intensive. They can also use quite a bit of memory, thus `return_spectra` is by default set to `FALSE`, which means the actual Laplacian spectra aren't saved, but only the metrics derived from it. Unless you want to dig deeper for some reason, you probably don't need to bother with them anyways.].
+```{r, results="hide", warning=FALSE, message=FALSE}
+emptestmetrics <- GetTreeMetrics(emptesttrees, empirical_start=TRUE, return_spectra=FALSE, quick_run=TRUE) # get tree shape metrics from empirical trees
 ```
 
 ### 3.3 Simulate Trees Under Model ###
@@ -99,7 +97,7 @@ emptestsims <- GetMetricTreeSets(empirical_start=TRUE, empParams=emptestparams, 
 ```
 Now we get the tree metrics for our freshly simulated trees (we could also use `GetTreeParams()` again to also estimate their parameters, but we'll save that for another day):
 ```{r, results="hide", warning=FALSE, message=FALSE}
-simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE, return_spectra=FALSE, quick_run=FALSE)
+simtestmetrics <- GetTreeMetrics(emptestsims, empirical_start=TRUE)
 ```
 
 ### 3.4 Compare Empirical and Simulated Tree Shapes ###
@@ -112,6 +110,11 @@ pvalues$pValues  # Display table of p-Values
 For illustration and to get a better idea of what our results look like, we can plot them in a number of different ways. With `plotPvalMetricsPDF` we can see where the empirical metrics fall on the distribution of the simulated ones:
 ```{r, fig.width=7, fig.height=2}
 plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1)
+```
+
+By default, this used the `"classic"` set of metrics (Colless index, Sackin index, number of cherries, number of pitchforks, average ladder size, and the gamma statistic), but we can also look at the set containing number of tips, node ages, and branch lengths, by specifying it accordingly using the argument `metricset`:
+```{r, fig.width=7, fig.height=2}
+plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1, metricset="nodibranch")
 ```
 
 And with `ScatterMetrics`, we can visualise empirical and simulated metrics in a 3D scatterplot:
@@ -135,19 +138,6 @@ Using that initial tree and the simulated set, we can use the same procedure as 
    ```
 3. Now go straight to estimating the metrics of both initial tree and simulations separately, and from there follow the standard procedure to get p-values, plot results, etc.
 
-### 3.6 Alternative Metrics ###
-Beyond the three main tree shape metrics, _i.e._ Principal Eigenvalue, Asymmetry, and Peakedness of the spectral sensity of the tree's modified graph Laplaican, BoskR also calculates the normalised versions of those. Additionally, it calculates a set of more classical shape metrics (Colless index, Sackin index, number of cherries, number of pitchforks, average ladder size, and the gamma statistic), as well as a set consisting of the minimum, median, and maximum node ages and branch lengths respectively. For an extended exploration of model adequacy and its reasons, those additional sets can also be explored.
-
-All sets are calculated anyway by `GetTreeMetrics`, but the subsequent functions `PvalMetrics` and `plotPvalMetricsPDF` will by default only make use of the standard set (`"spectR"`). The others can be chosen instead when specifying the variable `metricset` accordingly, _i.e._ either `"spectRnorm"`, `"classic"`, or `"nodibranch"` respectively. In case of the p-values, we can also just calculate them `"ALL"`, or all but the spectra ones, if the quick version of the analysis was run (`"AllQuick"`). 
-```{r}
-pvalues_classic <- PvalMetrics(emptestmetrics, simtestmetrics, metricset="classic")
-pvalues_classic$pValues  # Display table of p-Values
-```
-For reasons of space, we can plot each `metricset` separately, but not all at once.
-```{r, fig.width=9, fig.height=2}
-plotPvalMetricsPDF(emptestmetrics, simtestmetrics, set=1, metricset="classic")
-```
-
 ## 4 Final Notes ##
 ### 4.1 Interpretation and Caveats ###
 Following the general idea, if our empirical tree is significantly different from the simulations in one or more of the metrics, or is outside the could of simulated trees in metric space, we should question the adequacy of the employed model.
@@ -158,5 +148,3 @@ In order to make sure the results aren't spurious, and in order to generally mak
 If one wants to study the behaviour of a model in general, `GetMetricTreeSets()` can also just take parameter values as input, as opposed to an empirical phylogeny.
 
 Another potential use for this approach might be as a way to make sure simulated trees (used _e.g._ to create a distribution of scenarios to compare an empirical solution to) are within a certain range of shape around the empirical example, if the question makes that necessary.
-
-I may want to add more models to the package in the near future, and welcome suggestions as to which to add.
