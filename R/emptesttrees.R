@@ -1,6 +1,7 @@
 #' Set of Test Trees for BoskR
 #'
-#' ADD DESCRIPTION HERE
+#' A set of six example datasets to use with the package \code{BoskR}. This includes phylogenies of 87 whale species (Steeman et al. 2009), including subtrees for the families Balaenopteridae (9 spp.) and Phocoenidae (6 spp.), 77 species of Ericaceae (derived from Schwery et al. 2015), 11 species of Calomys (Pigot, Owens & Orme 2012), and 150 species of Phyllostomidae ().
+#'
 #' @docType data
 #'
 #' @usage data(epmtesttrees)
@@ -9,8 +10,12 @@
 #'
 #' @keywords datasets
 #'
-#' @references ADD THEM HERE
+#' @source
+#'      Steeman, M.E., M.B. Hebsgaard, R.E. Fordyce, S.W.Y. Ho, D.L. Rabosky, R. Nielsen, C. Rahbek, H. Glenner, M.V. Sorensen, E. Willerslev. 2009. Radiation of Extant Cetaceans Driven by Restructuring of the Oceans.Systematic Biology. 58: 573-585
 #'
-#' @source ADD THEM HERE
+#'      Schwery, O., Onstein, R.E., Bouchenak-Khelladi, Y., Xing, Y., Carter, R.J. & Linder, H.P. (2015) As old as the mountains: the radiations of the Ericaceae. New Phytologist, 207, 355-367
+#'
+#'      Pigot, A.L., Owens, I.P.F. & Orme, C.D.L. (2012) Speciation and Extinction Drive the Appearance of Directional Range Size Evolution in Phylogenies and the Fossil Record. Plos Biology, 10
+#'
 #'
 "emptesttrees"

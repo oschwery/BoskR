@@ -2,7 +2,7 @@
 #'
 #' `GetTreeParams` estimates parameters from a supplied tree or tree set, which can subsequently be used as input for tree simulations using `GetMetricTrees`.
 #'
-#' @details The function wraps around the internal `GetParams`, and uses either [...]
+#' @details The function wraps around the internal `GetParams`, and uses either functions from `ape` (`yule`, `birthdeath`), `RPANDA` (`fit.bd`), `DDD` (`dd_ML`), or `diversitree`.
 #'
 #' The parameter `current_method_est` can be `"Yule", "BD", "Time_lambda_mu", "DD_lambda_mu", for birth-death, time-dependent birth-death, or diversity dependent, respectively. For the time- and diversity-dependent models, "lambda" and "mu" in the name should be replaced with the kind of time dependence intended for the respective parameter, being "const", "lin", or "exp" for constant, linear or exponential respectively. For a pure-birth model (only time-dependent), mu can be set to "PB".
 #'
@@ -42,7 +42,7 @@ GetTreeParams <- function(trees, current_method_est) {
 #'
 #' `GetParams` estimates parameters from a supplied tree or tree set, within the wrapper of 'GetTreeParams', which allows to use it for lists of tree sets (e.g. simulated trees based on a set of trees). The output can subsequently be used as input for tree simulations using `GetMetricTrees`.
 #'
-#' The function uses either
+#' The function uses either functions from `ape` (`yule`, `birthdeath`), `RPANDA` (`fit.bd`), `DDD` (`dd_ML`), or `diversitree`.
 #'
 #' @param emptrees Set of (probably empirical) phylogenies, list or multiPhylo-object.
 #' @param current_method_est String specifying the method to be used to estimate the parameters. Can be `"Yule", "BD", "Time_lambda_mu", "DD_lambda_mu", "CD", "TraitD"` for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.

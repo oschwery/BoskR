@@ -9,7 +9,7 @@ PvalMetrics(
   simMetrics,
   empirical_start = TRUE,
   methodnr,
-  metricset = "spectR"
+  metricset = "AllQuick"
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ PvalMetrics(
 
 \item{methodnr}{Integral specifying which method is used: 1: BD, 2: TimeD-BD, 3: DD; is only used if \code{empirical_start} is \code{FALSE}}
 
-\item{metricset}{String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch", or "ALL" and "AllQuick"; for more information on the options see Details.}
+\item{metricset}{String specifying which tree metrics to use; default is "AllQuick", other options are "ALL", "classic", "nodibranch", "spectR", and "spectrRnorm"; for more information on the options see Details.}
 }
 \value{
 A list with two entries: \code{ECDs} is a list of Empirical Cumulative Distributions; \code{pValues} is a matrix with p-values for the targeted metrics
@@ -30,5 +30,5 @@ A list with two entries: \code{ECDs} is a list of Empirical Cumulative Distribut
 Estimates p-values based on simulated and empirical distributions of tree metrics
 }
 \details{
-The function uses an Empirical Cumulative Distribution function to determine the area under the curve of the metric values of the simulated trees, to get to a p-value for the position of the metrics of the empirical tree on that distribution. The argument \code{metricset} allows to chose between: \code{"spectR"}- the standard (i.e. unnormalised) spectral densities, \code{"spectRnorm"} - the normalised spectral densities, \code{"classic"} - a couple of more 'conventional' measures of tree shape, being Colless index, Sackin index, number of cherries, number of pitchforks, average ladder size, and gamma statistic; finally \verb{"nodibranch" - includes minimum, maximum, and median for both node ages and branch lengths respectively; option }"All"\verb{returns all sets, and}"AllQuick"` returns all except the metrics based on the Laplacian spectra. For more information on the spectral densities, i.e. the Eigenvalues of the tree's modified graph Laplacian, see R package RPANDA and associated papers.
+The function uses an Empirical Cumulative Distribution (ECD) function to determine the area under the curve of the metric values of the simulated trees, to get to a p-value for the position of the metrics of the empirical tree on that distribution. The argument \code{metricset} allows to chose which group of metrics to calculate p-values for: \code{"classic"} - a couple of more 'conventional' measures of tree shape, being Colless index, Sackin index, number of cherries, number of pitchforks, average ladder size, and gamma statistic; \verb{"nodibranch" - includes minimum, maximum, and median for both node ages and branch lengths respectively. If Laplacian spectra were calculated, }"spectR"\verb{- returns the standard (i.e. unnormalised) spectral densities, and }"spectRnorm"\verb{- the normalised spectral densities. Option}"All"\verb{returns all sets, and}"AllQuick"` returns all except the metrics based on the Laplacian spectra. For more information on the spectral densities, i.e. the Eigenvalues of the tree's modified graph Laplacian, see R package RPANDA and associated papers.
 }

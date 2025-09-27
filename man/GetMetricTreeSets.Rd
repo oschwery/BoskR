@@ -22,11 +22,11 @@ GetMetricTreeSets(
 )
 }
 \arguments{
-\item{empirical_start}{\code{TRUE} to use parameters estimated from empirical trees, \code{FALSE} to use user-specified ones}
+\item{empirical_start}{\code{TRUE} to use parameters estimated from empirical trees, \code{FALSE} to use user-specified ones (default)}
 
 \item{empParams}{Nested list object with tree parameters as inferred through \code{GetParams} from one or several empirical trees}
 
-\item{current_method}{Method to be used for simulation, either \verb{"Yule", "BD", "TimeD-BD", "DD", "CD", "TraitD"} for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively.}
+\item{current_method}{Method to be used for simulation, either \verb{"Yule", "BD", "TimeD-BD", "DD", "CD", "TraitD"} for birth-death, time-dependent birth-death, diversity dependent, clade dependent, or trait dependent diversification respectively}
 
 \item{N}{Number of taxa}
 
@@ -54,8 +54,8 @@ GetMetricTreeSets(
 A list of trees of class multiPhylo
 }
 \description{
-Uses \code{GetMetricTrees} to simulate trees under a given model based on either parameter estimates from empirical trees or pre-set parameters.
+Uses internal function \code{GetMetricTrees} to simulate trees under a given model based on either parameter estimates from empirical trees or pre-set parameters.
 }
 \details{
-The function will simulate a number of trees based on either the parameters inferred from one or several empirical trees (given through \code{empParams} if \code{empirical_start=TRUE}), or user-specified parameters (if \code{empirical_start=FALSE})
+The function will simulate a number of trees based on either the parameters inferred from one or several empirical trees (given through \code{empParams} if \code{empirical_start=TRUE}), or user-specified parameters (if \code{empirical_start=FALSE}).
 }

@@ -8,7 +8,7 @@ GetTreeMetrics(
   trees,
   empirical_start = FALSE,
   return_spectra = FALSE,
-  quick_run = FALSE
+  quick_run = TRUE
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ GetTreeMetrics(
 
 \item{return_spectra}{\code{TRUE} to return the full Laplacian spectra of each tree, \code{FALSE} (the default) to only return the list of metrics (traditional and based on spectra).}
 
-\item{quick_run}{If \code{TRUE}, ommits the time and memory intensive step of calculating the Laplacian spectra and estimates the remaining metrics only (default is \code{FALSE}).}
+\item{quick_run}{If \code{TRUE}, ommits the time and memory intensive step of calculating the Laplacian spectra and estimates the remaining metrics only (default is \code{TRUE}).}
 }
 \value{
 A list with two elements: \code{metrics}: a matrix with the values for all tree metrics for each tree, and \code{spectra}: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If applied to the simulated trees based on a tree set, it will be one such two-element list for each tree set provided in a nested list. If \code{return_spectra} is \code{FALSE}, only \code{metrics} will be returned.
@@ -27,5 +27,5 @@ A list with two elements: \code{metrics}: a matrix with the values for all tree 
 \code{GetTreeMetrics} calculates a number of metrics describing tree shape for a tree or a set of trees.
 }
 \details{
-The function wraps around the internal 'GetMetrics', which will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), the node age and branch length-based metrics (number of taxa, minimum, median, and maximum node age and branch length respectively), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in \code{RPANDA}.
+The function wraps around the internal 'GetMetrics', which will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes) and the node age and branch length-based metrics (number of taxa, minimum, median, and maximum node age and branch length respectively). Additionally, it can calculate the standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in \code{RPANDA}. However, the latter can be quite taxing on memory use and runtime, so it is excluded by default.
 }

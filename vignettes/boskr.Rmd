@@ -60,8 +60,6 @@ library(BoskR)
 
 ```{r, echo=FALSE}
 set.seed(1337)
-library(phyloTop)
-library(RPANDA)
 ```
 
 ### 3.1 Load and Prepare Data ###

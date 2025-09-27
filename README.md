@@ -2,13 +2,13 @@
 
 **UNDER CONSTRUCTION**
 
-R package to test adequacy of birth-death diversification models using metrics of tree shape derived from the tree’s modified graph Laplacian spectrum.
+R package to test adequacy of birth-death diversification models using metrics of tree shape.
 
 Once completed, it will be made available as a stable version on CRAN and a development version here. For now, this version can be installed as follows:
 
 ```
 library(devtools)
-install_github("oschwery/BoskR", build_vignettes = TRUE)
+install_github("oschwery/BoskR")
 ```
 
 

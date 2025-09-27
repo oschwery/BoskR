@@ -2,12 +2,12 @@
 #'
 #' `GetTreeMetrics` calculates a number of metrics describing tree shape for a tree or a set of trees.
 #'
-#' The function wraps around the internal 'GetMetrics', which will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes), the node age and branch length-based metrics (number of taxa, minimum, median, and maximum node age and branch length respectively), as well as standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`.
+#' The function wraps around the internal 'GetMetrics', which will calculate five 'traditional' tree metrics (Colless, Sackin, number of cherries, number of pitchforks, ladder sizes) and the node age and branch length-based metrics (number of taxa, minimum, median, and maximum node age and branch length respectively). Additionally, it can calculate the standard and normalised graph Laplacian spectra and the associated summary metrics (principal eigenvalue, asymmetry, peakedness, eigengap), as implemented in `RPANDA`. However, the latter can be quite taxing on memory use and runtime, so it is excluded by default.
 #'
 #' @param trees Tree or set of trees, list or multiPhylo-object, or list of tree sets
 #' @param empirical_start `TRUE` if started out from empirical trees, `FALSE` if started from user-specified parameters (currently just affects status updates).
 #' @param return_spectra `TRUE` to return the full Laplacian spectra of each tree, `FALSE` (the default) to only return the list of metrics (traditional and based on spectra).
-#' @param quick_run If `TRUE`, ommits the time and memory intensive step of calculating the Laplacian spectra and estimates the remaining metrics only (default is `FALSE`).
+#' @param quick_run If `TRUE`, ommits the time and memory intensive step of calculating the Laplacian spectra and estimates the remaining metrics only (default is `TRUE`).
 #' @return A list with two elements: `metrics`: a matrix with the values for all tree metrics for each tree, and `spectra`: a list of raw values for the standard and normalised graph Laplacian spectra for each tree. If applied to the simulated trees based on a tree set, it will be one such two-element list for each tree set provided in a nested list. If `return_spectra` is `FALSE`, only `metrics` will be returned.
 #'
 #' @export
@@ -16,7 +16,7 @@
 #' @import RPANDA
 #' @import phyloTop
 
-GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=FALSE) {
+GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=TRUE) {
   outlist <- c()
   if (!is.list(trees[[1]][[1]][[1]]) & !is.na(trees[[1]][[1]][[1]])[1]) {
     outlist <- try(GetMetrics(trees, empirical_start, return_spectra, quick_run), FALSE)
@@ -58,7 +58,7 @@ GetTreeMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, q
 #' @import RPANDA
 #' @import phyloTop
 
-GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=FALSE) {
+GetMetrics <- function(trees, empirical_start=FALSE, return_spectra=FALSE, quick_run=TRUE) {
   metricsnames <- c("Colless", "Sackin", "Cherries", "pitchforks", "AvgLadder", "Gamma", "N_tax", "Min_NodeAge", "Median_NodeAge", "Max_NodeAge", "Min_BranchLength", "Median_BranchLength", "Max_BranchLength")
   if (quick_run != TRUE) {
     metricsnames <- c(metricsnames, "Princ_Eigenv_St", "Asymmetry_St", "Peakedness_St", "Eigengap_St", "Princ_Eigenv_Nor", "Asymmetry_Nor", "Peakedness_Nor")

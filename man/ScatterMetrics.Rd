@@ -7,6 +7,8 @@
 ScatterMetrics(
   empMetrics,
   simMetrics = NULL,
+  metricsSet = c("Colless", "Gamma", "N_tax"),
+  metricsNames = NULL,
   pair = 1,
   sets = 1,
   setsize = NA,
@@ -31,6 +33,10 @@ ScatterMetrics(
 
 \item{simMetrics}{Metrics of sets of simulated trees; output of \code{GetTreeMetrics} or formatted the same way.}
 
+\item{metricsSet}{Vector with names of three metrics to be plotted on each axis (in order x, y, z); default is \code{c("Colless", "Gamma", "N_tax")}.}
+
+\item{metricsNames}{Vector with axis labels for the corresponding metrics in \code{metricsSet}. The default (\code{NULL}) just reuses the names in \code{metricsSet}.}
+
 \item{pair}{Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted. Value is ignored if \code{skim} or \code{combine} are \code{TRUE}, or \code{sets} is larger than 1 (the default).}
 
 \item{sets}{Integer for number of different subsets within \code{empMetrics}, e.g., sets originating from different models; is ignored if 1 (default).}
@@ -45,7 +51,7 @@ ScatterMetrics(
 
 \item{combine}{Logical, combines all empirical and simulated trees into one plot if \code{TRUE}.}
 
-\item{colours}{Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively); or vector ndicating the desired colours for each set, in same order as sets are in metrics object.}
+\item{colours}{Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively); or vector indicating the desired colours for each set, in same order as sets are in metrics object.}
 
 \item{transparencyEmp}{Value determining the transparency of the empirical tree plot points (0: completely transparent, 1: completely opaque; corresponding to \code{alpha} from package \code{scales}).}
 
@@ -68,5 +74,5 @@ ScatterMetrics(
 Plots empirical trees and their simulations in tree metric space using a 3D scatterplot.
 }
 \details{
-The function uses the internals \code{ScatterMetricsPair} and \code{ScatterMetricsCombo} and plots the empirical input-trees and their corresponding simulations in the metric space (asymmetry x peakedness x principal Eigenvalue) as a 3D scatterplot. It allows to either plot them all combined, or pairwise. The latter meaning each empirical tree is plotted with its corresponding simulations only, either one at a time or all together interactively (one advances through the plots by pressing enter). The basic function used is \code{scatterplot3d}, from the package with the same name.
+The function uses the internals \code{ScatterMetricsPair} and \code{ScatterMetricsCombo} and plots the empirical input-trees and their corresponding simulations in the metric space (e.g., Colless x Gamma x number of taxa) as a 3D scatterplot. It allows to either plot them all combined, or pairwise. The latter meaning each empirical tree is plotted with its corresponding simulations only, either one at a time or all together interactively (one advances through the plots by pressing enter). The basic function used is \code{scatterplot3d}, from the package with the same name.
 }

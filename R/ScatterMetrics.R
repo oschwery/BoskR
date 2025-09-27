@@ -2,10 +2,12 @@
 #'
 #' Plots empirical trees and their simulations in tree metric space using a 3D scatterplot.
 #'
-#' The function uses the internals `ScatterMetricsPair` and `ScatterMetricsCombo` and plots the empirical input-trees and their corresponding simulations in the metric space (asymmetry x peakedness x principal Eigenvalue) as a 3D scatterplot. It allows to either plot them all combined, or pairwise. The latter meaning each empirical tree is plotted with its corresponding simulations only, either one at a time or all together interactively (one advances through the plots by pressing enter). The basic function used is `scatterplot3d`, from the package with the same name.
+#' The function uses the internals `ScatterMetricsPair` and `ScatterMetricsCombo` and plots the empirical input-trees and their corresponding simulations in the metric space (e.g., Colless x Gamma x number of taxa) as a 3D scatterplot. It allows to either plot them all combined, or pairwise. The latter meaning each empirical tree is plotted with its corresponding simulations only, either one at a time or all together interactively (one advances through the plots by pressing enter). The basic function used is `scatterplot3d`, from the package with the same name.
 #'
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
+#' @param metricsSet Vector with names of three metrics to be plotted on each axis (in order x, y, z); default is `c("Colless", "Gamma", "N_tax")`.
+#' @param metricsNames Vector with axis labels for the corresponding metrics in `metricsSet`. The default (`NULL`) just reuses the names in `metricsSet`.
 #' @param pair Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted. Value is ignored if `skim` or `combine` are `TRUE`, or `sets` is larger than 1 (the default).
 #' @param sets Integer for number of different subsets within `empMetrics`, e.g., sets originating from different models; is ignored if 1 (default).
 #' @param setsize Size of each of the sets. If `NA` (default), set size will be determined automatically by dividing the metrics samples by the number of sets; single numbers get recycled for each set, and a vector of sizes can be provided if the sets all differ.
@@ -13,7 +15,7 @@
 #' @param separate Boolean for whether sets should be plotted in same plot or separate plots (default is `FALSE`); does not automatically open new plot devices or panels.
 #' @param setnames Names for each set, to be used to label plots when `separate=TRUE`
 #' @param combine Logical, combines all empirical and simulated trees into one plot if `TRUE`.
-#' @param colours Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively); or vector ndicating the desired colours for each set, in same order as sets are in metrics object.
+#' @param colours Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively); or vector indicating the desired colours for each set, in same order as sets are in metrics object.
 #' @param transparencyEmp Value determining the transparency of the empirical tree plot points (0: completely transparent, 1: completely opaque; corresponding to `alpha` from package `scales`).
 #' @param transparencySim Value determining the transparency of the simulated tree plot points (0: completely transparent, 1: completely opaque; corresponding to `alpha` from package `scales`).
 #' @param pch Shape of plot symbols; default 16.
@@ -28,23 +30,26 @@
 #' @importFrom scatterplot3d scatterplot3d
 #' @importFrom scales alpha
 
-ScatterMetrics <- function(empMetrics, simMetrics=NULL, pair=1, sets=1, setsize=NA, skim=FALSE, separate=FALSE, setnames=NA, combine=FALSE, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pch=16, cex.symbols=1.5, main=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
+ScatterMetrics <- function(empMetrics, simMetrics=NULL, metricsSet= c("Colless", "Gamma", "N_tax"), metricsNames=NULL, pair=1, sets=1, setsize=NA, skim=FALSE, separate=FALSE, setnames=NA, combine=FALSE, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pch=16, cex.symbols=1.5, main=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
+  if (is.null(metricsNames)) {
+    metricsNames <- metricsSet
+  }
   if (combine == TRUE) {
     simComb <- c()
     for (i in 1:length(simMetrics)) {
       simComb <- rbind(simComb, simMetrics[[i]]$metrics)
     }
-    ScatterMetricsCombo(empMetrics, simComb, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pch=pch, cex.symbols=cex.symbols, main=main, angle=angle)
+    ScatterMetricsCombo(empMetrics, simComb, metricsSet=metricsSet, metricsNames=metricsNames, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pch=pch, cex.symbols=cex.symbols, main=main, angle=angle)
   } else if (sets > 1) {
-    ScatterMetricsSets(empMetrics, sets=sets, setsize=setsize, separate=separate, setnames=setnames, colours=colours, transparencyEmp=transparencyEmp, pch=pch, cex.symbols=cex.symbols, main="Metrics Set", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL)
+    ScatterMetricsSets(empMetrics, metricsSet=metricsSet, metricsNames=metricsNames, sets=sets, setsize=setsize, separate=separate, setnames=setnames, colours=colours, transparencyEmp=transparencyEmp, pch=pch, cex.symbols=cex.symbols, main="Metrics Set", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL)
 
   } else if (skim == TRUE) {
     for (i in 1:nrow(empMetrics$metrics)) {
-      ScatterMetricsPair(empMetrics, simMetrics, pair=i, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pch=pch, cex.symbols=cex.symbols, main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
+      ScatterMetricsPair(empMetrics, simMetrics, metricsSet=metricsSet, metricsNames=metricsNames, pair=i, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pch=pch, cex.symbols=cex.symbols, main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
       invisible(readline(prompt="Press [enter] to continue"))
     }
   } else {
-    ScatterMetricsPair(empMetrics, simMetrics, pair=pair, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pch=pch, cex.symbols=cex.symbols, main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
+    ScatterMetricsPair(empMetrics, simMetrics, metricsSet=metricsSet, metricsNames=metricsNames, pair=pair, colours=colours, transparencyEmp=transparencyEmp, transparencySim=transparencySim, pch=pch, cex.symbols=cex.symbols, main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
   }
 }
 
@@ -56,6 +61,8 @@ ScatterMetrics <- function(empMetrics, simMetrics=NULL, pair=1, sets=1, setsize=
 #'
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simMetrics Metrics of sets of simulated trees; output of `GetTreeMetrics` or formatted the same way.
+#' @param metricsSet Vector with names of three metrics to be plotted on each axis (in order x, y, z); default is `c("Colless", "Gamma", "N_tax")`.
+#' @param metricsNames Vector with axis labels for the corresponding metrics in `metricsSet`. The default (`NULL`) just reuses the names in `metricsSet`.
 #' @param pair Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
 #' @param colours Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively).
 #' @param transparencyEmp Value determining the transparency of the empirical tree plot points (0: completely transparent, 1: completely opaque; corresponding to `alpha` from package `scales`).
@@ -72,8 +79,8 @@ ScatterMetrics <- function(empMetrics, simMetrics=NULL, pair=1, sets=1, setsize=
 #' @importFrom scatterplot3d scatterplot3d
 #' @importFrom scales alpha
 
-ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pch=16, cex.symbols=0.8, main=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
-  scatterplot3d(c(empMetrics$metrics[pair, "Asymmetry_St"], simMetrics[[pair]]$metrics[, "Asymmetry_St"]), c(empMetrics$metrics[pair, "Peakedness_St"], simMetrics[[pair]]$metrics[, "Peakedness_St"]), c(empMetrics$metrics[pair, "Princ_Eigenv_St"], simMetrics[[pair]]$metrics[, "Princ_Eigenv_St"]), xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, color=c(alpha(colours[1], transparencyEmp), alpha(c(rep(colours[2], times=nrow(simMetrics[[pair]]$metrics))), transparencySim)), type="p", main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
+ScatterMetricsPair <- function(empMetrics, simMetrics, metricsSet=metricsSet, metricsNames=metricsNames, pair=1, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pch=16, cex.symbols=0.8, main=paste("Empirical vs. Simulated Metrics Set", pair, sep=" "), angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
+  scatterplot3d(c(empMetrics$metrics[pair, metricsSet[1]], simMetrics[[pair]]$metrics[, metricsSet[1]]), c(empMetrics$metrics[pair, metricsSet[2]], simMetrics[[pair]]$metrics[, metricsSet[2]]), c(empMetrics$metrics[pair, metricsSet[3]], simMetrics[[pair]]$metrics[, metricsSet[3]]), xlab=metricsNames[1], ylab=metricsNames[2], zlab=metricsNames[3], pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, color=c(alpha(colours[1], transparencyEmp), alpha(c(rep(colours[2], times=nrow(simMetrics[[pair]]$metrics))), transparencySim)), type="p", main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
 }
 
 #' 3D Metrics Scatterplot of Combined Tree Sets
@@ -84,6 +91,8 @@ ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, colours=c("black"
 #'
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
 #' @param simComb Matrix of metrics of sets of simulated trees; `ScatterMetrics` will create this by combining the output of `GetTreeMetrics` or data formatted the same way.
+#' @param metricsSet Vector with names of three metrics to be plotted on each axis (in order x, y, z); default is `c("Colless", "Gamma", "N_tax")`.
+#' @param metricsNames Vector with axis labels for the corresponding metrics in `metricsSet`. The default (`NULL`) just reuses the names in `metricsSet`.
 #' @param colours Vector of length two, indicating the desired colours for empirical trees and simulated treees, in that order (defaults are "black" and "red", respectively).
 #' @param transparencyEmp Value determining the transparency of the empirical tree plot points (0: completely transparent, 1: completely opaque; corresponding to `alpha` from package `scales`).
 #' @param transparencySim Value determining the transparency of the simulated tree plot points (0: completely transparent, 1: completely opaque; corresponding to `alpha` from package `scales`).
@@ -99,8 +108,8 @@ ScatterMetricsPair <- function(empMetrics, simMetrics, pair=1, colours=c("black"
 #' @importFrom scatterplot3d scatterplot3d
 #' @importFrom scales alpha
 
-ScatterMetricsCombo <- function(empMetrics, simComb, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pch=16, cex.symbols=0.8, main="Empirical vs. Simulated Metrics Sets Combined", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
-  scatterplot3d(c(empMetrics$metrics[, "Asymmetry_St"], simComb[, "Asymmetry_St"]), c(empMetrics$metrics[, "Peakedness_St"], simComb[, "Peakedness_St"]), c(empMetrics$metrics[, "Princ_Eigenv_St"], simComb[, "Princ_Eigenv_St"]), xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, color=c(alpha(rep(colours[1], times=nrow(empMetrics$metrics)), transparencyEmp), alpha(c(rep(colours[2], times=nrow(simComb))), transparencySim)), type="p", main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
+ScatterMetricsCombo <- function(empMetrics, simComb, metricsSet=metricsSet, metricsNames=metricsNames, colours=c("black", "red"), transparencyEmp=0.8, transparencySim=0.2, pch=16, cex.symbols=0.8, main="Empirical vs. Simulated Metrics Sets Combined", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
+  scatterplot3d(c(empMetrics$metrics[, metricsSet[1]], simComb[, metricsSet[1]]), c(empMetrics$metrics[, metricsSet[2]], simComb[, metricsSet[2]]), c(empMetrics$metrics[, metricsSet[3]], simComb[, metricsSet[3]]), xlab=metricsNames[1], ylab=metricsNames[2], zlab=metricsNames[3], pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, color=c(alpha(rep(colours[1], times=nrow(empMetrics$metrics)), transparencyEmp), alpha(c(rep(colours[2], times=nrow(simComb))), transparencySim)), type="p", main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
 }
 
 #' 3D Metrics Scatterplot of Combined Tree Sets
@@ -110,6 +119,8 @@ ScatterMetricsCombo <- function(empMetrics, simComb, colours=c("black", "red"), 
 #' Internal function for `ScatterMetrics`, plots all empirical input-trees and their corresponding simulations in the metric space (asymmetry x peakedness x principal Eigenvalue) as a single 3D scatterplot. The basic function used is `scatterplot3d`, from the package with the same name.
 #'
 #' @param empMetrics Metrics of empirical tree or set of trees; output of `GetTreeMetrics` or formatted the same way.
+#' @param metricsSet Vector with names of three metrics to be plotted on each axis (in order x, y, z); default is `c("Colless", "Gamma", "N_tax")`.
+#' @param metricsNames Vector with axis labels for the corresponding metrics in `metricsSet`. The default (`NULL`) just reuses the names in `metricsSet`.
 #' @param sets Integer for number of different subsets within `empMetrics`, e.g., sets originating from different models.
 #' @param setsize Size of each of the sets. If `NA` (default), set size will be determined automatically by dividing the metrics samples by the number of sets; single numbers get recycled for each set, and a vector of sizes can be provided if the sets all differ.
 #' @param separate Boolean for whether sets should be plotted in same plot or separate plots (default is `FALSE`); does not automatically open new plot devices or panels.
@@ -128,7 +139,7 @@ ScatterMetricsCombo <- function(empMetrics, simComb, colours=c("black", "red"), 
 #' @importFrom scatterplot3d scatterplot3d
 #' @importFrom scales alpha
 
-ScatterMetricsSets <- function(empMetrics, sets=1, setsize=NA, separate=FALSE, setnames=NA, colours=c("black", "red"), transparencyEmp=0.8, pch=16, cex.symbols=0.8, main="Metrics Set", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
+ScatterMetricsSets <- function(empMetrics, metricsSet=metricsSet, metricsNames=metricsNames, sets=1, setsize=NA, separate=FALSE, setnames=NA, colours=c("black", "red"), transparencyEmp=0.8, pch=16, cex.symbols=0.8, main="Metrics Set", angle=-230, xlim=NULL, ylim=NULL, zlim=NULL) {
     if (is.na(setsize)) {
         setsize <- rep((nrow(empMetrics$metrics)/sets), times=sets)
     } else if (length(setsize) != sets) {
@@ -140,10 +151,10 @@ ScatterMetricsSets <- function(empMetrics, sets=1, setsize=NA, separate=FALSE, s
     }
     if (separate == FALSE) {
     scatterplot3d(
-        empMetrics$metrics[, "Asymmetry_St"], 
-        empMetrics$metrics[, "Peakedness_St"], 
-        empMetrics$metrics[, "Princ_Eigenv_St"],
-        xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, color=alpha(plotcols, transparencyEmp), type="p", main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
+        empMetrics$metrics[, metricsSet[1]], 
+        empMetrics$metrics[, metricsSet[2]], 
+        empMetrics$metrics[, metricsSet[3]],
+        xlab=metricsNames[1], ylab=metricsNames[2], zlab=metricsNames[3], pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, color=alpha(plotcols, transparencyEmp), type="p", main=main, angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
     } else if (separate == TRUE) {
         stopset <- 0
         for (sepset in 1:sets) {
@@ -151,10 +162,10 @@ ScatterMetricsSets <- function(empMetrics, sets=1, setsize=NA, separate=FALSE, s
             stopset <- stopset + setsize[sepset]
             # print(paste(models[sepset], startset, stopset, plotcols[startset], plotcols[stopset], sep=" "))
             scatterplot3d(
-                empMetrics$metrics[c(startset:stopset), "Asymmetry_St"], 
-                empMetrics$metrics[c(startset:stopset), "Peakedness_St"], 
-                empMetrics$metrics[c(startset:stopset), "Princ_Eigenv_St"],
-                xlab="Skewness", ylab="Kurtosis", zlab="Princ. Eigenvalue", pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, 
+                empMetrics$metrics[c(startset:stopset), metricsSet[1]], 
+                empMetrics$metrics[c(startset:stopset), metricsSet[2]], 
+                empMetrics$metrics[c(startset:stopset), metricsSet[3]],
+                xlab=metricsNames[1], ylab=metricsNames[2], zlab=metricsNames[3], pch=pch, cex.symbols=cex.symbols, highlight.3d=FALSE, 
                 color=alpha(plotcols[startset:stopset], transparencyEmp), 
                 type="p", main=paste(setnames[sepset], main, sep=" "), angle=angle, xlim=xlim, ylim=ylim, zlim=zlim)
         }

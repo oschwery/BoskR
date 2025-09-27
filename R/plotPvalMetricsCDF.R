@@ -1,15 +1,15 @@
 #' Plot p-values on CDF for sets of tree metrics
 #'
-#' Creates plots of p-values on their corresponding cumulative distribution function, based on sets of simulated and empirical distributions of tree metrics,
+#' Creates plots of p-values on their corresponding cumulative distribution function (CDF), based on sets of simulated and empirical distributions of tree metrics.
 #'
-#' @param pmetrics Object with ECDs and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
+#' @param pmetrics Object with ECDs (Empirical Cumulative Distributions) and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted; default NULL will plot all sets.
-#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch" (but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of `PvalMetrics()`.
+#' @param metricset String specifying which tree metrics to use; either "classic" (default) or "nodibranch" (or if Laplacian spectra are used also either "spectR" or "spectrRnorm"; but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of `PvalMetrics()`.
 #' @return An array of plots.
 #'
 #' @export
 
-plotPvalMetricsCDF <- function(pmetrics, set=NULL, metricset="spectR") {
+plotPvalMetricsCDF <- function(pmetrics, set=NULL, metricset="classic") {
   if (is.null(set)) {
     plotcounter <- 0
        empno <- c()
@@ -52,7 +52,7 @@ plotPvalMetricsCDF <- function(pmetrics, set=NULL, metricset="spectR") {
 #'
 #' @param pmetrics Object with ECDs and p-values of empirical and simulated tree shapes, output of `PvalMetrics` or formatted the same way.
 #' @param set Numerical index for which of the sets of pairs of empirical and simulated metrics to be plotted.
-#' @param metricset String specifying which tree metrics to use; default is "spectR", other options are "spectrRnorm", "classic", and "nodibranch" (but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of `PvalMetrics()`.
+#' @param metricset String specifying which tree metrics to use; either "classic" (default) or "nodibranch" (or if Laplacian spectra are used also either "spectR" or "spectrRnorm"; but not "ALL" and "AllQuick", to reduce the number of plots crammed in one); for more information on the options see Details of `PvalMetrics()`.
 #' @param inloop Logical indicating whether the function is called from within a loop (TRUE) or not (FALSE).
 #' @return An array of plots.
 #'
