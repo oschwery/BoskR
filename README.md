@@ -8,7 +8,7 @@ Once completed, it will be made available as a stable version on CRAN and a deve
 
 ```
 library(devtools)
-install_github("oschwery/BoskR")
+install_github("oschwery/BoskR", build_vignettes = TRUE)
 ```
 
 
